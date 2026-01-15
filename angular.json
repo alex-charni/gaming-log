@@ -55,6 +55,22 @@
               "outputHashing": "all"
             },
             "development": {
+              "assets": [
+                {
+                  "glob": "**/*",
+                  "input": "public"
+                },
+                {
+                  "glob": "**/*",
+                  "input": "src/mocks",
+                  "output": "/assets/mocks"
+                },
+                {
+                  "glob": "mockServiceWorker.js",
+                  "input": "src/mocks/workers",
+                  "output": "/"
+                }
+              ],
               "optimization": false,
               "extractLicenses": false,
               "sourceMap": true,
