@@ -1,5 +1,5 @@
 export interface GameMock {
-  date?: string;
+  date: string;
   id: string;
   platform: string;
   rating: number;

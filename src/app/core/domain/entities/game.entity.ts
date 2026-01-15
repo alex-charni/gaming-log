@@ -4,6 +4,6 @@ export class GameEntity {
     public readonly title: string,
     public readonly platform: string,
     public readonly rating: 1 | 2 | 3 | 4 | 5,
-    public readonly date?: string,
+    public readonly date: string,
   ) {}
 }
