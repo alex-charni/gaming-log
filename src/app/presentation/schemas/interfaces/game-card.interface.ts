@@ -6,5 +6,5 @@ export interface IGameCard {
   rating: 1 | 2 | 3 | 4 | 5;
   coverUrl: string;
   coverPlaceholderUrl: string;
-  date?: string;
+  date: string;
 }
