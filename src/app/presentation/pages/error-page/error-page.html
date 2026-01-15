@@ -1,0 +1,23 @@
+<section class="error-page">
+  <div class="error-page__container">
+    @if (code()) {
+      <span class="code">{{ code() }}</span>
+    } @else {
+      <i class="icon fa-solid fa-exclamation"></i>
+    }
+
+    <h1 class="title">{{ title() }}</h1>
+    <p class="message">{{ message() }}</p>
+
+    @if (showButton()) {
+      <button
+        type="button"
+        class="retry-button"
+        [class.retry-button--clicked]="isButtonClicked()"
+        (click)="retry()"
+      >
+        {{ buttonText() }}
+      </button>
+    }
+  </div>
+</section>
