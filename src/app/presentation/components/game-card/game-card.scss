@@ -1,0 +1,96 @@
+@use 'scss' as *;
+
+.game-card {
+  position: relative;
+  overflow: hidden;
+  aspect-ratio: $card-aspect-ratio;
+
+  &__image {
+    aspect-ratio: $card-aspect-ratio;
+    border-radius: $card-border-radius;
+    display: block;
+    object-fit: cover;
+    width: 100%;
+  }
+
+  &__rating {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.8), transparent);
+    border-radius: 0 0 $card-border-radius $card-border-radius;
+    text-align: center;
+    font-size: $font-lg;
+    // padding: 1rem; // for crown icon
+    padding: 1rem 1rem 0.4rem 1rem; // for star icon
+
+    i {
+      padding: 1rem 1rem 0.8rem 1rem;
+      background: linear-gradient(
+        90deg,
+        #ff6b6b,
+        #feca57,
+        #1dd1a1,
+        #54a0ff,
+        #1dd1a1,
+        #feca57,
+        #ff6b6b
+      );
+
+      background-size: 300% 100%;
+      background-position: 0% 50%;
+
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+
+      animation: rainbow 6s linear infinite;
+    }
+  }
+
+  &__info {
+    background-color: rgba(0, 0, 0, 0.8);
+    border-radius: $card-border-radius;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1rem;
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    transition: opacity 0.25s ease-in-out;
+
+    .title,
+    .rating,
+    .platform {
+      font-size: $font-lg;
+      text-align: center;
+    }
+
+    .title,
+    .platform {
+      color: $white-pure-color;
+    }
+
+    .rating {
+      color: $yellow-color;
+    }
+  }
+
+  &:hover {
+    .game-card__info {
+      opacity: 1;
+    }
+  }
+}
+
+@keyframes rainbow {
+  0% {
+    background-position: 0% 50%;
+  }
+  100% {
+    background-position: 300% 50%;
+  }
+}

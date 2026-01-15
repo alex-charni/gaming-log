@@ -1,0 +1,36 @@
+<div #grid class="grid">
+  @for (card of cardsCollection(); track card.id; let index = $index; let last = $last) {
+    <li class="grid__item">
+      @if (isGameCard(card)) {
+        @if (last) {
+          <app-game-card
+            [game]="card"
+            [priority]="index === 1"
+            viewportEnter
+            (viewPortEntered)="onEnterViewport()"
+          />
+        } @else {
+          <app-game-card [game]="card" [priority]="index === 1" />
+        }
+      } @else if (isYearCard(card)) {
+        <app-year-card [year]="card.year" />
+      }
+    </li>
+  }
+
+  <li class="grid__item">
+    @if (haventReachedLastYear()) {
+      <app-year-card [year]="nextYearToLoad()" [isLoading]="isLoading()" />
+    } @else {
+      <app-text-card [text]="'·'" />
+    }
+  </li>
+
+  @if (isLoading()) {
+    @for (item of [].constructor(19); track $index) {
+      <li class="grid__item">
+        <app-game-card-placeholder />
+      </li>
+    }
+  }
+</div>

@@ -1,0 +1,17 @@
+@use 'scss' as *;
+
+.card {
+  position: relative;
+  aspect-ratio: $card-aspect-ratio;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  background-color: $white-pure-color;
+  border-radius: $card-border-radius;
+  box-shadow: $card-box-shadow;
+
+  &.loading {
+    animation: card-loading 1s linear infinite alternate;
+  }
+}

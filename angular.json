@@ -69,7 +69,8 @@
                   "glob": "mockServiceWorker.js",
                   "input": "src/mocks/workers",
                   "output": "/"
-                }
+                },
+                "src/assets"
               ],
               "optimization": false,
               "extractLicenses": false,
