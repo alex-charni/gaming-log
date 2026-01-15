@@ -3,7 +3,6 @@
 {
   "compileOnSave": false,
   "compilerOptions": {
-    "baseUrl": "./",
     "strict": true,
     "noImplicitOverride": true,
     "noPropertyAccessFromIndexSignature": true,
@@ -14,14 +13,7 @@
     "experimentalDecorators": true,
     "importHelpers": true,
     "target": "ES2022",
-    "module": "preserve",
-    "paths": {
-      "@core/*": ["src/app/core/*"],
-      "@environments/*": ["src/environments/*"],
-      "@infrastructure/*": ["src/app/infrastructure/*"],
-      "@presentation/*": ["src/app/presentation/*"],
-      "@schemas/*": ["src/app/schemas/*"]
-    }
+    "module": "preserve"
   },
   "angularCompilerOptions": {
     "enableI18nLegacyMessageIdFormat": false,
