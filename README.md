@@ -1,59 +1,74 @@
-# GamingLog
+# Gaming Log
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 21.0.1.
+**Gaming Log** is a personal portfolio project built with **Angular 21**.  
+Its goal is to showcase a curated collection of video games I have played over the last few years, while also serving as a technical demonstration of modern Angular development practices.
 
-## Development server
+## 🚀 Live Demo
 
-To start a local development server, run:
+The application is available online at:
+
+http://www.demoproj.com
+
+## 💡Project Highlights
+
+- Emphasis on readability and maintainability
+- Designed to scale as the collection grows
+- Uses modern Angular patterns and best practices
+
+## 🧩 Tech Stack
+
+- **Angular 21**
+- **TypeScript**
+- **HTML**
+- **SCSS**
+
+## 📋 Prerequisites
+
+Before running the project locally, ensure you have the following installed:
+
+- **Node.js** (LTS recommended)
+- **Angular CLI** (v21 or compatible)
+
+Install Angular CLI globally if needed:
+
+```bash
+npm install -g @angular/cli
+```
+
+## ▶️ Running the Project Locally
+
+1. Clone the repository:
+
+```bash
+git clone https://github.com/alex-charni/gaming-log.git
+```
+
+2. Navigate to the project directory:
+
+```bash
+cd gaming-log
+```
+
+3. Install dependencies:
+
+```bash
+npm install
+```
+
+4. Start the development server:
 
 ```bash
 ng serve
 ```
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
-
-## Code scaffolding
-
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+5. Open your browser and go to:
 
 ```bash
-ng generate component component-name
+http://localhost:4200
 ```
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+The application will automatically reload when source files change.
 
-```bash
-ng generate --help
-```
+## 📄 License
 
-## Building
-
-To build the project run:
-
-```bash
-ng build
-```
-
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
-
-## Running unit tests
-
-To execute unit tests with the [Vitest](https://vitest.dev/) test runner, use the following command:
-
-```bash
-ng test
-```
-
-## Running end-to-end tests
-
-For end-to-end (e2e) testing, run:
-
-```bash
-ng e2e
-```
-
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
-
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+This project is intended for personal and portfolio use.
