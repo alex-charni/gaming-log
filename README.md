@@ -7,7 +7,7 @@ Its goal is to showcase a curated collection of video games I have played over t
 
 The application is available online at:
 
-http://www.demoproj.com
+https://alex-charni.github.io/gaming-log
 
 ## 💡Project Highlights
 
