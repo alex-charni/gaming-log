@@ -3,7 +3,7 @@ name: Deploy Angular 21 to GitHub Pages
 on:
   push:
     branches:
-      - main # Cambia si tu rama principal tiene otro nombre
+      - main
 
 permissions:
   contents: read
