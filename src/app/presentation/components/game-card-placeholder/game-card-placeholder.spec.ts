@@ -1,3 +1,4 @@
+// DONE
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { GameCardPlaceholder } from './game-card-placeholder';
@@ -8,9 +9,8 @@ describe('GameCardPlaceholder', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [GameCardPlaceholder]
-    })
-    .compileComponents();
+      imports: [GameCardPlaceholder],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(GameCardPlaceholder);
     component = fixture.componentInstance;
