@@ -16,6 +16,6 @@ export class GameCard {
   protected handleImageError(event: ErrorEvent): void {
     const target = event.target as HTMLImageElement;
 
-    if (target) target.src = `assets/media/images/covers/no-cover.webp`;
+    if (target) target.src = 'assets/media/images/covers/no-cover.webp';
   }
 }
