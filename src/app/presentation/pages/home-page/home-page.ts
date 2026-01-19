@@ -62,7 +62,7 @@ export class HomePage {
           requestAnimationFrame(() => {
             window.scrollTo({ top: scrollTop }); // hack to avoid scroll problems
           });
-        } else {
+        } else if (this.nextYearToLoad() >= environment.startingYear) {
           this.nextYearToLoad.set(year - 1);
           this.setLoadingStates(false, isFirstPage);
           this.fetchGamesByYear(this.nextYearToLoad());
