@@ -22,9 +22,9 @@ export class GameCardsGrid {
   nextYearToLoad = input.required<number>();
   loadMore = output<void>();
 
-  protected readonly haventReachedLastYear = computed(
-    () => (this.nextYearToLoad() ?? 0) >= environment.startingYear,
-  );
+  protected readonly haventReachedLastYear = computed(() => {
+    return (this.nextYearToLoad() ?? 0) >= environment.startingYear;
+  });
 
   protected onEnterViewport(): void {
     if (!this.isLoading() && this.haventReachedLastYear()) {

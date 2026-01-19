@@ -31,11 +31,11 @@ export class ErrorPage {
   readonly onRetry = signal<() => void>(() => this.location.back());
 
   constructor() {
-    if (this.routeData().code) this.code.set(this.routeData().code);
-    if (this.routeData().message) this.message.set(this.routeData().message);
-    if (this.routeData().buttonText) this.buttonText.set(this.routeData().buttonText);
-    if (this.routeData().showButton) this.showButton.set(this.routeData().showButton);
-    if (this.routeData().title) this.title.set(this.routeData().title);
+    if ('code' in this.routeData()) this.code.set(this.routeData().code);
+    if ('message' in this.routeData()) this.message.set(this.routeData().message);
+    if ('buttonText' in this.routeData()) this.buttonText.set(this.routeData().buttonText);
+    if ('showButton' in this.routeData()) this.showButton.set(!!this.routeData().showButton);
+    if ('title' in this.routeData()) this.title.set(this.routeData().title);
   }
 
   retry(): void {

@@ -1,43 +1,45 @@
-<div class="game-card">
-  <img
-    class="game-card__image"
-    [ngSrc]="game()?.coverUrl || ''"
-    fill
-    [priority]="priority()"
-    [placeholder]="game()?.coverPlaceholderUrl || ''"
-    alt="Cover image of {{ game()?.title }}"
-    (error)="handleImageError($event)"
-  />
+@if (game(); as game) {
+  <div class="game-card">
+    <img
+      class="game-card__image"
+      [ngSrc]="game.coverUrl"
+      fill
+      [priority]="priority()"
+      [placeholder]="game.coverPlaceholderUrl"
+      alt="Cover image of {{ game.title }}"
+      (error)="handleImageError($event)"
+    />
 
-  <!-- @if (game()?.rating === 5) {
+    <!-- @if (game.rating === 5) {
     <div class="game-card__rating">
       <i class="fa-solid fa-crown fa-lg"></i>
     </div>
   } -->
 
-  @if (game()?.rating === 5) {
-    <div class="game-card__rating">
-      <i class="fa-solid fa-star"></i>
-    </div>
-  }
+    @if (game.rating === 5) {
+      <div class="game-card__rating">
+        <i class="fa-solid fa-star"></i>
+      </div>
+    }
 
-  <div class="game-card__info">
-    <span class="platform">{{ game()?.platform }}</span>
-    <span class="title">{{ game()?.title }}</span>
-    <div class="rating">
-      @if (!game()?.rating) {
-        <span>—</span>
-      }
+    <div class="game-card__info">
+      <span class="platform">{{ game.platform }}</span>
+      <span class="title">{{ game.title }}</span>
+      <div class="rating">
+        @if (!game.rating) {
+          <span>—</span>
+        }
 
-      <!-- @else if (game()?.rating === 5) {
+        <!-- @else if (game.rating === 5) {
         <i class="fa-solid fa-crown fa-lg"></i>
       } -->
 
-      @else {
-        @for (point of [].constructor(game()?.rating); track $index) {
-          <i class="fa-solid fa-star"></i>
+        @else {
+          @for (point of [].constructor(game.rating); track $index) {
+            <i class="fa-solid fa-star"></i>
+          }
         }
-      }
+      </div>
     </div>
   </div>
-</div>
+}
