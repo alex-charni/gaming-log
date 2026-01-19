@@ -1,0 +1,48 @@
+name: Deploy Angular 21 to GitHub Pages
+on:
+  push:
+    branches:
+      - main # o la rama que uses como principal
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+jobs:
+  build_and_deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      # 1) Clona tu repo
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      # 2) Setup Node
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '20'
+
+      # 3) Instala dependencias
+      - name: Install Dependencias
+        run: npm ci
+
+      # 4) Build producción
+      - name: Build Angular
+        run: ng build --configuration production
+
+      # 5) Crear 404.html para rutas Angular
+      - name: Copiar index.html a 404.html
+        run: |
+          cp dist/gaming-log/browser/index.html dist/gaming-log/browser/404.html
+
+      # 6) Subir artefacto para Pages
+      - name: Upload Pages Artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: dist/gaming-log/browser
+
+      # 7) Deploy a GitHub Pages
+      - name: Deploy to GitHub Pages
+        uses: actions/deploy-pages@v4
