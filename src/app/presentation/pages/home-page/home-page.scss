@@ -1,12 +1,42 @@
+@use 'scss' as *;
+
 .home-page {
   &__container {
     display: flex;
     flex-direction: column;
     align-items: center;
 
-    .cards-grid {
+    .cards-grid,
+    .now-playing {
       width: 100%;
       max-width: 1280px;
     }
   }
+}
+
+.section-separator {
+  width: 100%;
+  max-width: 1280px;
+  display: flex;
+  align-items: center;
+  width: 100%;
+  margin: 1rem 0;
+  gap: 1rem;
+  box-sizing: border-box;
+  padding: 1rem;
+}
+
+.section-separator__line {
+  flex: 1;
+  height: 1px;
+  background-color: $fuchsia-color;
+}
+
+.section-separator__text {
+  white-space: nowrap;
+  color: $fuchsia-color;
+  font-size: $font-xl;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  
 }

@@ -2,6 +2,16 @@
   <div class="home-page__container">
     <app-header />
 
+    <section class="now-playing">
+      <app-now-playing-banner />
+    </section>
+
+    <div class="section-separator">
+      <span class="section-separator__line"></span>
+      <span class="section-separator__text">ALREADY FINISHED</span>
+      <span class="section-separator__line"></span>
+    </div>
+
     <main class="cards-grid">
       <app-game-cards-grid
         [cardsCollection]="cardsCollection()"

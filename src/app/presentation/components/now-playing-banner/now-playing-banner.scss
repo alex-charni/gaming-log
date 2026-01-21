@@ -1,0 +1,58 @@
+@use 'scss' as *;
+
+.now-playing {
+  &__container {
+    display: flex;
+    height: 400px;
+    justify-content: center;
+  }
+
+  &__data {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  &__logo {
+    height: 100%;
+    border-radius: 0.75rem;
+    object-fit: contain;
+    padding: 1rem 0 1rem 1rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    box-sizing: border-box;
+    gap: 1rem;
+
+    img {
+      width: 100%;
+      max-height: 200px;
+    }
+
+    .title {
+      background-color: #fa3296;
+      flex-grow: 1;
+      padding: 1rem;
+      color: white;
+      border-radius: 0.75rem;
+      align-content: center;
+
+      p {
+        font-size: $font-xl;
+        font-weight: 700;
+        margin: 0;
+        text-align: center;
+      }
+    }
+  }
+
+  &__game {
+    flex-basis: 0;
+    padding: 1rem;
+
+    img {
+      height: 100%;
+      border-radius: $card-border-radius;
+    }
+  }
+}

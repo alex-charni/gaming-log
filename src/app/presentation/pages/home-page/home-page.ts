@@ -7,10 +7,11 @@ import { IYearCard } from '@presentation/schemas/interfaces';
 import { CardTypes } from '@presentation/schemas/types';
 import { Spinner } from '@presentation/services';
 import { map } from 'rxjs';
+import { NowPlayingBanner } from "@presentation/components/now-playing-banner/now-playing-banner";
 
 @Component({
   selector: 'app-home-page',
-  imports: [GameCardsGrid, Header],
+  imports: [GameCardsGrid, Header, NowPlayingBanner],
   templateUrl: './home-page.html',
   styleUrl: './home-page.scss',
 })
