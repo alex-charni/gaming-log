@@ -4,6 +4,7 @@ export * from './game-card-placeholder/game-card-placeholder';
 export * from './game-card/game-card';
 export * from './game-cards-grid/game-cards-grid';
 export * from './header/header';
+export * from './horizontal-separator/horizontal-separator';
 export * from './scroll-top-button/scroll-top-button';
 export * from './text-card/text-card';
 export * from './year-card/year-card';
