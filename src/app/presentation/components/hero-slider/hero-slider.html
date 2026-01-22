@@ -1,0 +1,52 @@
+<div
+  #sliderContainer
+  class="hero-slider cinematic"
+  [style.height]="height()"
+  (mouseenter)="isHovered.set(true)"
+  (mouseleave)="isHovered.set(false)"
+  appSwipe
+  (swipeLeft)="next()"
+  (swipeRight)="prev()"
+>
+  <div class="hero-slider__stack">
+    @for (slide of slides(); track $index) {
+      <div class="hero-slider__slide" [class.is-active]="$index === currentIndex()">
+        <img
+          #heroImage
+          [ngSrc]="slide.imageUrl"
+          fill
+          sizes="100vw"
+          [priority]="$index === 0"
+          alt=""
+          class="hero-slider__image"
+          draggable="false"
+        />
+
+        @if (slide.topLeftText) {
+          <div class="overlay top-left">{{ slide.topLeftText }}</div>
+        }
+
+        @if (slide.topRightText) {
+          <div class="overlay top-right">{{ slide.topRightText }}</div>
+        }
+
+        @if (slide.bottomLeftText) {
+          <div class="overlay bottom-left">{{ slide.bottomLeftText }}</div>
+        }
+
+        @if (slide.bottomRightText) {
+          <div class="overlay bottom-right">{{ slide.bottomRightText }}</div>
+        }
+      </div>
+    }
+  </div>
+
+  <button class="nav prev" (click)="prev()">‹</button>
+  <button class="nav next" (click)="next()">›</button>
+
+  <div class="dots">
+    @for (slide of slides(); track $index) {
+      <button (click)="goTo($index)" [class.active]="$index === currentIndex()"></button>
+    }
+  </div>
+</div>

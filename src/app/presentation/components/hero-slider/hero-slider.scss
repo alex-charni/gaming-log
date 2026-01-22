@@ -1,0 +1,119 @@
+@use 'scss' as *;
+
+.hero-slider {
+  position: relative;
+  overflow: hidden;
+  border-radius: 0.75rem;
+
+  &__slide {
+    min-width: 100%;
+    height: 100%;
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.8s ease-in-out;
+
+    &.is-active {
+      opacity: 1;
+      pointer-events: auto;
+      z-index: 1;
+    }
+  }
+
+  &__image {
+    border-radius: inherit;
+    object-fit: cover;
+    width: 100%;
+    height: 100%;
+  }
+
+  &__stack {
+    position: relative;
+    width: 100%;
+    height: 100%;
+  }
+}
+
+.overlay {
+  position: absolute;
+  padding: 0.75rem 1rem;
+  background: rgba($black-color, 0.45);
+  color: $white-pure-color;
+  font-size: 0.9rem;
+  max-width: 80%;
+
+  &.top-left {
+    top: 0;
+    left: 0;
+    font-size: $font-md;
+    border-radius: $card-border-radius 0;
+  }
+
+  &.top-right {
+    top: 0;
+    right: 0;
+    border-radius: 0 $card-border-radius;
+  }
+
+  &.bottom-left {
+    bottom: 0;
+    left: 0;
+    font-size: $font-xl;
+    border-radius: 0 $card-border-radius;
+  }
+
+  &.bottom-right {
+    bottom: 0;
+    right: 0;
+    font-size: $font-xl;
+    border-radius: $card-border-radius 0;
+  }
+}
+
+.nav {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(0, 0, 0, 0.4);
+  color: #fff;
+  border: none;
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 50%;
+  cursor: pointer;
+  font-size: 1.5rem;
+  z-index: 100;
+
+  &.prev {
+    left: 1rem;
+  }
+
+  &.next {
+    right: 1rem;
+  }
+}
+
+.dots {
+  position: absolute;
+  bottom: 0.75rem;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 0.5rem;
+  z-index: 100;
+
+  button {
+    cursor: pointer;
+    width: 0.75rem;
+    height: 0.75rem;
+    border-radius: 50%;
+    border: none;
+    background: rgba($white-color, 0.5);
+    transition: opacity 0.8s ease-in-out;
+
+    &.active {
+      background: $fuchsia-color;
+    }
+  }
+}
