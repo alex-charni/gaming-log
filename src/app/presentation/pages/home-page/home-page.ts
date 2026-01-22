@@ -1,20 +1,38 @@
 import { Component, computed, inject, signal } from '@angular/core';
 import { GetGamesByYearUseCase } from '@core/application/use-cases';
 import { environment } from '@environments/environment';
-import { GameCardsGrid, Header } from '@presentation/components';
+import { GameCardsGrid, Header, HeroSlider, HorizontalSeparator } from '@presentation/components';
 import { toGameCardModel } from '@presentation/mappers';
-import { IYearCard } from '@presentation/schemas/interfaces';
+import { toHeroSlideModel } from '@presentation/mappers/game-to-hero-slide.model';
+import { IHeroSlide, IYearCard } from '@presentation/schemas/interfaces';
 import { CardTypes } from '@presentation/schemas/types';
 import { Spinner } from '@presentation/services';
 import { map } from 'rxjs';
 
 @Component({
   selector: 'app-home-page',
-  imports: [GameCardsGrid, Header],
+  imports: [GameCardsGrid, Header, HeroSlider, HorizontalSeparator],
   templateUrl: './home-page.html',
   styleUrl: './home-page.scss',
 })
 export class HomePage {
+  slides: IHeroSlide[] = [
+    {
+      id: 'hogwarts',
+      rating: 3 as 1 | 2 | 3 | 4 | 5,
+      title: 'Hogwarts Legacy',
+      platform: 'PC',
+      date: '2025-11-27',
+    },
+    {
+      id: 'mtga',
+      rating: 2 as 1 | 2 | 3 | 4 | 5,
+      title: 'Magic Arena',
+      platform: 'PC',
+      date: '2025-09-27',
+    },
+  ].map(toHeroSlideModel);
+
   private readonly getGamesByYearUseCase = inject(GetGamesByYearUseCase);
   private readonly spinnerService = inject(Spinner);
 

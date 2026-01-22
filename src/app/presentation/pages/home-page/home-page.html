@@ -1,6 +1,16 @@
 <section class="home-page">
   <div class="home-page__container">
-    <app-header />
+    <div class="header">
+      <app-header />
+    </div>
+
+    <section class="hero-slider">
+      <app-hero-slider [slides]="slides" />
+    </section>
+
+    <div class="separator">
+      <app-horizontal-separator [text]="'ALREADY FINISHED'" />
+    </div>
 
     <main class="cards-grid">
       <app-game-cards-grid
