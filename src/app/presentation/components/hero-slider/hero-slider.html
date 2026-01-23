@@ -22,21 +22,25 @@
           draggable="false"
         />
 
-        @if (slide.topLeftText) {
-          <div class="overlay top-left">{{ slide.topLeftText }}</div>
-        }
+        <div class="overlay__top">
+          @if (slide.topLeftText) {
+            <div class="overlay__top--left">{{ slide.topLeftText }}</div>
+          }
 
-        @if (slide.topRightText) {
-          <div class="overlay top-right">{{ slide.topRightText }}</div>
-        }
+          @if (slide.topRightText) {
+            <div class="overlay__top--right">{{ slide.topRightText }}</div>
+          }
+        </div>
 
-        @if (slide.bottomLeftText) {
-          <div class="overlay bottom-left">{{ slide.bottomLeftText }}</div>
-        }
+        <div class="overlay__bottom">
+          @if (slide.bottomLeftText) {
+            <div class="overlay__bottom--left">{{ slide.bottomLeftText }}</div>
+          }
 
-        @if (slide.bottomRightText) {
-          <div class="overlay bottom-right">{{ slide.bottomRightText }}</div>
-        }
+          @if (slide.bottomRightText) {
+            <div class="overlay__bottom--right">{{ slide.bottomRightText }}</div>
+          }
+        </div>
       </div>
     }
   </div>

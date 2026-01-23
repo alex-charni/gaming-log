@@ -36,69 +36,78 @@
 }
 
 .overlay {
-  position: absolute;
-  padding: 0.75rem 1rem;
-  color: $white-pure-color;
-  font-size: 0.9rem;
-  text-align: center;
+  &__top,
+  &__bottom {
+    position: absolute;
+    color: $white-pure-color;
+    display: flex;
+    justify-content: center;
+  }
 
-  &.top-left {
+  &__top {
+    align-items: flex-start;
     top: 0;
     left: 0;
     right: 0;
-    font-size: $font-md;
-    padding: 1.5rem 1rem 3rem 1rem;
+    padding: 2rem 1rem 3rem 1rem;
+    font-size: $font-lg;
     background: linear-gradient(to bottom, rgba(0, 0, 0, 0.8), transparent);
+
+    &--left {
+      text-align: center;
+    }
+
+    &--right {
+      display: none;
+    }
   }
 
-  &.bottom-left {
+  &__bottom {
+    align-items: flex-end;
     bottom: 0;
     left: 0;
     right: 0;
-    font-size: $font-xl;
     padding: 3rem 1rem 2rem 1rem;
+    font-size: $font-xl;
     background: linear-gradient(to top, rgba(0, 0, 0, 0.8), transparent);
+
+    &--left {
+      text-align: center;
+    }
+
+    &--right {
+      display: none;
+    }
   }
 
-  &.top-right,
-  &.bottom-right {
-    display: none;
-  }
-
-  @media screen and (min-width: 464px) {
-    max-width: 80%;
-
-    &.top-left {
-      right: unset;
-      font-size: $font-md;
-      padding: 1rem 1rem 2rem 1rem;
-      border-radius: $card-border-radius 0;
+  @media screen and (min-width: $screen-md) {
+    &__top,
+    &__bottom {
+      justify-content: space-between;
     }
 
-    &.top-right {
-      display: block;
-      top: 0;
-      right: 0;
-      padding: 1rem 1rem 2rem 1rem;
-      border-radius: 0 $card-border-radius;
-      background: linear-gradient(to bottom, rgba(0, 0, 0, 0.8), transparent);
+    &__top {
+      &--left {
+        padding: 0 1rem;
+        text-align: left;
+      }
+
+      &--right {
+        padding: 0 1rem;
+        display: block;
+      }
     }
 
-    &.bottom-left {
-      right: unset;
-      font-size: $font-xl;
-      padding: 2rem 1rem 1rem 1rem;
-      border-radius: 0 $card-border-radius;
-    }
+    &__bottom {
+      &--left {
+        padding: 0 1rem;
+        text-align: left;
+      }
 
-    &.bottom-right {
-      display: block;
-      bottom: 0;
-      right: 0;
-      font-size: $font-xl;
-      padding: 2rem 1rem 1rem 1rem;
-      border-radius: $card-border-radius 0;
-      background: linear-gradient(to top, rgba(0, 0, 0, 0.8), transparent);
+      &--right {
+        padding: 0 1rem;
+        display: block;
+      }
     }
   }
 }
@@ -123,15 +132,6 @@
 
     &.active {
       background: $fuchsia-color;
-    }
-  }
-
-  @media screen and (min-width: 464px) {
-    bottom: 1.25rem;
-
-    button {
-      width: 1rem;
-      height: 1rem;
     }
   }
 }
