@@ -12,9 +12,10 @@ import { IHeroSlide } from '@presentation/schemas/interfaces';
 })
 export class HeroSlider {
   slides = input.required<IHeroSlide[]>();
-  height = input('400px');
+  height = input(400);
   autoplay = input(true);
   autoplayInterval = input(5000);
+  isLoading = input.required<boolean>();
 
   readonly currentIndex = signal(0);
   readonly isHovered = signal(false);

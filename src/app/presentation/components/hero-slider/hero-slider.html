@@ -1,7 +1,7 @@
 <div
   #sliderContainer
-  class="hero-slider cinematic"
-  [style.height]="height()"
+  class="hero-slider"
+  [style.height]="height() + 'px'"
   (mouseenter)="isHovered.set(true)"
   (mouseleave)="isHovered.set(false)"
   appSwipe
@@ -15,9 +15,9 @@
           #heroImage
           [ngSrc]="slide.imageUrl"
           fill
-          sizes="100vw"
           [priority]="$index === 0"
-          alt=""
+          [placeholder]="slide.imagePlaceholderUrl"
+          alt="Cover image of {{ slide.bottomLeftText }}"
           class="hero-slider__image"
           draggable="false"
         />
@@ -41,12 +41,16 @@
     }
   </div>
 
-  <button class="nav prev" (click)="prev()">‹</button>
-  <button class="nav next" (click)="next()">›</button>
+  @if (slides().length > 1 && !isLoading()) {
+    <button class="nav prev" (click)="prev()">‹</button>
+    <button class="nav next" (click)="next()">›</button>
 
-  <div class="dots">
-    @for (slide of slides(); track $index) {
-      <button (click)="goTo($index)" [class.active]="$index === currentIndex()"></button>
-    }
-  </div>
+    <div class="dots">
+      @for (slide of slides(); track $index) {
+        <button (click)="goTo($index)" [class.active]="$index === currentIndex()"></button>
+      }
+    </div>
+  }
+
+  <div class="image-loader" [class.is-hidden]="!isLoading()"></div>
 </div>

@@ -5,7 +5,10 @@
     </div>
 
     <section class="hero-slider">
-      <app-hero-slider [slides]="slides" />
+      <app-hero-slider
+        [slides]="slidesCollection()"
+        [isLoading]="heroSliderIsLoading() && !cardGridHasLoadedFirstPage()"
+      />
     </section>
 
     <div class="separator">
@@ -16,7 +19,7 @@
       <app-game-cards-grid
         [cardsCollection]="cardsCollection()"
         [nextYearToLoad]="nextYearToLoad()"
-        [isLoading]="isLoading()"
+        [isLoading]="cardGridIsLoading()"
         (loadMore)="handleFetchMore()"
       />
     </main>

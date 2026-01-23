@@ -38,36 +38,68 @@
 .overlay {
   position: absolute;
   padding: 0.75rem 1rem;
-  background: rgba($black-color, 0.45);
   color: $white-pure-color;
   font-size: 0.9rem;
-  max-width: 80%;
+  text-align: center;
 
   &.top-left {
     top: 0;
     left: 0;
-    font-size: $font-md;
-    border-radius: $card-border-radius 0;
-  }
-
-  &.top-right {
-    top: 0;
     right: 0;
-    border-radius: 0 $card-border-radius;
+    font-size: $font-md;
+    padding: 1.5rem 1rem 3rem 1rem;
+    background: linear-gradient(to bottom, rgba(0, 0, 0, 0.8), transparent);
   }
 
   &.bottom-left {
     bottom: 0;
     left: 0;
-    font-size: $font-xl;
-    border-radius: 0 $card-border-radius;
-  }
-
-  &.bottom-right {
-    bottom: 0;
     right: 0;
     font-size: $font-xl;
-    border-radius: $card-border-radius 0;
+    padding: 3rem 1rem 2rem 1rem;
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.8), transparent);
+  }
+
+  &.top-right,
+  &.bottom-right {
+    display: none;
+  }
+
+  @media screen and (min-width: 464px) {
+    max-width: 80%;
+
+    &.top-left {
+      right: unset;
+      font-size: $font-md;
+      padding: 1rem 1rem 2rem 1rem;
+      border-radius: $card-border-radius 0;
+    }
+
+    &.top-right {
+      display: block;
+      top: 0;
+      right: 0;
+      padding: 1rem 1rem 2rem 1rem;
+      border-radius: 0 $card-border-radius;
+      background: linear-gradient(to bottom, rgba(0, 0, 0, 0.8), transparent);
+    }
+
+    &.bottom-left {
+      right: unset;
+      font-size: $font-xl;
+      padding: 2rem 1rem 1rem 1rem;
+      border-radius: 0 $card-border-radius;
+    }
+
+    &.bottom-right {
+      display: block;
+      bottom: 0;
+      right: 0;
+      font-size: $font-xl;
+      padding: 2rem 1rem 1rem 1rem;
+      border-radius: $card-border-radius 0;
+      background: linear-gradient(to top, rgba(0, 0, 0, 0.8), transparent);
+    }
   }
 }
 
@@ -101,7 +133,7 @@
   transform: translateX(-50%);
   display: flex;
   gap: 0.5rem;
-  z-index: 100;
+  z-index: 2;
 
   button {
     cursor: pointer;
@@ -116,4 +148,28 @@
       background: $fuchsia-color;
     }
   }
+
+  @media screen and (min-width: 464px) {
+    bottom: 1.25rem;
+
+    button {
+      width: 1rem;
+      height: 1rem;
+    }
+  }
+}
+
+.image-loader {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+
+  animation: card-loading 1s linear infinite alternate;
+
+  transition: opacity 500ms ease;
+}
+
+.image-loader.is-hidden {
+  opacity: 0;
 }
