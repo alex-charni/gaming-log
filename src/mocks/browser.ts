@@ -1,4 +1,5 @@
 import { setupWorker } from 'msw/browser';
-import { gamesHandler } from './handlers/games.handler';
+import { featuredGamesHandler, finishedGamesHandler } from './handlers/games.handler';
 
-export const worker = setupWorker(gamesHandler);
+export const finishedGamesWorker = setupWorker(finishedGamesHandler);
+export const featuredGamesWorker = setupWorker(featuredGamesHandler);

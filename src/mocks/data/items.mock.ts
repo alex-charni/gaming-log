@@ -1,12 +1,13 @@
-export interface GameMock {
-  date: string;
-  id: string;
-  platform: string;
-  rating: number;
-  title: string;
-}
+import { GameMock } from '../schemas';
 
 export const GAMES: GameMock[] = [
+  {
+    id: '88818720-0dc4-4127-88b3-e02a28e0f5b3',
+    rating: 3,
+    title: 'Prey (2017)',
+    platform: 'PC',
+    date: '2026-01-06',
+  },
   {
     id: 'bad59427-9281-48dd-93c1-5ff72ab5e82c',
     rating: 3,
