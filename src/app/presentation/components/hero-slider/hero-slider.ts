@@ -22,6 +22,9 @@ export class HeroSlider {
 
   readonly slidesCount = computed(() => this.slides().length);
 
+  readonly isPrevClicked = signal(false);
+  readonly isNextClicked = signal(false);
+
   constructor() {
     this.initEffects();
   }
@@ -40,10 +43,14 @@ export class HeroSlider {
 
   next(): void {
     this.currentIndex.update((i) => (i + 1) % this.slidesCount());
+    this.isNextClicked.set(true);
+    setTimeout(() => this.isNextClicked.set(false), 300);
   }
 
   prev(): void {
     this.currentIndex.update((i) => (i - 1 + this.slidesCount()) % this.slidesCount());
+    this.isPrevClicked.set(true);
+    setTimeout(() => this.isPrevClicked.set(false), 300);
   }
 
   goTo(index: number): void {

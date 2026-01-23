@@ -103,29 +103,6 @@
   }
 }
 
-.nav {
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  background: rgba(0, 0, 0, 0.4);
-  color: #fff;
-  border: none;
-  width: 2.5rem;
-  height: 2.5rem;
-  border-radius: 50%;
-  cursor: pointer;
-  font-size: 1.5rem;
-  z-index: 100;
-
-  &.prev {
-    left: 1rem;
-  }
-
-  &.next {
-    right: 1rem;
-  }
-}
-
 .dots {
   position: absolute;
   bottom: 0.75rem;
@@ -168,8 +145,64 @@
   animation: card-loading 1s linear infinite alternate;
 
   transition: opacity 500ms ease;
+
+  &.is-hidden {
+    opacity: 0;
+  }
 }
 
-.image-loader.is-hidden {
-  opacity: 0;
+.nav {
+  position: absolute;
+  top: 45%;
+  color: $fuchsia-color;
+  border: none;
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 50%;
+  cursor: pointer;
+  z-index: 2;
+  padding: 0;
+  background-color: $white-color;
+  transition: background-color 200ms ease;
+
+  &.prev {
+    left: 1rem;
+
+    svg {
+      transform: rotate(270deg);
+      scale: 50%;
+    }
+  }
+
+  &.next {
+    right: 1rem;
+
+    svg {
+      transform: rotate(90deg);
+      scale: 50%;
+    }
+  }
+
+  &:hover {
+    background-color: $fuchsia-color;
+    color: $white-color;
+  }
+
+  &:active {
+    transform: scale(0.92);
+  }
+
+  &:focus-visible {
+    outline: 2px solid $white-color;
+    outline-offset: 2px;
+  }
+
+  &--clicked {
+    background-color: $fuchsia-color;
+    animation: button-pulse 300ms ease-out;
+
+    &:hover {
+      background-color: $fuchsia-color;
+    }
+  }
 }

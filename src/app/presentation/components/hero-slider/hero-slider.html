@@ -42,8 +42,27 @@
   </div>
 
   @if (slides().length > 1 && !isLoading()) {
-    <button class="nav prev" (click)="prev()">‹</button>
-    <button class="nav next" (click)="next()">›</button>
+    <button class="nav prev" [class.nav--clicked]="isPrevClicked()" (click)="prev()">
+      <svg class="nav__icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+          d="M5 10l7-7m0 0l7 7m-7-7v18"
+        />
+      </svg>
+    </button>
+
+    <button class="nav next" [class.nav--clicked]="isNextClicked()" (click)="next()">
+      <svg class="nav__icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+          d="M5 10l7-7m0 0l7 7m-7-7v18"
+        />
+      </svg>
+    </button>
 
     <div class="dots">
       @for (slide of slides(); track $index) {
