@@ -74,7 +74,7 @@ $container-max-width: 480px;
 
       &--clicked {
         background-color: $fuchsia-color;
-        animation: button-pulse 300ms ease-out;
+        animation: button-pulse--black 300ms ease-out;
 
         &:hover {
           background-color: $fuchsia-color;
