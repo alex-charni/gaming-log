@@ -27,6 +27,7 @@
             <div class="overlay__top--left">{{ slide.topLeftText }}</div>
           }
 
+          <!-- TODO: enable when ready -->
           <!-- @if (slide.topRightText) {
             <div class="overlay__top--right">{{ slide.topRightText }}</div>
           } -->
@@ -46,33 +47,13 @@
   </div>
 
   @if (slides().length > 1 && !isLoading()) {
-    <button class="nav prev" [class.nav--clicked]="isPrevClicked()" (click)="prev()">
-      <svg class="nav__icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-width="2"
-          d="M5 10l7-7m0 0l7 7m-7-7v18"
-        />
-      </svg>
-    </button>
-
-    <button class="nav next" [class.nav--clicked]="isNextClicked()" (click)="next()">
-      <svg class="nav__icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-width="2"
-          d="M5 10l7-7m0 0l7 7m-7-7v18"
-        />
-      </svg>
-    </button>
-
-    <div class="dots">
-      @for (slide of slides(); track $index) {
-        <button (click)="goTo($index)" [class.active]="$index === currentIndex()"></button>
-      }
-    </div>
+    <app-hero-slider-nav-button [orientation]="'left'" (clicked)="prev()" />
+    <app-hero-slider-nav-button [orientation]="'right'" (clicked)="next()" />
+    <app-hero-slider-nav-dots
+      [slides]="slides()"
+      [currentIndex]="currentIndex()"
+      (goTo)="goTo($event)"
+    />
   }
 
   <div class="image-loader" [class.is-hidden]="!isLoading()"></div>

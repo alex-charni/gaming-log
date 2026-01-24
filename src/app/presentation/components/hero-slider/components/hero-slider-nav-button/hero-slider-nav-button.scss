@@ -1,0 +1,57 @@
+@use 'scss' as *;
+
+.nav {
+  position: absolute;
+  top: 45%;
+  color: $fuchsia-color;
+  border: none;
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 50%;
+  cursor: pointer;
+  z-index: 2;
+  padding: 0;
+  background-color: $white-color;
+  transition: background-color 200ms ease;
+
+  &--left {
+    left: 1rem;
+
+    .nav__icon {
+      transform: rotate(270deg);
+      scale: 50%;
+    }
+  }
+
+  &--right {
+    right: 1rem;
+
+    .nav__icon {
+      transform: rotate(90deg);
+      scale: 50%;
+    }
+  }
+
+  &:hover {
+    background-color: $fuchsia-color;
+    color: $white-color;
+  }
+
+  &:active {
+    transform: scale(0.92);
+  }
+
+  &:focus-visible {
+    outline: 2px solid $white-color;
+    outline-offset: 2px;
+  }
+
+  &--clicked {
+    background-color: $fuchsia-color;
+    animation: button-pulse--white 300ms ease-out;
+
+    &:hover {
+      background-color: $fuchsia-color;
+    }
+  }
+}

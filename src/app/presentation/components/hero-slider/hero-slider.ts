@@ -2,11 +2,12 @@ import { NgOptimizedImage } from '@angular/common';
 import { Component, computed, effect, input, signal } from '@angular/core';
 import { SwipeDirective } from '@presentation/directives';
 import { IHeroSlide } from '@presentation/schemas/interfaces';
+import { HeroSliderNavButton, HeroSliderNavDots } from './components';
 
 @Component({
   selector: 'app-hero-slider',
   standalone: true,
-  imports: [NgOptimizedImage, SwipeDirective],
+  imports: [NgOptimizedImage, SwipeDirective, HeroSliderNavButton, HeroSliderNavDots],
   templateUrl: './hero-slider.html',
   styleUrls: ['./hero-slider.scss'],
 })
@@ -21,9 +22,6 @@ export class HeroSlider {
   readonly isHovered = signal(false);
 
   readonly slidesCount = computed(() => this.slides().length);
-
-  readonly isPrevClicked = signal(false);
-  readonly isNextClicked = signal(false);
 
   constructor() {
     this.initEffects();
@@ -41,19 +39,15 @@ export class HeroSlider {
     });
   }
 
-  next(): void {
+  protected next(): void {
     this.currentIndex.update((i) => (i + 1) % this.slidesCount());
-    this.isNextClicked.set(true);
-    setTimeout(() => this.isNextClicked.set(false), 300);
   }
 
-  prev(): void {
+  protected prev(): void {
     this.currentIndex.update((i) => (i - 1 + this.slidesCount()) % this.slidesCount());
-    this.isPrevClicked.set(true);
-    setTimeout(() => this.isPrevClicked.set(false), 300);
   }
 
-  goTo(index: number): void {
+  protected goTo(index: number): void {
     this.currentIndex.set(index);
   }
 }
