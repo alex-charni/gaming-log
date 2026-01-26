@@ -24,6 +24,12 @@ export class HomePage {
   protected readonly cardGridIsLoading = signal(false);
   protected readonly cardGridHasLoadedFirstPage = signal(false);
 
+  private readonly isSpinnerVisible = computed(
+    () =>
+      (!this.cardGridHasLoadedFirstPage() && this.cardGridIsLoading()) ||
+      this.heroSliderIsLoading(),
+  );
+
   private readonly currentYear = signal(new Date().getFullYear());
   protected readonly nextYearToLoad = signal(this.currentYear());
   protected readonly haventReachedLastYear = computed(
@@ -38,12 +44,7 @@ export class HomePage {
   }
 
   private initEffects(): void {
-    effect(() => {
-      this.spinnerService.setVisible(
-        (!this.cardGridHasLoadedFirstPage() && this.cardGridIsLoading()) ||
-          this.heroSliderIsLoading(),
-      );
-    });
+    effect(() => this.spinnerService.setVisible(this.isSpinnerVisible()));
   }
 
   ngOnInit(): void {
@@ -62,12 +63,14 @@ export class HomePage {
 
     this.getFeaturedGamesUseCase
       .execute(3)
-      .pipe(map((games) => games.map(toHeroSlideModel)))
+      .pipe(
+        map((games) => {
+          return games.map(toHeroSlideModel);
+        }),
+      )
       .subscribe((response) => {
-        if (response.length) {
-          this.slidesCollection.set([...response]);
-          this.heroSliderIsLoading.set(false);
-        }
+        if (response.length) this.slidesCollection.set([...response]);
+        this.heroSliderIsLoading.set(false);
       });
   }
 
