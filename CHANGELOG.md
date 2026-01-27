@@ -7,6 +7,12 @@
 
 ---
 
+## [1.1.1] - 2026-01-27
+
+### 🟢 Added
+
+- App now uses i18n for displaying texts.
+
 ## 🚀 [1.1.0] - 2026-01-27
 
 ### 🟢 Added
