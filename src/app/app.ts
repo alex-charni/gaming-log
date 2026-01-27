@@ -1,6 +1,9 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
+import { TranslateService } from '@ngx-translate/core';
+
 import { FullScreenSpinner, ScrollTopButton } from '@presentation/components';
+import translationsEN from '../../public/i18n/en.json';
 
 @Component({
   selector: 'app-root',
@@ -8,4 +11,14 @@ import { FullScreenSpinner, ScrollTopButton } from '@presentation/components';
   templateUrl: './app.html',
   styleUrl: './app.scss',
 })
-export class App {}
+export class App {
+  private readonly translate = inject(TranslateService);
+
+  constructor() {
+    this.initTranslations();
+  }
+
+  private initTranslations(): void {
+    this.translate.setTranslation('en', translationsEN);
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "app": {
+    "title": "Gaming Log"
+  },
+  "common": {
+    "now_playing": "Now playing",
+    "now_playing_with_ellipsis": "Now playing..."
+  },
+  "separator": {
+    "already_finished_games": "Already finished"
+  }
+}
