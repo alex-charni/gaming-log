@@ -8,6 +8,7 @@ import { environment } from '@environments/environment';
 import { GameCardsGrid } from '@presentation/components';
 import { IYearCard } from '@presentation/schemas/interfaces';
 import { Spinner } from '@presentation/services';
+import { provideI18nTesting } from '@testing/i18-testing';
 import { HomePage } from './home-page';
 
 describe('HomePage', () => {
@@ -29,6 +30,7 @@ describe('HomePage', () => {
     await TestBed.configureTestingModule({
       imports: [HomePage],
       providers: [
+        provideI18nTesting(),
         { provide: GetFeaturedGamesUseCase, useValue: mockFeaturedUseCase },
         { provide: GetGamesByYearUseCase, useValue: mockGamesByYearUseCase },
         { provide: Spinner, useValue: mockSpinnerService },

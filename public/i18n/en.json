@@ -1,0 +1,18 @@
+{
+  "app": {
+    "title": "Gaming Log"
+  },
+  "common": {
+    "go_back": "Go back",
+    "now_playing": "Now playing",
+    "now_playing_with_ellipsis": "Now playing..."
+  },
+  "error": {
+    "oops_with_ellipsis": "Oops...",
+    "page_not_found": "The requested page can't be found.",
+    "unexpected_event": "Something unexpected happened on our end."
+  },
+  "separator": {
+    "already_finished_games": "Already finished"
+  }
+}

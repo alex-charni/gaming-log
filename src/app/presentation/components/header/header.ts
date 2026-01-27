@@ -1,9 +1,11 @@
 import { AfterViewInit, Component, HostListener, input, signal } from '@angular/core';
+import { TranslatePipe } from '@ngx-translate/core';
+
 import { BurgerButton } from '@presentation/components';
 
 @Component({
   selector: 'app-header',
-  imports: [BurgerButton],
+  imports: [BurgerButton, TranslatePipe],
   templateUrl: './header.html',
   styleUrl: './header.scss',
 })

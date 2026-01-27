@@ -7,6 +7,11 @@ export default defineConfig({
     globals: true,
     environment: 'jsdom',
     setupFiles: ['./vitest.setup.ts'],
+    server: {
+      deps: {
+        inline: [/@ngx-translate/],
+      },
+    },
     coverage: {
       enabled: true,
       provider: 'v8',
@@ -17,6 +22,11 @@ export default defineConfig({
         functions: [50, 80],
         lines: [50, 80],
       },
+    },
+  },
+  resolve: {
+    alias: {
+      '@i18n': new URL('./public/i18n', import.meta.url).pathname,
     },
   },
 });

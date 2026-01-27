@@ -20,7 +20,9 @@
       "@environments/*": ["src/environments/*"],
       "@infrastructure/*": ["src/app/infrastructure/*"],
       "@presentation/*": ["src/app/presentation/*"],
-      "@schemas/*": ["src/app/schemas/*"]
+      "@schemas/*": ["src/app/schemas/*"],
+      "@testing/*": ["src/testing/*"],
+      "@i18n/*": ["public/i18n/*"]
     }
   },
   "angularCompilerOptions": {
