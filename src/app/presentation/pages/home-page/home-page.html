@@ -1,8 +1,8 @@
-<section class="home-page">
+<main class="home-page">
   <div class="home-page__container">
-    <div class="header">
+    <header class="header">
       <app-header />
-    </div>
+    </header>
 
     <section class="hero-slider">
       <app-hero-slider
@@ -15,13 +15,13 @@
       <app-horizontal-separator [text]="'separator.already_finished_games' | translate" />
     </div>
 
-    <main class="cards-grid">
+    <section class="cards-grid">
       <app-game-cards-grid
         [cardsCollection]="cardsCollection()"
         [nextYearToLoad]="nextYearToLoad()"
         [isLoading]="cardGridIsLoading()"
         (loadMore)="handleFetchMore()"
       />
-    </main>
+    </section>
   </div>
-</section>
+</main>
