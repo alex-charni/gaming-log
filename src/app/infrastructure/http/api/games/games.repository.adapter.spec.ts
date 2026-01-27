@@ -2,20 +2,19 @@
 import { provideHttpClient } from '@angular/common/http';
 import { HttpTestingController, provideHttpClientTesting } from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
-import { firstValueFrom } from 'rxjs';
 
 import { GameEntity } from '@core/domain/entities';
 import { environment } from '@environments/environment';
 import { GamesRepositoryAdapter } from './games.repository.adapter';
 
-const games: GameEntity[] = [
+const gamesMock: GameEntity[] = [
   { id: '1', title: 'Game 1', platform: 'PS4', date: '2024', rating: 5 },
   { id: '2', title: 'Game 1', platform: 'PS3', date: '2025', rating: 5 },
 ];
 
 describe('GamesRepositoryAdapter', () => {
   let service: GamesRepositoryAdapter;
-  let httpTesting: HttpTestingController;
+  let httpMock: HttpTestingController;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -23,87 +22,128 @@ describe('GamesRepositoryAdapter', () => {
     });
 
     service = TestBed.inject(GamesRepositoryAdapter);
-    httpTesting = TestBed.inject(HttpTestingController);
+    httpMock = TestBed.inject(HttpTestingController);
+
+    vi.useFakeTimers();
   });
 
   afterEach(() => {
-    httpTesting.verify();
+    httpMock.verify();
+    vi.useRealTimers();
   });
 
-  it('should be created', () => {
-    expect(service).toBeTruthy();
+  describe('Add game', () => {
+    it('should add a game via POST', () => {
+      const mockGame: GameEntity = { id: '1', title: 'Elden Ring' } as any;
+      let response: GameEntity | undefined;
+
+      service.addGame(mockGame).subscribe((res) => (response = res));
+
+      const req = httpMock.expectOne(`${environment.apiUrl}/items`);
+
+      expect(req.request.method).toBe('POST');
+
+      req.flush(mockGame);
+
+      expect(response).toEqual(mockGame);
+    });
   });
 
-  it('should call addGame once and receive the same item that was sent ', async () => {
-    const sypAddGame = vi.spyOn(service, 'addGame');
-    const game = games[0];
+  describe('Get games by year', () => {
+    it('should handle multiple query parameters for date range', () => {
+      const year = 2025;
+      service.getGamesByYear(year).subscribe();
 
-    const config$ = service.addGame(game);
-    const configPromise = firstValueFrom(config$);
-    const req = httpTesting.expectOne(
-      `${environment.apiUrl}/items`,
-      'Request to load the configuration',
-    );
+      const req = httpMock.expectOne((r) => r.url.includes('/items'));
 
-    req.flush(games[0]);
+      expect(req.request.params.get('order')).toBe('date.desc');
 
-    expect(req.request.method).toBe('POST');
-    expect(req.request.body).toEqual(game);
-    expect(await configPromise).toEqual(game);
-    expect(sypAddGame).toHaveBeenCalledOnce();
+      const dateFilters = req.request.params.getAll('date');
+
+      req.flush([]);
+
+      expect(dateFilters).toContain(`gte.${year}-01-01`);
+      expect(dateFilters).toContain(`lte.${year}-12-31`);
+    });
+
+    it('should return a non empty array when the response body have a valid content', () => {
+      const year = 2025;
+
+      let result: GameEntity[] | undefined;
+
+      service.getGamesByYear(year).subscribe((res) => {
+        result = res;
+      });
+
+      const req = httpMock.expectOne((r) => r.url.includes('/items'));
+      req.flush(gamesMock);
+
+      vi.advanceTimersByTime(environment.dataMockDelay);
+
+      expect(result).not.toEqual([]);
+      expect(result).toHaveLength(2);
+    });
+
+    it('should return an empty array when the response body is null', () => {
+      const year = 2025;
+
+      let result: GameEntity[] | undefined;
+
+      service.getGamesByYear(year).subscribe((res) => {
+        result = res;
+      });
+
+      const req = httpMock.expectOne((r) => r.url.includes('/items'));
+      req.flush(null);
+
+      vi.advanceTimersByTime(environment.dataMockDelay);
+
+      expect(result).toEqual([]);
+    });
   });
 
-  it('should call addGame once and receive the same item that was sent ', async () => {
-    const sypAddGame = vi.spyOn(service, 'addGame');
-    const game = games[0];
+  describe('Get featured games', () => {
+    it('should apply the delay specified in environment', () => {
+      let completed = false;
 
-    const addGame$ = service.addGame(game);
-    const addGamePromise = firstValueFrom(addGame$);
-    const request = httpTesting.expectOne(`${environment.apiUrl}/items`, 'Request to add a game');
+      service.getFeaturedGames().subscribe(() => (completed = true));
 
-    request.flush(games[0]);
+      const req = httpMock.expectOne((r) => r.url.includes('/featured_games'));
+      req.flush([]);
 
-    expect(request.request.method).toBe('POST');
-    expect(request.request.body).toEqual(game);
-    expect(await addGamePromise).toEqual(game);
-    expect(sypAddGame).toHaveBeenCalledOnce();
-  });
+      expect(completed).toBe(false);
 
-  it('should call getGamesByYear once and receive some items ', async () => {
-    const sypAddGame = vi.spyOn(service, 'getGamesByYear');
-    const year = 2025;
-    const filteredGames = games.filter((game) => game.date === `${year}`);
+      vi.advanceTimersByTime(environment.dataMockDelay);
 
-    const getGamesByYear$ = service.getGamesByYear(year);
-    const getGamesByYearPromise = firstValueFrom(getGamesByYear$);
-    const request = httpTesting.expectOne(
-      `${environment.apiUrl}/items?order=date.desc&date=gte.${year}-01-01&date=lte.${year}-12-31`,
-      'Request to get games by year',
-    );
+      expect(completed).toBe(true);
+    });
 
-    request.flush(filteredGames);
+    it('should add limit param to the request with given value', () => {
+      const gamesToFetch = 3;
 
-    expect(request.request.method).toBe('GET');
-    expect(await getGamesByYearPromise).toEqual(filteredGames);
-    expect(sypAddGame).toHaveBeenCalledOnce();
-  });
+      service.getFeaturedGames(gamesToFetch).subscribe();
 
-  it('should call getGamesByYear once and receive no items ', async () => {
-    const sypAddGame = vi.spyOn(service, 'getGamesByYear');
-    const year = 1999;
-    const filteredGames = games.filter((game) => game.date === `${year}`);
+      const req = httpMock.expectOne((r) => r.url.includes('/featured_games'));
+      req.flush([]);
 
-    const getGamesByYear$ = service.getGamesByYear(year);
-    const getGamesByYearPromise = firstValueFrom(getGamesByYear$);
-    const request = httpTesting.expectOne(
-      `${environment.apiUrl}/items?order=date.desc&date=gte.${year}-01-01&date=lte.${year}-12-31`,
-      'Request to get games by year',
-    );
+      vi.advanceTimersByTime(environment.dataMockDelay);
 
-    request.flush(null);
+      expect(req.request.params.get('limit')).toBe(`${gamesToFetch}`);
+    });
 
-    expect(request.request.method).toBe('GET');
-    expect(await getGamesByYearPromise).toEqual(filteredGames);
-    expect(sypAddGame).toHaveBeenCalledOnce();
+    it('should return an empty array when the response body is null', () => {
+      let result: GameEntity[] | undefined;
+
+      service.getFeaturedGames().subscribe((res) => {
+        result = res;
+      });
+
+      const req = httpMock.expectOne((r) => r.url.includes('/featured_games'));
+      req.flush(null);
+
+      vi.advanceTimersByTime(environment.dataMockDelay);
+
+      expect(result).toEqual([]);
+    });
   });
 });
