@@ -2,9 +2,20 @@
 
 ## 🛠️ [Unreleased]
 
-- Hero banner for the home page.
+- Signal based state.
+- About page.
 
 ---
+
+## 🚀 [1.1.0] - 2026-01-27
+
+### 🟢 Added
+
+- Home Page now shows a Hero Banner.
+
+### 🟠 Changed
+
+- Updated testing suite for better performance.
 
 ## 🚀 [1.0.0] - 2026-01-19
 

@@ -1,12 +1,14 @@
 import { http, HttpResponse } from 'msw';
-import { GameMock, GAMES } from '../data';
+import { FEATURED_GAMES, GAMES } from '../data';
+import { GameMock } from '../schemas';
 
 type SortableField = 'date';
 type SortDirection = 'asc' | 'desc';
 
-const URL_TO_INTERCEPT = 'https://wrpriypmoaorobeeqmcc.supabase.co/rest/v1/items';
+const FINISHED_GAMES_URL = 'https://wrpriypmoaorobeeqmcc.supabase.co/rest/v1/items';
+const FEATURED_GAMES_URL = 'https://wrpriypmoaorobeeqmcc.supabase.co/rest/v1/featured_games';
 
-export const gamesHandler = http.get(URL_TO_INTERCEPT, ({ request }) => {
+export const finishedGamesHandler = http.get(FINISHED_GAMES_URL, ({ request }) => {
   const url = new URL(request.url);
   let result = [...GAMES];
 
@@ -33,6 +35,23 @@ export const gamesHandler = http.get(URL_TO_INTERCEPT, ({ request }) => {
       return lteTimestamp >= itemTimestamp && itemTimestamp >= gteTimestamp;
     });
   }
+
+  const orderParam = url.searchParams.get('order');
+
+  if (orderParam) {
+    const [field, direction] = orderParam.split('.') as [SortableField, SortDirection];
+
+    if (field && direction) {
+      result = sortItems(result, direction, field);
+    }
+  }
+
+  return HttpResponse.json(result);
+});
+
+export const featuredGamesHandler = http.get(FEATURED_GAMES_URL, ({ request }) => {
+  const url = new URL(request.url);
+  let result = [...FEATURED_GAMES];
 
   const orderParam = url.searchParams.get('order');
 

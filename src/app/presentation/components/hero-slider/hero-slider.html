@@ -1,0 +1,60 @@
+<div
+  #sliderContainer
+  class="hero-slider"
+  [style.height]="height() + 'px'"
+  (mouseenter)="isHovered.set(true)"
+  (mouseleave)="isHovered.set(false)"
+  appSwipe
+  (swipeLeft)="next()"
+  (swipeRight)="prev()"
+>
+  <div class="hero-slider__stack">
+    @for (slide of slides(); track $index) {
+      <div class="hero-slider__slide" [class.is-active]="$index === currentIndex()">
+        <img
+          #heroImage
+          [ngSrc]="slide.imageUrl"
+          fill
+          [priority]="$index === 0"
+          [placeholder]="slide.imagePlaceholderUrl"
+          alt="Cover image of {{ slide.bottomLeftText }}"
+          class="hero-slider__image"
+          draggable="false"
+        />
+
+        <div class="overlay__top">
+          @if (slide.topLeftText) {
+            <div class="overlay__top--left">{{ slide.topLeftText }}</div>
+          }
+
+          <!-- TODO: enable when ready -->
+          <!-- @if (slide.topRightText) {
+            <div class="overlay__top--right">{{ slide.topRightText }}</div>
+          } -->
+        </div>
+
+        <div class="overlay__bottom">
+          @if (slide.bottomLeftText) {
+            <div class="overlay__bottom--left">{{ slide.bottomLeftText }}</div>
+          }
+
+          @if (slide.bottomRightText) {
+            <div class="overlay__bottom--right">{{ slide.bottomRightText }}</div>
+          }
+        </div>
+      </div>
+    }
+  </div>
+
+  @if (slides().length > 1 && !isLoading()) {
+    <app-hero-slider-nav-button [orientation]="'left'" (clicked)="prev()" />
+    <app-hero-slider-nav-button [orientation]="'right'" (clicked)="next()" />
+    <app-hero-slider-nav-dots
+      [slides]="slides()"
+      [currentIndex]="currentIndex()"
+      (goTo)="goTo($event)"
+    />
+  }
+
+  <div class="image-loader" [class.is-hidden]="!isLoading()"></div>
+</div>

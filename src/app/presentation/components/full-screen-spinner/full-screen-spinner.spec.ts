@@ -7,15 +7,10 @@ import { Spinner } from '@presentation/services';
 import { FullScreenSpinner } from './full-screen-spinner';
 
 class SpinnerMock {
-  private activeRequests = 0;
-  visible = signal(false);
+  readonly visible = signal(false);
 
-  show(): void {
-    this.visible.set(true);
-  }
-
-  hide(): void {
-    this.visible.set(false);
+  setVisible(value: boolean): void {
+    this.visible.set(value);
   }
 }
 
@@ -46,8 +41,7 @@ describe('FullScreenSpinner', () => {
   });
 
   it('should set visible to true when spinner service requires it', () => {
-    spinnerServiceMock.show();
-
+    spinnerServiceMock.setVisible(true);
     fixture.detectChanges();
 
     const overlay = fixture.debugElement.query(By.css('.overlay'))?.nativeElement as HTMLDivElement;
@@ -57,8 +51,7 @@ describe('FullScreenSpinner', () => {
   });
 
   it('should set visible to false when spinner service requires it', () => {
-    spinnerServiceMock.hide();
-
+    spinnerServiceMock.setVisible(false);
     fixture.detectChanges();
 
     const overlay = fixture.debugElement.query(By.css('.overlay'))?.nativeElement as HTMLDivElement;

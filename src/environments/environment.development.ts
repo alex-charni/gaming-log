@@ -5,7 +5,7 @@ export const environment = {
   supabaseUrl: 'https://wrpriypmoaorobeeqmcc.supabase.co',
   startingYear: 2010,
   useDataMocks: true,
-  dataMockDelay: 0,
+  dataMockDelay: 1000,
   useImageMocks: true,
   production: false,
 };

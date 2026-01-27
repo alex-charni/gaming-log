@@ -71,24 +71,29 @@ describe('GameCardsGrid', () => {
     const loadMoreSpy = vi.spyOn(component.loadMore, 'emit');
 
     component['onEnterViewport']();
+
     expect(loadMoreSpy).toHaveBeenCalled();
   });
 
   it('should not trigger loadMore onEnterViewport when loading and not reached last year', () => {
     const loadMoreSpy = vi.spyOn(component.loadMore, 'emit');
+
     componentRef.setInput('isLoading', true);
     fixture.detectChanges();
 
     component['onEnterViewport']();
+
     expect(loadMoreSpy).not.toHaveBeenCalled();
   });
 
   it('should not trigger loadMore onEnterViewport when not loading and reached last year', () => {
     const loadMoreSpy = vi.spyOn(component.loadMore, 'emit');
+
     componentRef.setInput('isLoading', true);
     fixture.detectChanges();
 
     component['onEnterViewport']();
+
     expect(loadMoreSpy).not.toHaveBeenCalled();
   });
 

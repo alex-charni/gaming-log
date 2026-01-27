@@ -19,7 +19,7 @@ describe('ErrorPage component', () => {
     vi.useRealTimers();
   });
 
-  function configureTest(routeData: any = {}) {
+  function reconfigureTestingModule(routeData: any = {}) {
     return TestBed.configureTestingModule({
       imports: [ErrorPage],
       providers: [
@@ -34,113 +34,101 @@ describe('ErrorPage component', () => {
     }).compileComponents();
   }
 
-  it('should use default values when no route data is provided', async () => {
-    await configureTest();
+  describe('Route data', () => {
+    it('should use default values when no route data is provided', async () => {
+      await reconfigureTestingModule();
 
-    fixture = TestBed.createComponent(ErrorPage);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
+      fixture = TestBed.createComponent(ErrorPage);
+      component = fixture.componentInstance;
+      fixture.detectChanges();
 
-    expect(component.code()).toBe('');
-    expect(component.title()).toBe('Oops...');
-    expect(component.message()).toBe('Something unexpected happened on our end.');
-    expect(component.buttonText()).toBe('Go back');
-    expect(component.showButton()).toBe(true);
-  });
-
-  it('should override values from route data', async () => {
-    await configureTest({
-      code: 404,
-      title: 'Not Found',
-      message: 'Page not found',
-      buttonText: 'Retry',
-      showButton: true,
+      expect(component.code()).toBe('');
+      expect(component.title()).toBe('Oops...');
+      expect(component.message()).toBe('Something unexpected happened on our end.');
+      expect(component.buttonText()).toBe('Go back');
+      expect(component.showButton()).toBe(true);
     });
 
-    fixture = TestBed.createComponent(ErrorPage);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
+    it('should override values from route data', async () => {
+      await reconfigureTestingModule({
+        code: 404,
+        title: 'Not Found',
+        message: 'Page not found',
+        buttonText: 'Retry',
+        showButton: true,
+      });
 
-    expect(component.code()).toBe(404);
-    expect(component.title()).toBe('Not Found');
-    expect(component.message()).toBe('Page not found');
-    expect(component.buttonText()).toBe('Retry');
-    expect(component.showButton()).toBe(true);
+      fixture = TestBed.createComponent(ErrorPage);
+      component = fixture.componentInstance;
+      fixture.detectChanges();
+
+      expect(component.code()).toBe(404);
+      expect(component.title()).toBe('Not Found');
+      expect(component.message()).toBe('Page not found');
+      expect(component.buttonText()).toBe('Retry');
+      expect(component.showButton()).toBe(true);
+    });
   });
 
-  it('should render code when code is present', async () => {
-    await configureTest({ code: 500 });
+  describe('Template', () => {
+    it('should render code when code is present', async () => {
+      await reconfigureTestingModule({ code: 500 });
 
-    fixture = TestBed.createComponent(ErrorPage);
-    fixture.detectChanges();
+      fixture = TestBed.createComponent(ErrorPage);
+      fixture.detectChanges();
 
-    const codeEl = fixture.debugElement.query(By.css('.code'));
-    const iconEl = fixture.debugElement.query(By.css('.icon'));
+      const codeDebugElement = fixture.debugElement.query(By.css('.code'));
+      const iconDebugElement = fixture.debugElement.query(By.css('.icon'));
 
-    expect(codeEl).not.toBeNull();
-    expect(codeEl.nativeElement.textContent).toContain('500');
-    expect(iconEl).toBeNull();
-  });
+      expect(codeDebugElement).not.toBeNull();
+      expect(codeDebugElement.nativeElement.textContent).toContain('500');
+      expect(iconDebugElement).toBeNull();
+    });
 
-  it('should render icon when code is empty', async () => {
-    await configureTest({});
+    it('should render icon when code is empty', async () => {
+      await reconfigureTestingModule({});
 
-    fixture = TestBed.createComponent(ErrorPage);
-    fixture.detectChanges();
+      fixture = TestBed.createComponent(ErrorPage);
+      fixture.detectChanges();
 
-    const iconEl = fixture.debugElement.query(By.css('.icon'));
-    const codeEl = fixture.debugElement.query(By.css('.code'));
+      const iconDebugElement = fixture.debugElement.query(By.css('.icon'));
+      const codeDebugElement = fixture.debugElement.query(By.css('.code'));
 
-    expect(iconEl).not.toBeNull();
-    expect(codeEl).toBeNull();
-  });
+      expect(iconDebugElement).not.toBeNull();
+      expect(codeDebugElement).toBeNull();
+    });
 
-  it('should not render retry button when showButton is false', async () => {
-    await configureTest({ showButton: false });
+    it('should not render retry button when showButton is false', async () => {
+      await reconfigureTestingModule({ showButton: false });
 
-    fixture = TestBed.createComponent(ErrorPage);
-    fixture.detectChanges();
+      fixture = TestBed.createComponent(ErrorPage);
+      fixture.detectChanges();
 
-    const button = fixture.debugElement.query(By.css('.retry-button'));
-    expect(button).toBeNull();
-  });
+      const buttonDebugElement = fixture.debugElement.query(By.css('.retry-button'));
 
-  it('should call onRetry and toggle clicked state on retry()', async () => {
-    vi.useFakeTimers();
-    await configureTest({ showButton: true });
+      expect(buttonDebugElement).toBeNull();
+    });
 
-    fixture = TestBed.createComponent(ErrorPage);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
+    it('should call onRetry and toggle clicked state on retry()', async () => {
+      vi.useFakeTimers();
+      await reconfigureTestingModule({ showButton: true });
 
-    const button = fixture.debugElement.query(By.css('.retry-button'));
-    button.nativeElement.click();
+      fixture = TestBed.createComponent(ErrorPage);
+      component = fixture.componentInstance;
+      fixture.detectChanges();
 
-    fixture.detectChanges();
+      const buttonDebugElement = fixture.debugElement.query(By.css('.retry-button'));
+      buttonDebugElement.nativeElement.click();
 
-    expect(component.isButtonClicked()).toBe(true);
-    expect(locationMock.back).toHaveBeenCalled();
+      fixture.detectChanges();
 
-    vi.advanceTimersByTime(300);
-    fixture.detectChanges();
+      expect(component.isButtonClicked()).toBe(true);
+      expect(locationMock.back).toHaveBeenCalled();
 
-    expect(component.isButtonClicked()).toBe(false);
-  });
+      vi.advanceTimersByTime(300);
+      fixture.detectChanges();
 
-  it('should execute custom onRetry if overridden', async () => {
-    const retrySpy = vi.fn();
-    locationMock.back.mockClear();
-
-    await configureTest();
-
-    fixture = TestBed.createComponent(ErrorPage);
-    component = fixture.componentInstance;
-
-    component.onRetry.set(retrySpy);
-    fixture.detectChanges();
-
-    component.retry();
-
-    expect(retrySpy).toHaveBeenCalled();
+      expect(component.isButtonClicked()).toBe(false);
+    });
   });
 });

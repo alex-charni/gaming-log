@@ -1,0 +1,31 @@
+@use 'scss' as *;
+
+.dots {
+  &__container {
+    position: absolute;
+    bottom: 0.75rem;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 0.5rem;
+    z-index: 2;
+  }
+
+  &__button {
+    cursor: pointer;
+    width: 0.75rem;
+    height: 0.75rem;
+    border-radius: 50%;
+    border: none;
+    background: rgba($white-color, 0.5);
+    transition: opacity 0.8s ease-in-out;
+
+    &.active {
+      background: $fuchsia-color;
+    }
+
+    &--clicked {
+      animation: button-pulse--white 300ms ease-out;
+    }
+  }
+}

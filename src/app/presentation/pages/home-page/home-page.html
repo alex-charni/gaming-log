@@ -1,12 +1,25 @@
 <section class="home-page">
   <div class="home-page__container">
-    <app-header />
+    <div class="header">
+      <app-header />
+    </div>
+
+    <section class="hero-slider">
+      <app-hero-slider
+        [slides]="slidesCollection()"
+        [isLoading]="heroSliderIsLoading() && !cardGridHasLoadedFirstPage()"
+      />
+    </section>
+
+    <div class="separator">
+      <app-horizontal-separator [text]="'ALREADY FINISHED'" />
+    </div>
 
     <main class="cards-grid">
       <app-game-cards-grid
         [cardsCollection]="cardsCollection()"
         [nextYearToLoad]="nextYearToLoad()"
-        [isLoading]="isLoading()"
+        [isLoading]="cardGridIsLoading()"
         (loadMore)="handleFetchMore()"
       />
     </main>

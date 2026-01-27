@@ -1,25 +1,34 @@
-import { Component, computed, inject, signal } from '@angular/core';
-import { GetGamesByYearUseCase } from '@core/application/use-cases';
+import { Component, computed, effect, inject, signal } from '@angular/core';
+import { GetFeaturedGamesUseCase, GetGamesByYearUseCase } from '@core/application/use-cases';
 import { environment } from '@environments/environment';
-import { GameCardsGrid, Header } from '@presentation/components';
+import { GameCardsGrid, Header, HeroSlider, HorizontalSeparator } from '@presentation/components';
 import { toGameCardModel } from '@presentation/mappers';
-import { IYearCard } from '@presentation/schemas/interfaces';
+import { toHeroSlideModel } from '@presentation/mappers/game-to-hero-slide.model';
+import { IHeroSlide, IYearCard } from '@presentation/schemas/interfaces';
 import { CardTypes } from '@presentation/schemas/types';
 import { Spinner } from '@presentation/services';
 import { map } from 'rxjs';
 
 @Component({
   selector: 'app-home-page',
-  imports: [GameCardsGrid, Header],
+  imports: [GameCardsGrid, Header, HeroSlider, HorizontalSeparator],
   templateUrl: './home-page.html',
   styleUrl: './home-page.scss',
 })
 export class HomePage {
   private readonly getGamesByYearUseCase = inject(GetGamesByYearUseCase);
+  private readonly getFeaturedGamesUseCase = inject(GetFeaturedGamesUseCase);
   private readonly spinnerService = inject(Spinner);
 
-  protected readonly isLoading = signal(false);
-  protected readonly isLoadingFirstPage = signal(false);
+  protected readonly heroSliderIsLoading = signal(false);
+  protected readonly cardGridIsLoading = signal(false);
+  protected readonly cardGridHasLoadedFirstPage = signal(false);
+
+  private readonly isSpinnerVisible = computed(
+    () =>
+      (!this.cardGridHasLoadedFirstPage() && this.cardGridIsLoading()) ||
+      this.heroSliderIsLoading(),
+  );
 
   private readonly currentYear = signal(new Date().getFullYear());
   protected readonly nextYearToLoad = signal(this.currentYear());
@@ -28,23 +37,47 @@ export class HomePage {
   );
 
   protected cardsCollection = signal<CardTypes[]>([]);
+  protected slidesCollection = signal<IHeroSlide[]>([]);
 
-  ngOnInit(): void {
-    this.fetchFirstPage();
+  constructor() {
+    this.initEffects();
   }
 
-  private fetchFirstPage(): void {
-    this.fetchGamesByYear(this.nextYearToLoad(), true);
+  private initEffects(): void {
+    effect(() => this.spinnerService.setVisible(this.isSpinnerVisible()));
+  }
+
+  ngOnInit(): void {
+    this.fetchFeaturedGames();
+    this.fetchGamesByYear(this.nextYearToLoad());
   }
 
   protected handleFetchMore(): void {
     this.fetchGamesByYear(this.nextYearToLoad());
   }
 
-  private fetchGamesByYear(year: number, isFirstPage = false): void {
-    if (this.isLoading()) return;
+  private fetchFeaturedGames(): void {
+    if (this.heroSliderIsLoading()) return;
 
-    this.setLoadingStates(true, isFirstPage);
+    this.heroSliderIsLoading.set(true);
+
+    this.getFeaturedGamesUseCase
+      .execute(3)
+      .pipe(
+        map((games) => {
+          return games.map(toHeroSlideModel);
+        }),
+      )
+      .subscribe((response) => {
+        if (response.length) this.slidesCollection.set([...response]);
+        this.heroSliderIsLoading.set(false);
+      });
+  }
+
+  private fetchGamesByYear(year: number): void {
+    if (this.cardGridIsLoading()) return;
+
+    this.cardGridIsLoading.set(true);
 
     this.getGamesByYearUseCase
       .execute(year)
@@ -57,25 +90,18 @@ export class HomePage {
 
           this.cardsCollection.set([...this.cardsCollection(), yearCard, ...response]);
           this.nextYearToLoad.set(year - 1);
-          this.setLoadingStates(false, isFirstPage);
+
+          this.cardGridIsLoading.set(false);
+          this.cardGridHasLoadedFirstPage.set(true);
 
           requestAnimationFrame(() => {
             window.scrollTo({ top: scrollTop }); // hack to avoid scroll problems
           });
         } else if (this.nextYearToLoad() >= environment.startingYear) {
           this.nextYearToLoad.set(year - 1);
-          this.setLoadingStates(false, isFirstPage);
+          this.cardGridIsLoading.set(false);
           this.fetchGamesByYear(this.nextYearToLoad());
         }
       });
-  }
-
-  private setLoadingStates(state: boolean, isFirstPage: boolean): void {
-    this.isLoading.set(state);
-
-    if (isFirstPage) {
-      this.isLoadingFirstPage.set(state);
-      state ? this.spinnerService.show() : this.spinnerService.hide();
-    }
   }
 }
