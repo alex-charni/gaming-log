@@ -18,6 +18,7 @@ describe('GetGamesByYearUseCase', () => {
     gamesRepositoryMock = {
       addGame: vi.fn((game: GameEntity) => of(game)),
       getGamesByYear: vi.fn((year: number) => of(games)),
+      getFeaturedGames: vi.fn((quantity: number) => of(games)),
     };
 
     getGamesByYearUseCase = new GetGamesByYearUseCase(gamesRepositoryMock);

@@ -17,7 +17,7 @@ describe('GetGamesByYearUseCase', () => {
   beforeEach(() => {
     gamesRepositoryMock = {
       addGame: vi.fn((game: GameEntity) => of(game)),
-      getFeaturedGames: vi.fn((year: number) => of(games)),
+      getFeaturedGames: vi.fn((quantity: number) => of(games)),
       getGamesByYear: vi.fn((year: number) => of(games)),
     };
 
@@ -35,8 +35,8 @@ describe('GetGamesByYearUseCase', () => {
       result = data;
     });
 
-    expect(gamesRepositoryMock.getGamesByYear).toHaveBeenCalledOnce();
-    expect(gamesRepositoryMock.getGamesByYear).toHaveBeenCalledWith(quantity);
+    expect(gamesRepositoryMock.getFeaturedGames).toHaveBeenCalledOnce();
+    expect(gamesRepositoryMock.getFeaturedGames).toHaveBeenCalledWith(quantity);
     expect(result?.length).toEqual(2);
   });
 });

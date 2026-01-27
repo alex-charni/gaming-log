@@ -14,7 +14,7 @@ describe('toHeroSlideModel', () => {
 
     const mappedGamesData = toHeroSlideModel(gameEntity);
 
-    expect(mappedGamesData).toHaveProperty('coverUrl');
+    expect(mappedGamesData).toHaveProperty('imageUrl');
     expect(mappedGamesData).toHaveProperty('bottomLeftText');
   });
 });

@@ -15,50 +15,21 @@ describe('Spinner', () => {
     expect(service).toBeTruthy();
   });
 
-  it('should set visible to true after executing show()', () => {
+  it('should set visible to true after executing setVisible() with true', () => {
     const visibleSpy = vi.spyOn(service.visible, 'set');
-    service['activeRequests'] = 0;
 
-    service.show();
+    service.setVisible(true);
 
-    expect(service['activeRequests']).toEqual(1);
     expect(visibleSpy).toHaveBeenCalledWith(true);
+    expect(service.visible()).toBe(true);
   });
 
-  it('should not set visible to true after executing show() with one active request already in queue', () => {
+  it('should set visible to false after executing setVisible() with false', () => {
     const visibleSpy = vi.spyOn(service.visible, 'set');
-    service['activeRequests'] = 1;
 
-    service.show();
+    service.setVisible(false);
 
-    expect(service['activeRequests']).toEqual(2);
-    expect(visibleSpy).not.toHaveBeenCalledWith(true);
-  });
-
-  it('should set visible to false after executing hide()', () => {
-    const visibleSpy = vi.spyOn(service.visible, 'set');
-    service['activeRequests'] = 1;
-
-    service.hide();
-    expect(service['activeRequests']).toEqual(0);
     expect(visibleSpy).toHaveBeenCalledWith(false);
-  });
-
-  it('should set visible to false after executing hide() with no active request in queue', () => {
-    const visibleSpy = vi.spyOn(service.visible, 'set');
-    service['activeRequests'] = 0;
-
-    service.hide();
-    expect(service['activeRequests']).toEqual(0);
-    expect(visibleSpy).toHaveBeenCalledWith(false);
-  });
-
-  it('should not set visible to false after executing hide() with two active requests in queue', () => {
-    const visibleSpy = vi.spyOn(service.visible, 'set');
-    service['activeRequests'] = 4;
-
-    service.hide();
-    expect(service['activeRequests']).toEqual(3);
-    expect(visibleSpy).not.toHaveBeenCalled();
+    expect(service.visible()).toBe(false);
   });
 });

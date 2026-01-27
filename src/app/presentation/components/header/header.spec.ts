@@ -103,6 +103,7 @@ describe('Header', () => {
 
     const buttonDebugElement = fixture.debugElement.query(By.directive(BurgerButton));
     const buttonComponentInstance = buttonDebugElement.componentInstance as BurgerButton;
+
     buttonComponentInstance.toggle.emit(true);
 
     expect(toggleSpy).toHaveBeenCalledWith(true);
