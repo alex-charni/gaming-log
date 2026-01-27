@@ -3,6 +3,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 
+import { provideI18nTesting } from '@testing/i18-testing';
 import { BurgerButton } from '../burger-button/burger-button';
 import { Header } from './header';
 
@@ -27,6 +28,7 @@ describe('Header', () => {
 
     await TestBed.configureTestingModule({
       imports: [Header],
+      providers: [provideI18nTesting()],
     }).compileComponents();
 
     fixture = TestBed.createComponent(Header);

@@ -3,8 +3,11 @@ import { Location } from '@angular/common';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { ActivatedRoute } from '@angular/router';
+import { TranslateService } from '@ngx-translate/core';
 import { of } from 'rxjs';
 
+import enTranslations from '@i18n/en.json';
+import { provideI18nTesting } from '@testing/i18-testing';
 import { ErrorPage } from './error-page';
 
 describe('ErrorPage component', () => {
@@ -23,6 +26,7 @@ describe('ErrorPage component', () => {
     return TestBed.configureTestingModule({
       imports: [ErrorPage],
       providers: [
+        provideI18nTesting(),
         { provide: Location, useValue: locationMock },
         {
           provide: ActivatedRoute,
@@ -38,14 +42,18 @@ describe('ErrorPage component', () => {
     it('should use default values when no route data is provided', async () => {
       await reconfigureTestingModule();
 
+      const translate = TestBed.inject(TranslateService);
+      await new Promise((resolve) => translate.use('en').subscribe(resolve));
+
       fixture = TestBed.createComponent(ErrorPage);
       component = fixture.componentInstance;
+
       fixture.detectChanges();
 
       expect(component.code()).toBe('');
-      expect(component.title()).toBe('Oops...');
-      expect(component.message()).toBe('Something unexpected happened on our end.');
-      expect(component.buttonText()).toBe('Go back');
+      expect(component.title()).toBe(enTranslations.error.oops_with_ellipsis);
+      expect(component.message()).toBe(enTranslations.error.unexpected_event);
+      expect(component.buttonText()).toBe(enTranslations.common.go_back);
       expect(component.showButton()).toBe(true);
     });
 
