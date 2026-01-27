@@ -19,6 +19,19 @@ export class GamesRepositoryAdapter implements GamesRepository {
       .pipe(map((res) => res.body as GameEntity));
   }
 
+  public getFeaturedGames(quantity?: number): Observable<GameEntity[]> {
+    const url = `${environment.apiUrl}/featured_games`;
+
+    let params = new HttpParams();
+    params = params.append('order', 'date.desc');
+    if (quantity) params = params.append('limit', quantity);
+
+    return this.http.get<GameApiResponse[]>(url, { params, observe: 'response' }).pipe(
+      delay(environment.dataMockDelay),
+      map((response) => (response.body ? mapGamesData(response.body) : [])),
+    );
+  }
+
   public getGamesByYear(year: number): Observable<GameEntity[]> {
     const url = `${environment.apiUrl}/items`;
 

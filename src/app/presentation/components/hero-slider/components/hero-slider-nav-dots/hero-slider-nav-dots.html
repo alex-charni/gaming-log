@@ -1,0 +1,10 @@
+<div class="dots__container">
+  @for (slide of slides(); track $index) {
+    <button
+      class="dots__button"
+      [class.dots__button--clicked]="isClicked() && $index === currentIndex()"
+      [class.active]="$index === currentIndex()"
+      (click)="handleGoTo($index)"
+    ></button>
+  }
+</div>

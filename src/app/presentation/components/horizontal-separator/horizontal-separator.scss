@@ -1,0 +1,22 @@
+@use 'scss' as *;
+
+.separator {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+
+  &__line {
+    flex: 1;
+    height: 1px;
+    background-color: $fuchsia-color;
+  }
+
+  &__text {
+    color: $fuchsia-color;
+    font-size: $font-xl;
+    letter-spacing: 0.05em;
+    padding-inline: 1rem;
+    white-space: nowrap;
+  }
+}
