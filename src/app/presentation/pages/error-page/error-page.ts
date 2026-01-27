@@ -2,6 +2,7 @@ import { Location } from '@angular/common';
 import { Component, inject, signal } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { ActivatedRoute } from '@angular/router';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-error-page',
@@ -11,6 +12,7 @@ import { ActivatedRoute } from '@angular/router';
 export class ErrorPage {
   private readonly location = inject(Location);
   private readonly route = inject(ActivatedRoute);
+  private readonly translate = inject(TranslateService);
 
   private readonly routeData = toSignal(this.route.data, {
     initialValue: {} as {
@@ -22,21 +24,32 @@ export class ErrorPage {
     },
   });
 
-  readonly code = signal<string | number>('');
-  readonly message = signal('Something unexpected happened on our end.');
-  readonly buttonText = signal('Go back');
-  readonly showButton = signal(true);
-  readonly title = signal('Oops...');
+  readonly code = signal<string | number>('code' in this.routeData() ? this.routeData().code : '');
+
+  readonly message = toSignal<string>(
+    'message' in this.routeData()
+      ? this.translate.stream(this.routeData().message)
+      : this.translate.stream('error.unexpected_event'),
+  );
+
+  readonly buttonText = toSignal<string>(
+    'buttonText' in this.routeData()
+      ? this.translate.stream(this.routeData().buttonText)
+      : this.translate.stream('common.go_back'),
+  );
+
+  readonly showButton = signal(
+    'showButton' in this.routeData() ? !!this.routeData().showButton : true,
+  );
+
+  readonly title = toSignal<string>(
+    'buttonText' in this.routeData()
+      ? this.translate.stream(this.routeData().title)
+      : this.translate.stream('error.oops_with_ellipsis'),
+  );
+
   readonly isButtonClicked = signal(false);
   readonly onRetry = signal<() => void>(() => this.location.back());
-
-  constructor() {
-    if ('code' in this.routeData()) this.code.set(this.routeData().code);
-    if ('message' in this.routeData()) this.message.set(this.routeData().message);
-    if ('buttonText' in this.routeData()) this.buttonText.set(this.routeData().buttonText);
-    if ('showButton' in this.routeData()) this.showButton.set(!!this.routeData().showButton);
-    if ('title' in this.routeData()) this.title.set(this.routeData().title);
-  }
 
   retry(): void {
     this.isButtonClicked.set(true);
