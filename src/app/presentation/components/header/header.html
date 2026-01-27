@@ -1,6 +1,6 @@
 <header class="app-header auto-hide-header" [class.visible]="isVisible" [class.sticky]="isSticky">
   <div class="app-header__container">
-    <h1 class="title">GAMING LOG</h1>
+    <h1 class="title">{{ 'app.title' | translate }}</h1>
     <div class="menu-button" hidden>
       <app-burger-button [open]="menuOpen()" (toggle)="menuOpen.set($event)" />
     </div>

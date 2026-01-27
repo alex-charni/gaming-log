@@ -1,4 +1,7 @@
 import { Component, computed, effect, inject, signal } from '@angular/core';
+import { TranslatePipe } from '@ngx-translate/core';
+import { map } from 'rxjs';
+
 import { GetFeaturedGamesUseCase, GetGamesByYearUseCase } from '@core/application/use-cases';
 import { environment } from '@environments/environment';
 import { GameCardsGrid, Header, HeroSlider, HorizontalSeparator } from '@presentation/components';
@@ -7,11 +10,10 @@ import { toHeroSlideModel } from '@presentation/mappers/game-to-hero-slide.model
 import { IHeroSlide, IYearCard } from '@presentation/schemas/interfaces';
 import { CardTypes } from '@presentation/schemas/types';
 import { Spinner } from '@presentation/services';
-import { map } from 'rxjs';
 
 @Component({
   selector: 'app-home-page',
-  imports: [GameCardsGrid, Header, HeroSlider, HorizontalSeparator],
+  imports: [GameCardsGrid, Header, HeroSlider, HorizontalSeparator, TranslatePipe],
   templateUrl: './home-page.html',
   styleUrl: './home-page.scss',
 })
