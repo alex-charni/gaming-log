@@ -52,8 +52,7 @@
                   "maximumError": "8kB"
                 }
               ],
-              "outputHashing": "all",
-              "baseHref": "/gaming-log/"
+              "outputHashing": "all"
             },
             "development": {
               "assets": [
@@ -103,7 +102,7 @@
           "options": {
             "runnerConfig": "vitest.config.ts",
             "coverage": true,
-            "watch": true
+            "watch": false
           }
         }
       }
