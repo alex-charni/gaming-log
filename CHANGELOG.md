@@ -13,15 +13,15 @@
 
 - Home Page now shows a Hero Banner.
 
+### 🟠 Changed
+
+- Updated testing suite for better performance.
+
 ## 🚀 [1.0.0] - 2026-01-19
 
 ### 🟢 Added
 
 - First stable version.
-
-### 🟠 Changed
-
-- Updated testing suite for better performance.
 
 ---
 
