@@ -14,6 +14,10 @@ export class SwipeDirective {
   private swipeTriggered = false;
 
   constructor(private el: ElementRef) {
+    this.addEventListeners();
+  }
+
+  private addEventListeners(): void {
     this.el.nativeElement.addEventListener('dragstart', (e: Event) => e.preventDefault());
   }
 
