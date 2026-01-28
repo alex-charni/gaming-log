@@ -2,10 +2,16 @@
 
 ## 🛠️ [Unreleased]
 
-- Signal based state.
 - About page.
+- Language selector.
 
 ---
+
+## [1.1.2] - 2026-01-28
+
+### 🟢 Added
+
+- Home Page now uses signal stores.
 
 ## [1.1.1] - 2026-01-27
 
