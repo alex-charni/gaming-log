@@ -15,5 +15,5 @@ export const provideI18nTesting = () =>
       provide: TranslateLoader,
       useClass: JsonTranslationLoader,
     },
-    defaultLanguage: 'en',
+    fallbackLang: 'en',
   });
