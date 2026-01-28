@@ -1,7 +1,7 @@
 import { Injectable, signal } from '@angular/core';
 
 @Injectable({ providedIn: 'root' })
-export class Spinner {
+export class SpinnerService {
   readonly visible = signal(false);
 
   setVisible(value: boolean): void {

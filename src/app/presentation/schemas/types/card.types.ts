@@ -1,3 +1,3 @@
-import { IGameCard, ITextCard, IYearCard } from '../interfaces';
+import { GameCardModel, TextCardModel, YearCardModel } from '../interfaces';
 
-export type CardTypes = IGameCard | ITextCard | IYearCard;
+export type Card = GameCardModel | TextCardModel | YearCardModel;

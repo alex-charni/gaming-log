@@ -6,8 +6,8 @@ import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-error-page',
-  templateUrl: './error-page.html',
-  styleUrl: './error-page.scss',
+  templateUrl: './error.page.html',
+  styleUrl: './error.page.scss',
 })
 export class ErrorPage {
   private readonly location = inject(Location);

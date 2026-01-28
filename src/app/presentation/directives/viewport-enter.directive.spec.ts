@@ -3,7 +3,7 @@ import { Component } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 
-import { ViewportEnter } from './viewport-enter';
+import { ViewportEnterDirective } from './viewport-enter.directive';
 
 let intersectionCallback: IntersectionObserverCallback;
 
@@ -18,7 +18,7 @@ class IntersectionObserverMock {
 
 @Component({
   standalone: true,
-  imports: [ViewportEnter],
+  imports: [ViewportEnterDirective],
   template: ` <div viewportEnter (viewPortEntered)="onEnter()"></div> `,
 })
 class TestHostComponent {
@@ -44,10 +44,10 @@ describe('ViewportEnter directive', () => {
   });
 
   it('should create the IntersectionObserver and observe the host element', () => {
-    const directiveEl = fixture.debugElement.query(By.directive(ViewportEnter));
+    const directiveEl = fixture.debugElement.query(By.directive(ViewportEnterDirective));
     expect(directiveEl).not.toBeNull();
 
-    const instance = directiveEl!.injector.get(ViewportEnter) as any;
+    const instance = directiveEl!.injector.get(ViewportEnterDirective) as any;
 
     expect(instance.observer).toBeDefined();
     expect(instance.observer.observe).toHaveBeenCalledWith(directiveEl!.nativeElement);
@@ -76,8 +76,8 @@ describe('ViewportEnter directive', () => {
   });
 
   it('should disconnect observer on destroy', () => {
-    const directiveEl = fixture.debugElement.query(By.directive(ViewportEnter));
-    const instance = directiveEl!.injector.get(ViewportEnter) as any;
+    const directiveEl = fixture.debugElement.query(By.directive(ViewportEnterDirective));
+    const instance = directiveEl!.injector.get(ViewportEnterDirective) as any;
 
     fixture.destroy();
 

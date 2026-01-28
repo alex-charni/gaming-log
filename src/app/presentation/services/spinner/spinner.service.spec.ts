@@ -1,18 +1,14 @@
 // DONE
 import { TestBed } from '@angular/core/testing';
 
-import { Spinner } from './spinner';
+import { SpinnerService } from './spinner.service';
 
-describe('Spinner', () => {
-  let service: Spinner;
+describe('SpinnerService', () => {
+  let service: SpinnerService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({});
-    service = TestBed.inject(Spinner);
-  });
-
-  it('should be created', () => {
-    expect(service).toBeTruthy();
+    service = TestBed.inject(SpinnerService);
   });
 
   it('should set visible to true after executing setVisible() with true', () => {

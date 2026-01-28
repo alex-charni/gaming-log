@@ -3,7 +3,7 @@ import { signal } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 
-import { Spinner } from '@presentation/services';
+import { SpinnerService } from '@presentation/services';
 import { FullScreenSpinner } from './full-screen-spinner';
 
 class SpinnerMock {
@@ -16,7 +16,7 @@ class SpinnerMock {
 
 describe('FullScreenSpinner', () => {
   let component: FullScreenSpinner;
-  let spinnerServiceMock: Spinner;
+  let spinnerServiceMock: SpinnerService;
   let fixture: ComponentFixture<FullScreenSpinner>;
 
   beforeEach(async () => {
@@ -24,7 +24,7 @@ describe('FullScreenSpinner', () => {
       imports: [FullScreenSpinner],
       providers: [
         {
-          provide: Spinner,
+          provide: SpinnerService,
           useClass: SpinnerMock,
         },
       ],
@@ -32,7 +32,7 @@ describe('FullScreenSpinner', () => {
 
     fixture = TestBed.createComponent(FullScreenSpinner);
     component = fixture.componentInstance;
-    spinnerServiceMock = TestBed.inject(Spinner);
+    spinnerServiceMock = TestBed.inject(SpinnerService);
     await fixture.whenStable();
   });
 

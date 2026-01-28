@@ -1,8 +1,8 @@
 import { GameEntity } from '@core/domain/entities';
 import { environment } from '@environments/environment';
-import { IGameCard } from '@presentation/schemas/interfaces';
+import { GameCardModel } from '@presentation/schemas/interfaces';
 
-export function toGameCardModel(game: GameEntity): IGameCard {
+export function toGameCardModel(game: GameEntity): GameCardModel {
   return {
     type: 'game',
     id: game.id,

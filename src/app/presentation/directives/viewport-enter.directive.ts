@@ -3,7 +3,7 @@ import { Directive, ElementRef, inject, OnDestroy, OnInit, output } from '@angul
 @Directive({
   selector: '[viewportEnter]',
 })
-export class ViewportEnter implements OnInit, OnDestroy {
+export class ViewportEnterDirective implements OnInit, OnDestroy {
   private readonly elementRef = inject(ElementRef);
   readonly viewPortEntered = output<void>();
 

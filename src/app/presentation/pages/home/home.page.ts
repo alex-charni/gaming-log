@@ -2,19 +2,19 @@ import { Component, effect, inject } from '@angular/core';
 import { TranslatePipe } from '@ngx-translate/core';
 
 import { GameCardsGrid, Header, HeroSlider, HorizontalSeparator } from '@presentation/components';
-import { Spinner } from '@presentation/services';
+import { SpinnerService } from '@presentation/services';
 import { HomePageStore } from '@presentation/stores';
 
 @Component({
   selector: 'app-home-page',
   imports: [GameCardsGrid, Header, HeroSlider, HorizontalSeparator, TranslatePipe],
   providers: [HomePageStore],
-  templateUrl: './home-page.html',
-  styleUrl: './home-page.scss',
+  templateUrl: './home.page.html',
+  styleUrl: './home.page.scss',
 })
 export class HomePage {
   protected readonly store = inject(HomePageStore);
-  private readonly spinnerService = inject(Spinner);
+  private readonly spinnerService = inject(SpinnerService);
 
   constructor() {
     this.initEffects();

@@ -1,4 +1,4 @@
-export interface ITextCard {
+export interface TextCardModel {
   type: 'text';
   id: string;
   text: string;

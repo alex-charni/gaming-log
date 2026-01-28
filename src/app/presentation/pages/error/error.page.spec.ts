@@ -8,9 +8,9 @@ import { of } from 'rxjs';
 
 import enTranslations from '@i18n/en.json';
 import { provideI18nTesting } from '@testing/i18-testing';
-import { ErrorPage } from './error-page';
+import { ErrorPage } from './error.page';
 
-describe('ErrorPage component', () => {
+describe('ErrorPage', () => {
   let fixture: ComponentFixture<ErrorPage>;
   let component: ErrorPage;
 

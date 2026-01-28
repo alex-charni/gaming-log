@@ -1,4 +1,4 @@
-export interface IHeroSlide {
+export interface HeroSlideModel {
   imageUrl: string;
   imagePlaceholderUrl: string;
   topLeftText: string;

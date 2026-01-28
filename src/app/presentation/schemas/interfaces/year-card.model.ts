@@ -1,4 +1,4 @@
-export interface IYearCard {
+export interface YearCardModel {
   type: 'year';
   id: string;
   year: string;

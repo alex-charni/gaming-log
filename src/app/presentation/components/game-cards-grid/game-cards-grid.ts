@@ -1,8 +1,8 @@
 import { Component, inject, input, output } from '@angular/core';
 
-import { ViewportEnter } from '@presentation/directives';
-import { IGameCard, ITextCard, IYearCard } from '@presentation/schemas/interfaces';
-import { CardTypes } from '@presentation/schemas/types';
+import { ViewportEnterDirective } from '@presentation/directives';
+import { GameCardModel, TextCardModel, YearCardModel } from '@presentation/schemas/interfaces';
+import { Card } from '@presentation/schemas/types';
 import { HomePageStore } from '@presentation/stores';
 import { GameCardPlaceholder } from '../game-card-placeholder/game-card-placeholder';
 import { GameCard } from '../game-card/game-card';
@@ -11,7 +11,7 @@ import { YearCard } from '../year-card/year-card';
 
 @Component({
   selector: 'app-game-cards-grid',
-  imports: [GameCardPlaceholder, ViewportEnter, GameCard, YearCard, TextCard],
+  imports: [GameCardPlaceholder, ViewportEnterDirective, GameCard, YearCard, TextCard],
   templateUrl: './game-cards-grid.html',
   styleUrl: './game-cards-grid.scss',
 })
@@ -25,15 +25,15 @@ export class GameCardsGrid {
     if (!this.store.cardsAreLoading() && this.keepTriggeringLoadMore()) this.loadMore.emit();
   }
 
-  protected isGameCard(arg: CardTypes): arg is IGameCard {
+  protected isGameCard(arg: Card): arg is GameCardModel {
     return arg.type === 'game';
   }
 
-  protected isTextCard(arg: CardTypes): arg is ITextCard {
+  protected isTextCard(arg: Card): arg is TextCardModel {
     return arg.type === 'text';
   }
 
-  protected isYearCard(arg: CardTypes): arg is IYearCard {
+  protected isYearCard(arg: Card): arg is YearCardModel {
     return arg.type === 'year';
   }
 

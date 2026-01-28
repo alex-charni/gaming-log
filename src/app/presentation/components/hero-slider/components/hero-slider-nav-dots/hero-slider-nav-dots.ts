@@ -1,5 +1,5 @@
 import { Component, input, output, signal } from '@angular/core';
-import { IHeroSlide } from '@presentation/schemas/interfaces';
+import { HeroSlideModel } from '@presentation/schemas/interfaces';
 
 @Component({
   selector: 'app-hero-slider-nav-dots',
@@ -8,7 +8,7 @@ import { IHeroSlide } from '@presentation/schemas/interfaces';
 })
 export class HeroSliderNavDots {
   readonly currentIndex = input.required<number>();
-  readonly slides = input.required<IHeroSlide[]>();
+  readonly slides = input.required<HeroSlideModel[]>();
   readonly goTo = output<number>();
 
   readonly isClicked = signal(false);

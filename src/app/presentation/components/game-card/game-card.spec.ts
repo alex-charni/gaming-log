@@ -3,15 +3,15 @@ import { ComponentRef } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 
-import { IGameCard } from '@presentation/schemas/interfaces';
+import { GameCardModel } from '@presentation/schemas/interfaces';
 import { GameCard } from './game-card';
 
-const GameMock: IGameCard = {
+const GameMock: GameCardModel = {
   type: 'game',
   id: '',
   title: '',
   platform: '',
-  rating: 1,
+  rating: 3,
   coverUrl: 'demo.webp',
   coverPlaceholderUrl: 'demo.webp',
   date: '',
@@ -80,7 +80,7 @@ describe('GameCard', () => {
   });
 
   it('should render fa-star icon when provided game has rating 5', () => {
-    const GameWithRatingFiveMock: IGameCard = {
+    const GameWithRatingFiveMock: GameCardModel = {
       ...GameMock,
       rating: 5,
     };
@@ -96,12 +96,12 @@ describe('GameCard', () => {
   });
 
   it('should render long dash icon when provided game has no rating', () => {
-    const GameWithRatingFiveMock: IGameCard = {
+    const GameWithRatingZeroMock: GameCardModel = {
       ...GameMock,
-      rating: 0 as 1 | 2 | 3 | 4 | 5,
+      rating: 0,
     };
 
-    componentRef.setInput('game', GameWithRatingFiveMock);
+    componentRef.setInput('game', GameWithRatingZeroMock);
 
     fixture.detectChanges();
 
