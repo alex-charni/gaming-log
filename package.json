@@ -33,6 +33,8 @@
     "@angular/platform-browser": "^21.1.0",
     "@angular/router": "^21.1.0",
     "@fortawesome/fontawesome-free": "^7.1.0",
+    "@ngrx/operators": "^21.0.1",
+    "@ngrx/signals": "^21.0.1",
     "@ngx-translate/core": "^17.0.0",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0"
@@ -41,6 +43,8 @@
     "@angular/build": "^21.1.0",
     "@angular/cli": "^21.1.0",
     "@angular/compiler-cli": "^21.1.0",
+    "@ngrx/operators": "^21.0.1",
+    "@ngrx/signals": "^21.0.1",
     "@vitest/coverage-v8": "^4.0.17",
     "jsdom": "^27.1.0",
     "msw": "^2.12.7",
