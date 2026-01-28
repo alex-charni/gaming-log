@@ -6,8 +6,7 @@ import { rxMethod } from '@ngrx/signals/rxjs-interop';
 import { distinctUntilChanged, map, pipe, switchMap, tap } from 'rxjs';
 
 import { environment } from '@environments/environment';
-import { toGameCardModel } from '@presentation/mappers';
-import { toHeroSlideModel } from '@presentation/mappers/game-to-hero-slide.model';
+import { toGameCardModel, toHeroSlideModel } from '@presentation/mappers';
 import { homePageInitialState } from './home-page-initial-state';
 
 export const HomePageStore = signalStore(

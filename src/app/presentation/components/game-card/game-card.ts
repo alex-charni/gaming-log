@@ -1,6 +1,6 @@
 import { IMAGE_CONFIG, NgOptimizedImage } from '@angular/common';
 import { Component, input } from '@angular/core';
-import { IGameCard } from '@presentation/schemas/interfaces';
+import { GameCardModel } from '@presentation/schemas/interfaces';
 
 @Component({
   selector: 'app-game-card',
@@ -10,7 +10,7 @@ import { IGameCard } from '@presentation/schemas/interfaces';
   providers: [{ provide: IMAGE_CONFIG, useValue: { placeholderResolution: 40 } }],
 })
 export class GameCard {
-  readonly game = input<IGameCard>();
+  readonly game = input<GameCardModel>();
   readonly priority = input<boolean>(false);
 
   protected handleImageError(event: ErrorEvent): void {

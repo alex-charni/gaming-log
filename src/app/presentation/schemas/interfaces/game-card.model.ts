@@ -1,9 +1,11 @@
-export interface IGameCard {
+import { Rating } from "@core/domain/schemas/types";
+
+export interface GameCardModel {
   type: 'game';
   id: string;
   title: string;
   platform: string;
-  rating: 1 | 2 | 3 | 4 | 5;
+  rating: Rating;
   coverUrl: string;
   coverPlaceholderUrl: string;
   date: string;

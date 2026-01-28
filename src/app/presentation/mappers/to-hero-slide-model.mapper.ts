@@ -1,8 +1,8 @@
 import { GameEntity } from '@core/domain/entities';
 import { environment } from '@environments/environment';
-import { IHeroSlide } from '@presentation/schemas/interfaces';
+import { HeroSlideModel } from '@presentation/schemas/interfaces';
 
-export function toHeroSlideModel(game: GameEntity): IHeroSlide {
+export function toHeroSlideModel(game: GameEntity): HeroSlideModel {
   return {
     imageUrl: `${environment.publicImagesUrl}/featured/${game.id}.webp`,
     imagePlaceholderUrl: `${environment.publicImagesUrl}/featured-placeholders/${game.id}.placeholder.webp`,

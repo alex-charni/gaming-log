@@ -2,7 +2,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 
-import { IHeroSlide } from '@presentation/schemas/interfaces';
+import { HeroSlideModel } from '@presentation/schemas/interfaces';
 import { HeroSliderNavButton } from './components';
 import { HeroSlider } from './hero-slider';
 
@@ -10,7 +10,7 @@ describe('HeroSlider', () => {
   let component: HeroSlider;
   let fixture: ComponentFixture<HeroSlider>;
 
-  const mockSlides: IHeroSlide[] = [
+  const mockSlides: HeroSlideModel[] = [
     {
       bottomLeftText: 'bottom left',
       bottomRightText: 'bottom right',

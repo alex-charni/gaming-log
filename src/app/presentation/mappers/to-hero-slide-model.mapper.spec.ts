@@ -1,6 +1,6 @@
 // DONE
 import { GameEntity } from '@core/domain/entities';
-import { toHeroSlideModel } from './game-to-hero-slide.model';
+import { toHeroSlideModel } from './to-hero-slide-model.mapper';
 
 describe('toHeroSlideModel', () => {
   it('should return a valid HeroSlide', () => {

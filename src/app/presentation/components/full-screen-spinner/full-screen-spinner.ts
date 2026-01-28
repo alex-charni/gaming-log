@@ -1,5 +1,5 @@
 import { Component, computed, inject } from '@angular/core';
-import { Spinner } from '@presentation/services';
+import { SpinnerService } from '@presentation/services';
 
 @Component({
   selector: 'app-full-screen-spinner',
@@ -7,6 +7,6 @@ import { Spinner } from '@presentation/services';
   styleUrls: ['./full-screen-spinner.scss'],
 })
 export class FullScreenSpinner {
-  private readonly spinnerService = inject(Spinner);
+  private readonly spinnerService = inject(SpinnerService);
   public readonly visible = computed(() => this.spinnerService.visible());
 }

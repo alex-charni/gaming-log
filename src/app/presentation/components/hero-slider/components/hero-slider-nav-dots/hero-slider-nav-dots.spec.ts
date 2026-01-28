@@ -3,10 +3,10 @@ import { ComponentRef } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 
-import { IHeroSlide } from '@presentation/schemas/interfaces';
+import { HeroSlideModel } from '@presentation/schemas/interfaces';
 import { HeroSliderNavDots } from './hero-slider-nav-dots';
 
-const mockSlides: IHeroSlide[] = [
+const mockSlides: HeroSlideModel[] = [
   {
     bottomLeftText: 'bottom left',
     bottomRightText: 'bottom right',

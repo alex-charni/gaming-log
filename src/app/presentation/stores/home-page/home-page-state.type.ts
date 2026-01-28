@@ -1,9 +1,9 @@
-import { IHeroSlide } from '@presentation/schemas/interfaces';
-import { CardTypes } from '@presentation/schemas/types';
+import { HeroSlideModel } from '@presentation/schemas/interfaces';
+import { Card } from '@presentation/schemas/types';
 
 export type HomePageState = {
-  slidesCollection: IHeroSlide[];
-  cardsCollection: CardTypes[];
+  slidesCollection: HeroSlideModel[];
+  cardsCollection: Card[];
   nextYearToLoad: number;
   slidesAreLoading: boolean;
   cardsAreLoading: boolean;

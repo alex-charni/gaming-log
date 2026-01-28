@@ -7,7 +7,7 @@ import { of, Subject, throwError } from 'rxjs';
 import { GetFeaturedGamesUseCase, GetGamesByYearUseCase } from '@core/application/use-cases';
 import { environment } from '@environments/environment';
 import { homePageInitialState } from './home-page-initial-state';
-import { HomePageStore } from './home-page-store';
+import { HomePageStore } from './home-page.store';
 
 describe('HomePageStore', () => {
   let store: InstanceType<typeof HomePageStore>;

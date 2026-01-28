@@ -2,7 +2,7 @@
 import { GameEntity } from '@core/domain/entities';
 
 import { GameApiResponse } from '@infrastructure/http/schemas';
-import { mapGamesData } from './games.mapper';
+import { toGamesEntity } from './games.mapper';
 
 describe('mapGamesData', () => {
   it('should return a valid GameEntity[] with some results in it', () => {
@@ -16,7 +16,7 @@ describe('mapGamesData', () => {
       },
     ];
 
-    const mappedGamesData = mapGamesData(gameApiResponse);
+    const mappedGamesData = toGamesEntity(gameApiResponse);
 
     expect(mappedGamesData).toBeInstanceOf(Array<GameEntity>);
     expect(mappedGamesData).toHaveLength(1);
@@ -25,7 +25,7 @@ describe('mapGamesData', () => {
   it('should return a valid GameEntity[] with no results in it', () => {
     const gameApiResponse: GameApiResponse[] = [];
 
-    const mappedGamesData = mapGamesData(gameApiResponse);
+    const mappedGamesData = toGamesEntity(gameApiResponse);
 
     expect(mappedGamesData).toBeInstanceOf(Array<GameEntity>);
     expect(mappedGamesData).toHaveLength(0);
@@ -34,7 +34,7 @@ describe('mapGamesData', () => {
   it('should return a valid GameEntity[] with no results in it', () => {
     const gameApiResponse: GameApiResponse[] = [];
 
-    const mappedGamesData = mapGamesData(gameApiResponse);
+    const mappedGamesData = toGamesEntity(gameApiResponse);
 
     expect(mappedGamesData).toBeInstanceOf(Array<GameEntity>);
     expect(mappedGamesData).toHaveLength(0);

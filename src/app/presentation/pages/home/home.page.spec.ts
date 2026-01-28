@@ -4,12 +4,12 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 
 import { GameCardsGrid } from '@presentation/components';
-import { Spinner } from '@presentation/services';
+import { SpinnerService } from '@presentation/services';
 import { HomePageStore } from '@presentation/stores';
 import { provideI18nTesting } from '@testing/i18-testing';
-import { HomePage } from './home-page';
+import { HomePage } from './home.page';
 
-describe('HomePage Component', () => {
+describe('HomePage', () => {
   let component: HomePage;
   let fixture: ComponentFixture<HomePage>;
 
@@ -38,7 +38,7 @@ describe('HomePage Component', () => {
       providers: [provideI18nTesting()],
     })
       .overrideProvider(HomePageStore, { useValue: storeMock })
-      .overrideProvider(Spinner, { useValue: spinnerServiceMock })
+      .overrideProvider(SpinnerService, { useValue: spinnerServiceMock })
       .compileComponents();
 
     fixture = TestBed.createComponent(HomePage);

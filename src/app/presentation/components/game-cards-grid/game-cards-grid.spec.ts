@@ -3,14 +3,14 @@ import { ComponentRef, signal } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 
-import { ViewportEnter } from '@presentation/directives';
-import { IGameCard, ITextCard, IYearCard } from '@presentation/schemas/interfaces';
-import { CardTypes } from '@presentation/schemas/types';
+import { ViewportEnterDirective } from '@presentation/directives';
+import { GameCardModel, TextCardModel, YearCardModel } from '@presentation/schemas/interfaces';
+import { Card } from '@presentation/schemas/types';
 import { HomePageStore } from '@presentation/stores';
 import { GameCard } from '../game-card/game-card';
 import { GameCardsGrid } from './game-cards-grid';
 
-const CardsCollectionMock: CardTypes[] = [
+const CardsCollectionMock: Card[] = [
   {
     type: 'game',
     id: '0001',
@@ -46,7 +46,7 @@ const CardsCollectionMock: CardTypes[] = [
 function createHomePageStoreMock() {
   return {
     cardsAreLoading: signal(false),
-    cardsCollection: signal<CardTypes[]>([]),
+    cardsCollection: signal<Card[]>([]),
     slidesAreLoading: signal(false),
     spinner: signal(false),
     nextYearToLoad: signal(2026),
@@ -116,19 +116,19 @@ describe('GameCardsGrid', () => {
   });
 
   it('should return true when passing a valid argument to isGameCard', () => {
-    const check = component['isGameCard']({ type: 'game' } as IGameCard);
+    const check = component['isGameCard']({ type: 'game' } as GameCardModel);
 
     expect(check).toBe(true);
   });
 
   it('should return true when passing a valid argument to isTextCard', () => {
-    const check = component['isTextCard']({ type: 'text' } as ITextCard);
+    const check = component['isTextCard']({ type: 'text' } as TextCardModel);
 
     expect(check).toBe(true);
   });
 
   it('should return true when passing a valid argument to isYearCard', () => {
-    const check = component['isYearCard']({ type: 'year' } as IYearCard);
+    const check = component['isYearCard']({ type: 'year' } as YearCardModel);
 
     expect(check).toBe(true);
   });
@@ -144,7 +144,7 @@ describe('GameCardsGrid', () => {
 
     const cards = fixture.debugElement.queryAll(By.directive(GameCard));
     const lastCard = cards[cards.length - 1];
-    const viewportDirective = lastCard.injector.get(ViewportEnter, null);
+    const viewportDirective = lastCard.injector.get(ViewportEnterDirective, null);
 
     expect(viewportDirective).not.toBeNull();
 

@@ -1,6 +1,6 @@
 // DONE
 import { GameEntity } from '@core/domain/entities';
-import { toGameCardModel } from './game-to-card.model';
+import { toGameCardModel } from './to-card-model.mapper';
 
 describe('toGameCardModel', () => {
   it('should return a valid IGameCard', () => {
