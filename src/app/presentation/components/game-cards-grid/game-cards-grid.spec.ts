@@ -1,11 +1,12 @@
 // DONE
-import { ComponentRef } from '@angular/core';
+import { ComponentRef, signal } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 
 import { ViewportEnter } from '@presentation/directives';
 import { IGameCard, ITextCard, IYearCard } from '@presentation/schemas/interfaces';
 import { CardTypes } from '@presentation/schemas/types';
+import { HomePageStore } from '@presentation/stores';
 import { GameCard } from '../game-card/game-card';
 import { GameCardsGrid } from './game-cards-grid';
 
@@ -42,43 +43,59 @@ const CardsCollectionMock: CardTypes[] = [
   },
 ];
 
+function createHomePageStoreMock() {
+  return {
+    cardsAreLoading: signal(false),
+    cardsCollection: signal<CardTypes[]>([]),
+    slidesAreLoading: signal(false),
+    spinner: signal(false),
+    nextYearToLoad: signal(2026),
+
+    getCardsRx: vi.fn(),
+    getHeroBannerSlidesRx: vi.fn(),
+  };
+}
+
 describe('GameCardsGrid', () => {
   let component: GameCardsGrid;
   let componentRef: ComponentRef<GameCardsGrid>;
   let fixture: ComponentFixture<GameCardsGrid>;
+  let storeMock: ReturnType<typeof createHomePageStoreMock>;
 
   beforeEach(async () => {
+    storeMock = createHomePageStoreMock();
+
     await TestBed.configureTestingModule({
       imports: [GameCardsGrid],
+      providers: [{ provide: HomePageStore, useValue: storeMock }],
     }).compileComponents();
 
     fixture = TestBed.createComponent(GameCardsGrid);
     component = fixture.componentInstance;
     componentRef = fixture.componentRef;
 
-    componentRef.setInput('cardsCollection', []);
-    componentRef.setInput('isLoading', false);
-    componentRef.setInput('nextYearToLoad', 2025);
+    componentRef.setInput('keepTriggeringLoadMore', true);
 
     await fixture.whenStable();
   });
 
-  it('should create', () => {
-    expect(component).toBeTruthy();
-  });
-
-  it('should trigger loadMore onEnterViewport when not loading neither reached last year', () => {
+  it('should trigger loadMore onEnterViewport when not loading and keepTriggeringLoadMore is true', () => {
     const loadMoreSpy = vi.spyOn(component.loadMore, 'emit');
+
+    storeMock.cardsAreLoading.set(false);
+    componentRef.setInput('keepTriggeringLoadMore', true);
+    fixture.detectChanges();
 
     component['onEnterViewport']();
 
     expect(loadMoreSpy).toHaveBeenCalled();
   });
 
-  it('should not trigger loadMore onEnterViewport when loading and not reached last year', () => {
+  it('should not trigger loadMore onEnterViewport when loading and  keepTriggeringLoadMore is true', () => {
     const loadMoreSpy = vi.spyOn(component.loadMore, 'emit');
 
-    componentRef.setInput('isLoading', true);
+    storeMock.cardsAreLoading.set(true);
+    componentRef.setInput('keepTriggeringLoadMore', true);
     fixture.detectChanges();
 
     component['onEnterViewport']();
@@ -86,10 +103,11 @@ describe('GameCardsGrid', () => {
     expect(loadMoreSpy).not.toHaveBeenCalled();
   });
 
-  it('should not trigger loadMore onEnterViewport when not loading and reached last year', () => {
+  it('should not trigger loadMore onEnterViewport when not loading and keepTriggeringLoadMore is false', () => {
     const loadMoreSpy = vi.spyOn(component.loadMore, 'emit');
 
-    componentRef.setInput('isLoading', true);
+    storeMock.cardsAreLoading.set(false);
+    componentRef.setInput('keepTriggeringLoadMore', false);
     fixture.detectChanges();
 
     component['onEnterViewport']();
@@ -115,26 +133,12 @@ describe('GameCardsGrid', () => {
     expect(check).toBe(true);
   });
 
-  it('should use fallback 0 when nextYearToLoad is undefined', () => {
-    componentRef.setInput('nextYearToLoad', undefined);
-    fixture.detectChanges();
-
-    expect(component['haventReachedLastYear']()).toBe(false);
-  });
-
-  it('should accept different types of cards in cardsCollection', () => {
-    componentRef.setInput('cardsCollection', CardsCollectionMock);
-    fixture.detectChanges();
-
-    expect(component.cardsCollection()).toHaveLength(4);
-  });
-
   it('should call onEnterViewport when last game card emits viewPortEntered', () => {
     const spy = vi.spyOn(component as any, 'onEnterViewport');
 
-    componentRef.setInput('cardsCollection', CardsCollectionMock);
-    componentRef.setInput('isLoading', false);
-    componentRef.setInput('nextYearToLoad', 2025);
+    storeMock.cardsCollection.set(CardsCollectionMock);
+    storeMock.cardsAreLoading.set(false);
+    storeMock.nextYearToLoad.set(2025);
 
     fixture.detectChanges();
 
