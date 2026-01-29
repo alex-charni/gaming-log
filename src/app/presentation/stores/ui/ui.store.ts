@@ -11,7 +11,8 @@ export const UiStore = signalStore(
     resetUi: () => patchState(store, uiInitialState),
     setFullScreenBackdrop: (value: boolean) => patchState(store, { fullScreenBackdrop: value }),
     setFullScreenSpinner: (value: boolean) => patchState(store, { fullScreenSpinner: value }),
-    setLanguage: (value: Language) => patchState(store, { language: value }),
+    setAvailableLanguages: (value: Language[]) => patchState(store, { availableLanguages: value }),
+    setSelectedLanguage: (value: Language) => patchState(store, { selectedLanguage: value }),
   })),
   withComputed(({ fullScreenSpinner }) => ({
     isUiBlocked: computed(() => fullScreenSpinner()),
