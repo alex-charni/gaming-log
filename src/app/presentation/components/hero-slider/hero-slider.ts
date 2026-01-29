@@ -1,5 +1,7 @@
 import { NgOptimizedImage } from '@angular/common';
 import { Component, computed, effect, input, signal } from '@angular/core';
+import { TranslatePipe } from '@ngx-translate/core';
+
 import { SwipeDirective } from '@presentation/directives';
 import { HeroSlideModel } from '@presentation/schemas/interfaces';
 import { HeroSliderNavButton, HeroSliderNavDots } from './components';
@@ -7,7 +9,13 @@ import { HeroSliderNavButton, HeroSliderNavDots } from './components';
 @Component({
   selector: 'app-hero-slider',
   standalone: true,
-  imports: [NgOptimizedImage, SwipeDirective, HeroSliderNavButton, HeroSliderNavDots],
+  imports: [
+    NgOptimizedImage,
+    SwipeDirective,
+    HeroSliderNavButton,
+    HeroSliderNavDots,
+    TranslatePipe,
+  ],
   templateUrl: './hero-slider.html',
   styleUrls: ['./hero-slider.scss'],
 })

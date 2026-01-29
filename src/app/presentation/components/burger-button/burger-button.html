@@ -2,9 +2,11 @@
   type="button"
   class="burger"
   [class.burger--is-open]="open()"
-  [class.burger--clicked]="isClicked()"
   aria-label="Toggle menu"
   [attr.aria-expanded]="open()"
+  appPulseOnclick
+  [variant]="'white'"
+  [size]="14"
   (click)="onClick()"
 >
   <span class="line"></span>

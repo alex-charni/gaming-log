@@ -1,0 +1,52 @@
+@let isMenuOpen = isOpen();
+
+<div #anchor class="menu-anchor">
+  <app-burger-button [open]="isMenuOpen" (toggle)="toggleMenu($event)" />
+
+  <div #menu class="menu" [class.menu--open]="isMenuOpen">
+    <div class="menu__header"></div>
+
+    <!-- TODO: awaiting for functionality to be ready -->
+    <!-- <ul class="menu__list">
+      <li class="menu__item">
+        <button type="button" class="button" (click)="toggleMenu(false)">
+          {{ 'menu.filters' | translate }}
+        </button>
+      </li>
+
+      <li class="menu__item">
+        <button type="button" class="button" (click)="toggleMenu(false)">
+          {{ 'menu.about' | translate }}
+        </button>
+      </li>
+    </ul>
+
+    <div class="menu__separator">
+      <app-horizontal-separator [color]="'white'" />
+    </div> -->
+
+    <ul class="menu__list">
+      <li class="menu__item">
+        <div class="language__selector">
+          <span class="language__icon" aria-hidden="true">
+            <i class="fa-solid fa-language"></i>
+          </span>
+
+          @for (language of uiStore.availableLanguages(); track language) {
+            <button
+              type="button"
+              class="language__item"
+              [class.language__item--active]="uiStore.selectedLanguage() === language"
+              appPulseOnclick
+              [variant]="'white'"
+              [size]="8"
+              (click)="changeLanguage(language)"
+            >
+              {{ language }}
+            </button>
+          }
+        </div>
+      </li>
+    </ul>
+  </div>
+</div>

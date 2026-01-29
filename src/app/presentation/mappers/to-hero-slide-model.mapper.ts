@@ -8,7 +8,7 @@ export function toHeroSlideModel(game: GameEntity): HeroSlideModel {
     imagePlaceholderUrl: `${environment.publicImagesUrl}/featured-placeholders/${game.id}.placeholder.webp`,
     bottomLeftText: game.title,
     bottomRightText: game.platform,
-    topLeftText: 'Now Playing',
+    topLeftText: 'common.now_playing',
     topRightText: game.rating ? `${game.rating}` : '',
   };
 }

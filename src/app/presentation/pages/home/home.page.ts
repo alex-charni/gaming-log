@@ -1,4 +1,4 @@
-import { Component, effect, inject } from '@angular/core';
+import { Component, effect, inject, signal } from '@angular/core';
 import { TranslatePipe } from '@ngx-translate/core';
 
 import { GameCardsGrid, Header, HeroSlider, HorizontalSeparator } from '@presentation/components';
@@ -15,6 +15,8 @@ import { HomePageStore } from '@presentation/stores';
 export class HomePage {
   protected readonly store = inject(HomePageStore);
   private readonly spinnerService = inject(SpinnerService);
+
+  readonly menuOpen = signal(false);
 
   constructor() {
     this.initEffects();

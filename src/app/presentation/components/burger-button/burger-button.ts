@@ -1,18 +1,18 @@
-import { Component, input, output, signal } from '@angular/core';
+import { Component, input, output } from '@angular/core';
+
+import { PulseOnClickDirective } from '@presentation/directives';
 
 @Component({
   selector: 'app-burger-button',
   templateUrl: './burger-button.html',
   styleUrl: './burger-button.scss',
+  imports: [PulseOnClickDirective],
 })
 export class BurgerButton {
-  protected readonly isClicked = signal(false);
   open = input(false);
   toggle = output<boolean>();
 
   protected onClick(): void {
-    this.isClicked.set(true);
-    setTimeout(() => this.isClicked.set(false), 300);
     this.toggle.emit(!this.open());
   }
 }

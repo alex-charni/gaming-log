@@ -12,6 +12,10 @@
     "page_not_found": "The requested page can't be found.",
     "unexpected_event": "Something unexpected happened on our end."
   },
+  "menu": {
+    "about": "About",
+    "filters": "Filters"
+  },
   "separator": {
     "already_finished_games": "Already finished"
   }
