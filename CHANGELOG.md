@@ -3,9 +3,18 @@
 ## 🛠️ [Unreleased]
 
 - About page.
-- Language selector.
+- LTR configurations.
+- Japanese language.
 
 ---
+
+## [1.1.3] - 2026-01-29
+
+### 🟢 Added
+
+- Global state now centraliced in UI Store.
+- Header has now a dropdown menu.
+- Language can be changed from header menu.
 
 ## [1.1.2] - 2026-01-28
 
