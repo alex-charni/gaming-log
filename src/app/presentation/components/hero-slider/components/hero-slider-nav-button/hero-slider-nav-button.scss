@@ -45,13 +45,4 @@
     outline: 2px solid $white-color;
     outline-offset: 2px;
   }
-
-  &--clicked {
-    background-color: $fuchsia-color;
-    animation: button-pulse--white 300ms ease-out;
-
-    &:hover {
-      background-color: $fuchsia-color;
-    }
-  }
 }

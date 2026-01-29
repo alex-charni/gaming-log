@@ -72,15 +72,6 @@ $container-max-width: 480px;
         transform: scale(0.92);
       }
 
-      &--clicked {
-        background-color: $fuchsia-color;
-        animation: button-pulse--black 300ms ease-out;
-
-        &:hover {
-          background-color: $fuchsia-color;
-        }
-      }
-
       &:focus-visible {
         outline: 2px solid $fuchsia-color;
         outline-offset: 2px;

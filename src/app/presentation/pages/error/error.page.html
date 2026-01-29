@@ -13,8 +13,10 @@
       <button
         type="button"
         class="retry-button"
-        [class.retry-button--clicked]="isButtonClicked()"
-        (click)="retry()"
+        appPulseOnclick
+        [variant]="'black'"
+        [size]="8"
+        (click)="handleButtonAction()"
       >
         {{ buttonText() }}
       </button>

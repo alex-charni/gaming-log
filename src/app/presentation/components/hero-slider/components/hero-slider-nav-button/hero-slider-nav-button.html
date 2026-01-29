@@ -2,7 +2,8 @@
   class="nav"
   [class.nav--left]="orientation() === 'left'"
   [class.nav--right]="orientation() === 'right'"
-  [class.nav--clicked]="isClicked()"
+  appPulseOnclick
+  [variant]="'white'"
   (click)="handleClick()"
 >
   <svg class="nav__icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
