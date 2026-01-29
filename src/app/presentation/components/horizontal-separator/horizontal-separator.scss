@@ -9,15 +9,29 @@
   &__line {
     flex: 1;
     height: 1px;
-    background-color: $fuchsia-color;
+
+    &--fuchsia {
+      background-color: $fuchsia-color;
+    }
+
+    &--white {
+      background-color: $white-color;
+    }
   }
 
   &__text {
-    color: $fuchsia-color;
     font-size: $font-xl;
     letter-spacing: 0.05em;
     padding-inline: 1rem;
     white-space: nowrap;
     text-transform: uppercase;
+
+    &--fuchsia {
+      color: $fuchsia-color;
+    }
+
+    &--white {
+      color: $white-color;
+    }
   }
 }
