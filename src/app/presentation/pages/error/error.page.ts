@@ -3,11 +3,13 @@ import { Component, inject, signal } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { ActivatedRoute } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
+import { PulseOnClickDirective } from '@presentation/directives';
 
 @Component({
   selector: 'app-error-page',
   templateUrl: './error.page.html',
   styleUrl: './error.page.scss',
+  imports: [PulseOnClickDirective],
 })
 export class ErrorPage {
   private readonly location = inject(Location);
@@ -48,13 +50,9 @@ export class ErrorPage {
       : this.translate.stream('error.oops_with_ellipsis'),
   );
 
-  readonly isButtonClicked = signal(false);
-  readonly onRetry = signal<() => void>(() => this.location.back());
+  readonly buttonAction = signal<() => void>(() => this.location.back());
 
-  retry(): void {
-    this.isButtonClicked.set(true);
-    setTimeout(() => this.isButtonClicked.set(false), 300);
-
-    this.onRetry()?.();
+  protected handleButtonAction(): void {
+    // this.buttonAction()?.();
   }
 }

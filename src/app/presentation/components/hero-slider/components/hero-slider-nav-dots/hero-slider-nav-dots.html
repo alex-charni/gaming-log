@@ -2,8 +2,10 @@
   @for (slide of slides(); track $index) {
     <button
       class="dots__button"
-      [class.dots__button--clicked]="isClicked() && $index === currentIndex()"
       [class.active]="$index === currentIndex()"
+      appPulseOnclick
+      [variant]="'white'"
+      [size]="8"
       (click)="handleGoTo($index)"
     ></button>
   }

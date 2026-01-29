@@ -47,15 +47,6 @@
     pointer-events: auto;
   }
 
-  &--clicked {
-    background-color: $fuchsia-color;
-    animation: button-pulse--black 300ms ease-out;
-
-    &:hover {
-      background-color: $fuchsia-color;
-    }
-  }
-
   &__icon {
     height: 2rem;
     width: 2rem;

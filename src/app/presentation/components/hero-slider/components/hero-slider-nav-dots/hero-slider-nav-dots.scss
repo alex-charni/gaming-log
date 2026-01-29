@@ -23,9 +23,5 @@
     &.active {
       background: $fuchsia-color;
     }
-
-    &--clicked {
-      animation: button-pulse--white 300ms ease-out;
-    }
   }
 }

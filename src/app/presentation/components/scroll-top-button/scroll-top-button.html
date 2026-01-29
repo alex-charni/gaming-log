@@ -2,8 +2,10 @@
   type="button"
   class="scroll-top-button"
   [class.scroll-top-button--visible]="isVisible()"
-  [class.scroll-top-button--clicked]="isClicked()"
   aria-label="Go to top"
+  appPulseOnclick
+  [variant]="'black'"
+  [size]="14"
   (click)="scrollToTop()"
 >
   <svg class="scroll-top-button__icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
