@@ -14,7 +14,8 @@
   },
   "menu": {
     "about": "Acerca de...",
-    "filters": "Filtros"
+    "filters": "Filtros",
+    "toggle_menu": "Alternar menú"
   },
   "separator": {
     "already_finished_games": "Juegos terminados"
