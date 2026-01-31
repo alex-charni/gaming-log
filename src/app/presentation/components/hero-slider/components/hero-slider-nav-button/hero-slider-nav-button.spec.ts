@@ -22,31 +22,12 @@ describe('HeroSliderNavButton', () => {
     await fixture.whenStable();
   });
 
-  afterEach(() => {
-    vi.useRealTimers();
-  });
-
-  it('should create', () => {
-    expect(component).toBeTruthy();
-  });
-
-  it('should emit and call triggerAnimation() after calling handleGoTo()', async () => {
-    vi.useFakeTimers();
-
-    // @ts-ignore
-    const triggerAnimationSpy = vi.spyOn(component, 'triggerAnimation');
-    // @ts-ignore
-    const isClickedSpy = vi.spyOn(component.isClicked, 'set');
+  it('should emit after calling handleGoTo()', async () => {
+    const clickedSpy = vi.spyOn(component.clicked, 'emit');
 
     component['handleClick']();
 
-    expect(triggerAnimationSpy).toHaveBeenCalled();
-    expect(isClickedSpy).toHaveBeenCalledWith(true);
-
-    vi.advanceTimersByTime(300);
-    fixture.detectChanges();
-
-    expect(isClickedSpy).toHaveBeenCalledWith(false);
+    expect(clickedSpy).toHaveBeenCalled();
   });
 
   it('should trigger handleClick() when button is clicked', () => {

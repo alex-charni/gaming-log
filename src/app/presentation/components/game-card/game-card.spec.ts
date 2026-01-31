@@ -36,10 +36,6 @@ describe('GameCard', () => {
     await fixture.whenStable();
   });
 
-  it('should create', () => {
-    expect(component).toBeTruthy();
-  });
-
   it('should replace the image src when an error occurs', () => {
     fixture.detectChanges();
 

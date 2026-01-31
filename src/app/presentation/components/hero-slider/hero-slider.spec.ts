@@ -1,6 +1,7 @@
 // DONE GG
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
+import { provideTranslateService } from '@ngx-translate/core';
 
 import { HeroSlideModel } from '@presentation/schemas/interfaces';
 import { HeroSliderNavButton } from './components';
@@ -34,6 +35,7 @@ describe('HeroSlider', () => {
 
     await TestBed.configureTestingModule({
       imports: [HeroSlider],
+      providers: [provideTranslateService()],
     }).compileComponents();
 
     fixture = TestBed.createComponent(HeroSlider);
@@ -53,6 +55,7 @@ describe('HeroSlider', () => {
   describe('Autoplay', () => {
     it('should trigger autoplay based on interval', async () => {
       fixture.componentRef.setInput('autoplay', true);
+
       fixture.detectChanges();
 
       vi.advanceTimersByTime(5000);
@@ -66,6 +69,7 @@ describe('HeroSlider', () => {
 
     it('should stop autoplay when isHovered is true', async () => {
       fixture.componentRef.setInput('autoplay', true);
+
       fixture.detectChanges();
 
       component['isHovered'].set(true);
@@ -107,6 +111,7 @@ describe('HeroSlider', () => {
       expect(slides[1].nativeElement.classList.contains('is-active')).toBe(false);
 
       component['currentIndex'].set(1);
+
       fixture.detectChanges();
 
       expect(slides[0].nativeElement.classList.contains('is-active')).toBe(false);
@@ -115,6 +120,7 @@ describe('HeroSlider', () => {
 
     it('should set the slider height based on the input', () => {
       fixture.componentRef.setInput('height', 600);
+
       fixture.detectChanges();
 
       const container = fixture.debugElement.query(By.css('.hero-slider')).nativeElement;
@@ -206,6 +212,7 @@ describe('HeroSlider', () => {
 
     it('should display the loader when isLoading is true', () => {
       fixture.componentRef.setInput('isLoading', true);
+
       fixture.detectChanges();
 
       const loader = fixture.debugElement.query(By.css('.image-loader'));
@@ -220,6 +227,7 @@ describe('HeroSlider', () => {
       expect(topLeft.nativeElement.textContent).toContain('top left');
 
       component['currentIndex'].set(1);
+
       fixture.detectChanges();
 
       const secondSlide = fixture.debugElement.queryAll(By.css('.hero-slider__slide'))[1];

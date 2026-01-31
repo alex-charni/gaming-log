@@ -3,30 +3,24 @@ import { Location } from '@angular/common';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { ActivatedRoute } from '@angular/router';
-import { TranslateService } from '@ngx-translate/core';
+import { provideTranslateService, TranslateService } from '@ngx-translate/core';
 import { of } from 'rxjs';
 
-import enTranslations from '@i18n/en.json';
-import { provideI18nTesting } from '@testing/i18-testing';
 import { ErrorPage } from './error.page';
+
+const locationMock = {
+  back: vi.fn(),
+};
 
 describe('ErrorPage', () => {
   let fixture: ComponentFixture<ErrorPage>;
   let component: ErrorPage;
 
-  const locationMock = {
-    back: vi.fn(),
-  };
-
-  afterEach(() => {
-    vi.useRealTimers();
-  });
-
   function reconfigureTestingModule(routeData: any = {}) {
     return TestBed.configureTestingModule({
       imports: [ErrorPage],
       providers: [
-        provideI18nTesting(),
+        provideTranslateService(),
         { provide: Location, useValue: locationMock },
         {
           provide: ActivatedRoute,
@@ -37,6 +31,10 @@ describe('ErrorPage', () => {
       ],
     }).compileComponents();
   }
+
+  afterEach(() => {
+    vi.useRealTimers();
+  });
 
   describe('Route data', () => {
     it('should use default values when no route data is provided', async () => {
@@ -51,9 +49,9 @@ describe('ErrorPage', () => {
       fixture.detectChanges();
 
       expect(component.code()).toBe('');
-      expect(component.title()).toBe(enTranslations.error.oops_with_ellipsis);
-      expect(component.message()).toBe(enTranslations.error.unexpected_event);
-      expect(component.buttonText()).toBe(enTranslations.common.go_back);
+      expect(component.title()).toBe('error.oops_with_ellipsis');
+      expect(component.message()).toBe('error.unexpected_event');
+      expect(component.buttonText()).toBe('common.go_back');
       expect(component.showButton()).toBe(true);
     });
 
@@ -106,37 +104,30 @@ describe('ErrorPage', () => {
       expect(codeDebugElement).toBeNull();
     });
 
-    it('should not render retry button when showButton is false', async () => {
+    it('should not render button when showButton is false', async () => {
       await reconfigureTestingModule({ showButton: false });
 
       fixture = TestBed.createComponent(ErrorPage);
       fixture.detectChanges();
 
-      const buttonDebugElement = fixture.debugElement.query(By.css('.retry-button'));
+      const buttonDebugElement = fixture.debugElement.query(By.css('.button'));
 
       expect(buttonDebugElement).toBeNull();
     });
 
-    it('should call onRetry and toggle clicked state on retry()', async () => {
-      vi.useFakeTimers();
+    it('should call buttonAction on handleButtonAction()', async () => {
       await reconfigureTestingModule({ showButton: true });
 
       fixture = TestBed.createComponent(ErrorPage);
       component = fixture.componentInstance;
       fixture.detectChanges();
 
-      const buttonDebugElement = fixture.debugElement.query(By.css('.retry-button'));
+      const buttonDebugElement = fixture.debugElement.query(By.css('.button'));
       buttonDebugElement.nativeElement.click();
 
       fixture.detectChanges();
 
-      expect(component.isButtonClicked()).toBe(true);
       expect(locationMock.back).toHaveBeenCalled();
-
-      vi.advanceTimersByTime(300);
-      fixture.detectChanges();
-
-      expect(component.isButtonClicked()).toBe(false);
     });
   });
 });

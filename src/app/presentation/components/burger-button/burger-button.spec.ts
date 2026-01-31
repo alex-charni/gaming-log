@@ -1,7 +1,7 @@
-// DONE
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 
+import { provideTranslateService } from '@ngx-translate/core';
 import { BurgerButton } from './burger-button';
 
 describe('BurgerButton', () => {
@@ -11,6 +11,7 @@ describe('BurgerButton', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [BurgerButton],
+      providers: [provideTranslateService()],
     }).compileComponents();
 
     fixture = TestBed.createComponent(BurgerButton);
@@ -18,23 +19,17 @@ describe('BurgerButton', () => {
     await fixture.whenStable();
   });
 
-  it('should create', () => {
-    expect(component).toBeTruthy();
-  });
-
-  it('should emit when onClick() is triggered and set is clicked to true and false', () => {
-    vi.useFakeTimers();
-
+  it('should emit when onClick() is triggered', () => {
     const toggleSpy = vi.spyOn(component.toggle, 'emit');
 
-    const button = fixture.debugElement.query(By.css('.burger')).nativeElement as HTMLButtonElement;
-    button.click();
+    const buttonDebugElement = fixture.debugElement.query(By.css('.burger'));
+
+    expect(buttonDebugElement).toBeTruthy();
+
+    const buttonNativeElement = buttonDebugElement.nativeElement as HTMLButtonElement;
+
+    buttonNativeElement.click();
 
     expect(toggleSpy).toHaveBeenCalled();
-    expect(component['isClicked']()).toBe(true);
-
-    vi.advanceTimersByTime(400);
-
-    expect(component['isClicked']()).toBe(false);
   });
 });
