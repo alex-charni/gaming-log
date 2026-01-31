@@ -2,7 +2,7 @@
   type="button"
   class="burger"
   [class.burger--is-open]="open()"
-  aria-label="Toggle menu"
+  [aria-label]="'menu.toggle_menu' | translate"
   [attr.aria-expanded]="open()"
   appPulseOnclick
   [variant]="'white'"

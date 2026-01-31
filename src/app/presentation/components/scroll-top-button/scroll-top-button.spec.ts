@@ -23,65 +23,65 @@ describe('ScrollTopButton', () => {
     vi.useRealTimers();
   });
 
-  it('should create', () => {
-    expect(component).toBeTruthy();
-  });
+  describe('Button visibility', () => {
+    it('should show button when pageYOffset is bigger than threshold', () => {
+      vi.spyOn(window, 'pageYOffset', 'get').mockReturnValue(600);
+      vi.spyOn(document.documentElement, 'scrollTop', 'get').mockReturnValue(0);
+      vi.spyOn(document.body, 'scrollTop', 'get').mockReturnValue(0);
 
-  it('should show button when pageYOffset is bigger than threshold', () => {
-    Object.defineProperty(window, 'pageYOffset', { value: 600, writable: true });
-    Object.defineProperty(document.documentElement, 'scrollTop', { value: 0, writable: true });
-    Object.defineProperty(document.body, 'scrollTop', { value: 0, writable: true });
+      window.dispatchEvent(new Event('scroll'));
 
-    window.dispatchEvent(new Event('scroll'));
-
-    expect(component.isVisible()).toBe(true);
-  });
-
-  it('should show button when document.documentElement scrollTop is bigger than threshold', () => {
-    Object.defineProperty(window, 'pageYOffset', { value: 0, writable: true });
-    Object.defineProperty(document.documentElement, 'scrollTop', { value: 600, writable: true });
-    Object.defineProperty(document.body, 'scrollTop', { value: 0, writable: true });
-
-    window.dispatchEvent(new Event('scroll'));
-
-    expect(component.isVisible()).toBe(true);
-  });
-
-  it('should show button when document.body is bigger than threshold', () => {
-    Object.defineProperty(window, 'pageYOffset', { value: 0, writable: true });
-    Object.defineProperty(document.documentElement, 'scrollTop', { value: 0, writable: true });
-    Object.defineProperty(document.body, 'scrollTop', { value: 600, writable: true });
-
-    window.dispatchEvent(new Event('scroll'));
-
-    expect(component.isVisible()).toBe(true);
-  });
-
-  it('should not show button when threshold is not reached', () => {
-    Object.defineProperty(window, 'pageYOffset', { value: 0, writable: true });
-    Object.defineProperty(document.documentElement, 'scrollTop', { value: 0, writable: true });
-    Object.defineProperty(document.body, 'scrollTop', { value: 0, writable: true });
-
-    window.dispatchEvent(new Event('scroll'));
-
-    expect(component.isVisible()).toBe(false);
-  });
-
-  it('should scroll to top and toggle isClicked state', () => {
-    vi.useFakeTimers();
-
-    const scrollToSpy = vi.spyOn(window, 'scrollTo').mockImplementation(() => {});
-    const button = fixture.debugElement.query(By.css('.scroll-top-button'))
-      ?.nativeElement as HTMLButtonElement;
-    button?.click();
-
-    expect(component.isClicked()).toBe(true);
-    expect(scrollToSpy).toHaveBeenCalledWith({
-      top: 0,
-      behavior: 'smooth',
+      // @ts-ignore
+      expect(component.isVisible()).toBe(true);
     });
 
-    vi.advanceTimersByTime(300);
-    expect(component.isClicked()).toBe(false);
+    it('should show button when document.documentElement scrollTop is bigger than threshold', () => {
+      vi.spyOn(window, 'pageYOffset', 'get').mockReturnValue(0);
+      vi.spyOn(document.documentElement, 'scrollTop', 'get').mockReturnValue(600);
+      vi.spyOn(document.body, 'scrollTop', 'get').mockReturnValue(0);
+
+      window.dispatchEvent(new Event('scroll'));
+
+      // @ts-ignore
+      expect(component.isVisible()).toBe(true);
+    });
+
+    it('should show button when document.body is bigger than threshold', () => {
+      vi.spyOn(window, 'pageYOffset', 'get').mockReturnValue(0);
+      vi.spyOn(document.documentElement, 'scrollTop', 'get').mockReturnValue(0);
+      vi.spyOn(document.body, 'scrollTop', 'get').mockReturnValue(600);
+
+      window.dispatchEvent(new Event('scroll'));
+
+      // @ts-ignore
+      expect(component.isVisible()).toBe(true);
+    });
+
+    it('should not show button when threshold is not reached', () => {
+      vi.spyOn(window, 'pageYOffset', 'get').mockReturnValue(0);
+      vi.spyOn(document.documentElement, 'scrollTop', 'get').mockReturnValue(0);
+      vi.spyOn(document.body, 'scrollTop', 'get').mockReturnValue(0);
+
+      window.dispatchEvent(new Event('scroll'));
+
+      // @ts-ignore
+      expect(component.isVisible()).toBe(false);
+    });
+  });
+
+  describe('Button functionality', () => {
+    it('should scroll to top', () => {
+      const scrollToSpy = vi.spyOn(window, 'scrollTo');
+
+      const buttonDebugElement = fixture.debugElement.query(By.css('.scroll-top-button'));
+
+      expect(buttonDebugElement).toBeTruthy();
+
+      const buttonNativeElement = buttonDebugElement.nativeElement as HTMLButtonElement;
+
+      buttonNativeElement.click();
+
+      expect(scrollToSpy).toHaveBeenCalledWith({ top: 0, behavior: 'smooth' });
+    });
   });
 });

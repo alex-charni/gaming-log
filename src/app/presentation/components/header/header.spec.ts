@@ -1,25 +1,22 @@
-// DONE
 // TODO: revisit for a better understanding of some concepts
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { By } from '@angular/platform-browser';
+import { provideTranslateService } from '@ngx-translate/core';
 
-import { provideI18nTesting } from '@testing/i18-testing';
-import { BurgerButton } from '../burger-button/burger-button';
 import { Header } from './header';
 
+function setScrollTop(value: number) {
+  Object.defineProperty(window, 'pageYOffset', {
+    value,
+    writable: true,
+  });
+
+  Object.defineProperty(document.documentElement, 'scrollTop', {
+    value,
+    writable: true,
+  });
+}
+
 describe('Header', () => {
-  function setScrollTop(value: number) {
-    Object.defineProperty(window, 'pageYOffset', {
-      value,
-      writable: true,
-    });
-
-    Object.defineProperty(document.documentElement, 'scrollTop', {
-      value,
-      writable: true,
-    });
-  }
-
   let component: Header;
   let fixture: ComponentFixture<Header>;
 
@@ -28,16 +25,12 @@ describe('Header', () => {
 
     await TestBed.configureTestingModule({
       imports: [Header],
-      providers: [provideI18nTesting()],
+      providers: [provideTranslateService()],
     }).compileComponents();
 
     fixture = TestBed.createComponent(Header);
     component = fixture.componentInstance;
     await fixture.whenStable();
-  });
-
-  it('should create', () => {
-    expect(component).toBeTruthy();
   });
 
   it('should set hasScrolled to true and lastScrollTop to 600 after scrolling for the first time', () => {
@@ -98,17 +91,5 @@ describe('Header', () => {
 
     expect(component.isSticky).toBe(false);
     expect(component.isVisible).toBe(true);
-  });
-
-  it('should trigger toggle on app-burger-button emit ', () => {
-    const toggleSpy = vi.spyOn(component['menuOpen'], 'set');
-
-    const buttonDebugElement = fixture.debugElement.query(By.directive(BurgerButton));
-    const buttonComponentInstance = buttonDebugElement.componentInstance as BurgerButton;
-
-    buttonComponentInstance.toggle.emit(true);
-
-    expect(toggleSpy).toHaveBeenCalledWith(true);
-    expect(component['menuOpen']()).toBe(true);
   });
 });

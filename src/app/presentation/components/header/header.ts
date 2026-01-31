@@ -19,8 +19,6 @@ export class Header implements AfterViewInit {
   private lastScrollTop = 0;
   private hasScrolled = false;
 
-  protected menuOpen = signal(false);
-
   ngAfterViewInit(): void {
     const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
 

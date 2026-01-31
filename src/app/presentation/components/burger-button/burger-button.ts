@@ -1,4 +1,5 @@
 import { Component, input, output } from '@angular/core';
+import { TranslatePipe } from '@ngx-translate/core';
 
 import { PulseOnClickDirective } from '@presentation/directives';
 
@@ -6,7 +7,7 @@ import { PulseOnClickDirective } from '@presentation/directives';
   selector: 'app-burger-button',
   templateUrl: './burger-button.html',
   styleUrl: './burger-button.scss',
-  imports: [PulseOnClickDirective],
+  imports: [PulseOnClickDirective, TranslatePipe],
 })
 export class BurgerButton {
   open = input(false);

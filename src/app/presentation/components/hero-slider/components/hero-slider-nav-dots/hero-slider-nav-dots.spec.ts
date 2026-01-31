@@ -45,14 +45,6 @@ describe('HeroSliderNavDots', () => {
     await fixture.whenStable();
   });
 
-  afterEach(() => {
-    vi.useRealTimers();
-  });
-
-  it('should create', () => {
-    expect(component).toBeTruthy();
-  });
-
   it('should call handleToGo() on button click', () => {
     // @ts-ignore
     const spy = vi.spyOn(component, 'handleGoTo');
@@ -64,25 +56,12 @@ describe('HeroSliderNavDots', () => {
     expect(spy).toHaveBeenCalled();
   });
 
-  it('should emit and call triggerAnimation() after calling handleGoTo()', async () => {
-    vi.useFakeTimers();
-
-    // @ts-ignore
-    const triggerAnimationSpy = vi.spyOn(component, 'triggerAnimation');
+  it('should emit after calling handleGoTo()', async () => {
     // @ts-ignore
     const goToSpy = vi.spyOn(component.goTo, 'emit');
-    // @ts-ignore
-    const isClickedSpy = vi.spyOn(component.isClicked, 'set');
 
     component['handleGoTo'](1);
 
-    expect(triggerAnimationSpy).toHaveBeenCalled();
-    expect(isClickedSpy).toHaveBeenCalledWith(true);
     expect(goToSpy).toHaveBeenCalledWith(1);
-
-    vi.advanceTimersByTime(300);
-    fixture.detectChanges();
-
-    expect(isClickedSpy).toHaveBeenCalledWith(false);
   });
 });

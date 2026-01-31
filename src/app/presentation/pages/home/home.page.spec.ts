@@ -2,40 +2,40 @@
 import { signal } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
+import { provideTranslateService } from '@ngx-translate/core';
 
 import { GameCardsGrid } from '@presentation/components';
 import { SpinnerService } from '@presentation/services';
 import { HomePageStore } from '@presentation/stores';
-import { provideI18nTesting } from '@testing/i18-testing';
 import { HomePage } from './home.page';
+
+const storeMock = {
+  spinner: signal(false),
+  nextYearToLoad: signal(2025),
+  slidesAreLoading: signal(false),
+  cardsAreLoading: signal(false),
+  slidesCollection: signal([]),
+  cardsCollection: signal([]),
+  haventReachedLastYear: signal(true),
+
+  getHeroBannerSlidesRx: vi.fn(),
+  getCardsRx: vi.fn(),
+};
+
+const spinnerServiceMock = {
+  setVisible: vi.fn(),
+};
 
 describe('HomePage', () => {
   let component: HomePage;
   let fixture: ComponentFixture<HomePage>;
-
-  const storeMock = {
-    spinner: signal(false),
-    nextYearToLoad: signal(2025),
-    slidesAreLoading: signal(false),
-    cardsAreLoading: signal(false),
-    slidesCollection: signal([]),
-    cardsCollection: signal([]),
-    haventReachedLastYear: signal(true),
-
-    getHeroBannerSlidesRx: vi.fn(),
-    getCardsRx: vi.fn(),
-  };
-
-  const spinnerServiceMock = {
-    setVisible: vi.fn(),
-  };
 
   beforeEach(async () => {
     vi.clearAllMocks();
 
     await TestBed.configureTestingModule({
       imports: [HomePage],
-      providers: [provideI18nTesting()],
+      providers: [provideTranslateService()],
     })
       .overrideProvider(HomePageStore, { useValue: storeMock })
       .overrideProvider(SpinnerService, { useValue: spinnerServiceMock })
@@ -88,8 +88,7 @@ describe('HomePage', () => {
 
   describe('Effects', () => {
     it('should synchronize spinner visibility with store state', () => {
-      // Effect runs after initial detection
-      fixture.detectChanges();
+      fixture.detectChanges(); // Effect runs after initial detection
 
       storeMock.spinner.set(true);
       fixture.detectChanges(); // Trigger effect execution cycle
@@ -110,6 +109,7 @@ describe('HomePage', () => {
 
       const componentDebugElement = fixture.debugElement.query(By.directive(GameCardsGrid));
       const componentInstance = componentDebugElement.componentInstance as GameCardsGrid;
+
       componentInstance.loadMore.emit();
 
       expect(spy).toHaveBeenCalledWith();

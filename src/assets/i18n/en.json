@@ -14,7 +14,8 @@
   },
   "menu": {
     "about": "About",
-    "filters": "Filters"
+    "filters": "Filters",
+    "toggle_menu": "Toggle menu"
   },
   "separator": {
     "already_finished_games": "Already finished"
