@@ -53,6 +53,6 @@ export class ErrorPage {
   readonly buttonAction = signal<() => void>(() => this.location.back());
 
   protected handleButtonAction(): void {
-    // this.buttonAction()?.();
+    this.buttonAction()?.();
   }
 }
