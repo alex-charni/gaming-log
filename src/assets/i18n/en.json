@@ -12,12 +12,24 @@
     "page_not_found": "The requested page can't be found.",
     "unexpected_event": "Something unexpected happened on our end."
   },
+  "languages": {
+    "en": "English",
+    "es": "Español",
+    "jp": "日本語 "
+  },
   "menu": {
     "about": "About",
     "filters": "Filters",
-    "toggle_menu": "Toggle menu"
+    "language": "Language",
+    "theme": "Theme",
+    "toggle_menu": "Toggle menu",
+    "settings": "Settings"
   },
   "separator": {
     "already_finished_games": "Already finished"
+  },
+  "themes": {
+    "dark": "Dark",
+    "light": "Light"
   }
 }
