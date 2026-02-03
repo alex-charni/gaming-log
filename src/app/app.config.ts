@@ -11,7 +11,7 @@ import { provideTranslateHttpLoader } from '@ngx-translate/http-loader';
 
 import { APP_PROVIDERS } from '@infrastructure/config';
 import { SupabaseInterceptor } from '@infrastructure/http/interceptors';
-import { LanguageService } from '@presentation/services';
+import { LanguageService, ThemeService } from '@presentation/services';
 import { routes } from './app.routes';
 
 export const appConfig: ApplicationConfig = {
@@ -30,6 +30,10 @@ export const appConfig: ApplicationConfig = {
     provideAppInitializer(() => {
       const languageService = inject(LanguageService);
       return languageService.initLanguages();
+    }),
+    provideAppInitializer(() => {
+      const themeService = inject(ThemeService);
+      return themeService.initThemes();
     }),
     ...APP_PROVIDERS,
   ],
