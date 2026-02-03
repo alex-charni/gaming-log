@@ -1,16 +1,12 @@
 import { Component, ElementRef, HostListener, inject, signal, ViewChild } from '@angular/core';
-import { TranslatePipe } from '@ngx-translate/core';
 
-import { PulseOnClickDirective } from '@presentation/directives';
-import { Language } from '@presentation/schemas/types';
-import { LanguageService } from '@presentation/services';
 import { UiStore } from '@presentation/stores/ui';
 import { BurgerButton } from '../burger-button/burger-button';
-import { HorizontalSeparator } from '../horizontal-separator/horizontal-separator';
+import { LanguageSelectorMenuItem } from '../language-selector-menu-item/language-selector-menu-item';
 
 @Component({
   selector: 'app-burger-menu',
-  imports: [BurgerButton, HorizontalSeparator, PulseOnClickDirective, TranslatePipe],
+  imports: [BurgerButton, LanguageSelectorMenuItem],
   templateUrl: './burger-menu.component.html',
   styleUrls: ['./burger-menu.component.scss'],
 })
@@ -21,7 +17,6 @@ export class BurgerMenuComponent {
   @ViewChild('anchor', { static: true })
   private anchorRef!: ElementRef<HTMLDivElement>;
 
-  private readonly languageService = inject(LanguageService);
   protected readonly uiStore = inject(UiStore);
 
   readonly isOpen = signal(false);
@@ -45,9 +40,5 @@ export class BurgerMenuComponent {
     }
 
     this.toggleMenu(false);
-  }
-
-  protected changeLanguage(language: Language): void {
-    this.languageService.setLanguage(language);
   }
 }
