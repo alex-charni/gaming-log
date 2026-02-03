@@ -1,7 +1,7 @@
 import { AfterViewInit, Component, HostListener, input, signal } from '@angular/core';
 import { TranslatePipe } from '@ngx-translate/core';
 
-import { BurgerMenuComponent } from '../burger-menu/burger-menu.component';
+import { BurgerMenuComponent } from '../menu/burger-menu/burger-menu.component';
 
 @Component({
   selector: 'app-header',

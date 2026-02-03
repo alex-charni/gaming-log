@@ -1,0 +1,28 @@
+@let isOpen = open();
+@let selectedLanguage = uiStore.selectedLanguage();
+
+<li class="menu-item" [class.is-open]="isOpen" (click)="toggle()" [attr.aria-expanded]="isOpen">
+  <button type="button" class="button">{{ 'menu.language' | translate }}</button>
+
+  <span aria-hidden="true">
+    <i class="icon fa-solid fa-language fa-lg"></i>
+  </span>
+</li>
+
+<div class="menu-item__panel" [class.is-open]="isOpen">
+  <ul class="menu-sublist">
+    @for (language of uiStore.availableLanguages(); track language) {
+      <li
+        class="menu-sublist-item"
+        [class.menu-sublist-item--active]="selectedLanguage === language"
+        (click)="changeLanguage(language)"
+      >
+        <button type="button">{{ language | languageLabel | translate }}</button>
+
+        <span aria-hidden="true">
+          <i class="icon fa-solid fa-check"></i>
+        </span>
+      </li>
+    }
+  </ul>
+</div>
