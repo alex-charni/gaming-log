@@ -3,10 +3,20 @@
 ## 🛠️ [Unreleased]
 
 - About page.
-- LTR configurations.
 - Japanese language.
 
 ---
+
+## 🚀 [1.2.0] - 2026-02-04
+
+### 🟢 Added
+
+- Dark and light theme support.
+- Language and theme persistence.
+
+### 🟠 Changed
+
+- Burger menu redesign.
 
 ## [1.1.3] - 2026-01-29
 
