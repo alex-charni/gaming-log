@@ -23,6 +23,6 @@ export class ThemeSelectorMenuItem {
   }
 
   protected changeTheme(theme: Theme): void {
-    this.themeService.setTheme(theme);
+    this.themeService.set(theme);
   }
 }

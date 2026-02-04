@@ -23,6 +23,6 @@ export class LanguageSelectorMenuItem {
   }
 
   protected changeLanguage(language: Language): void {
-    this.languageService.setLanguage(language);
+    this.languageService.set(language);
   }
 }
