@@ -3,10 +3,11 @@ import { Component, ElementRef, HostListener, inject, signal, ViewChild } from '
 import { UiStore } from '@presentation/stores/ui';
 import { BurgerButton } from '../burger-button/burger-button';
 import { LanguageSelectorMenuItem } from '../language-selector-menu-item/language-selector-menu-item';
+import { ThemeSelectorMenuItem } from '../theme-selector-menu-item/theme-selector-menu-item';
 
 @Component({
   selector: 'app-burger-menu',
-  imports: [BurgerButton, LanguageSelectorMenuItem],
+  imports: [BurgerButton, LanguageSelectorMenuItem, ThemeSelectorMenuItem],
   templateUrl: './burger-menu.component.html',
   styleUrls: ['./burger-menu.component.scss'],
 })
