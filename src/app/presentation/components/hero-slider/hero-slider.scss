@@ -39,7 +39,7 @@
   &__top,
   &__bottom {
     position: absolute;
-    color: $white-pure-color;
+    color: $white-pure;
     display: flex;
     justify-content: center;
   }
@@ -113,12 +113,12 @@
 }
 
 .image-loader {
+  @extend .skeleton-pulse;
+
   position: absolute;
   inset: 0;
   z-index: 2;
   pointer-events: none;
-
-  animation: card-loading 1s linear infinite alternate;
 
   transition: opacity 500ms ease;
 

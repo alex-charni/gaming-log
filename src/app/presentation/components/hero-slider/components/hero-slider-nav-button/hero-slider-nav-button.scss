@@ -3,7 +3,7 @@
 .nav {
   position: absolute;
   top: 45%;
-  color: $fuchsia-color;
+  color: var(--primary);
   border: none;
   width: 2.5rem;
   height: 2.5rem;
@@ -11,7 +11,7 @@
   cursor: pointer;
   z-index: 2;
   padding: 0;
-  background-color: $white-color;
+  background-color: $white;
   transition: background-color 200ms ease;
 
   &--left {
@@ -33,8 +33,8 @@
   }
 
   &:hover {
-    background-color: $fuchsia-color;
-    color: $white-color;
+    background-color: var(--primary);
+    color: $white;
   }
 
   &:active {
@@ -42,7 +42,7 @@
   }
 
   &:focus-visible {
-    outline: 2px solid $white-color;
+    outline: 2px solid $white;
     outline-offset: 2px;
   }
 }

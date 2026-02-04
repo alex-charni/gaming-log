@@ -1,5 +1,31 @@
 @use 'scss' as *;
 
+:root {
+  --header-height: 80px;
+
+  color-scheme: light;
+  --bg-app: #{$white};
+  --bg-surface: #{$white-pure};
+  --primary: #{$fuchsia};
+  --primary-hover: #e02d86;
+  --text-main: #121212;
+  --border: #e2e8f0;
+  --skeleton-start: hsl(200, 20%, 80%);
+  --skeleton-end: hsl(200, 20%, 95%);
+}
+
+[data-theme='dark'] {
+  color-scheme: dark;
+  --bg-app: #0f172a;
+  --bg-surface: #1e293b;
+  --primary: #{$fuchsia-dark};
+  --primary-hover: #{$fuchsia};
+  --text-main: #f1f5f9;
+  --border: #334155;
+  --skeleton-start: hsl(222, 25%, 15%);
+  --skeleton-end: hsl(222, 25%, 25%);
+}
+
 html,
 body {
   margin: 0;
