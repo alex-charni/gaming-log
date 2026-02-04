@@ -2,6 +2,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { provideTranslateService } from '@ngx-translate/core';
 
+import { APP_SETTINGS_PROVIDER_MOCK } from '@testing/mocks';
 import { Header } from './header';
 
 function setScrollTop(value: number) {
@@ -25,7 +26,7 @@ describe('Header', () => {
 
     await TestBed.configureTestingModule({
       imports: [Header],
-      providers: [provideTranslateService()],
+      providers: [provideTranslateService(), APP_SETTINGS_PROVIDER_MOCK()],
     }).compileComponents();
 
     fixture = TestBed.createComponent(Header);

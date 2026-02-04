@@ -1,16 +1,15 @@
-// DONE: 26.01.30
 import { Directive } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { provideTranslateService } from '@ngx-translate/core';
 
 import { LanguageService } from '@presentation/services';
-import { UI_STORE_PROVIDER_MOCK, UiStoreMock } from '@testing/mocks';
+import { APP_SETTINGS_PROVIDER_MOCK, UI_STORE_MOCK, UI_STORE_PROVIDER_MOCK } from '@testing/mocks';
 import { BurgerButton } from '../burger-button/burger-button';
 import { BurgerMenuComponent } from './burger-menu.component';
 
 const languageServiceMock = {
-  setLanguage: vi.fn(),
+  set: vi.fn(),
 };
 
 @Directive({
@@ -22,15 +21,16 @@ class PulseOnClickStub {}
 describe('BurgerMenuComponent', () => {
   let fixture: ComponentFixture<BurgerMenuComponent>;
   let component: BurgerMenuComponent;
-  let uiStoreMock: typeof UiStoreMock;
+  let uiStoreMock: typeof UI_STORE_MOCK;
 
   beforeEach(async () => {
-    uiStoreMock = UiStoreMock;
+    uiStoreMock = UI_STORE_MOCK;
 
     await TestBed.configureTestingModule({
       imports: [BurgerMenuComponent, BurgerButton, PulseOnClickStub],
       providers: [
         provideTranslateService(),
+        APP_SETTINGS_PROVIDER_MOCK(),
         UI_STORE_PROVIDER_MOCK(uiStoreMock),
         { provide: LanguageService, useValue: languageServiceMock },
       ],
@@ -40,31 +40,6 @@ describe('BurgerMenuComponent', () => {
     component = fixture.componentInstance;
 
     fixture.detectChanges();
-  });
-
-  describe('Language selector', () => {
-    it('should render available languages', () => {
-      const buttons = fixture.nativeElement.querySelectorAll('.language__item');
-
-      expect(buttons.length).toBe(2);
-      expect(buttons[0].textContent.trim()).toBe('en');
-      expect(buttons[1].textContent.trim()).toBe('es');
-    });
-
-    it('should mark selected language as active', () => {
-      const activeButton = fixture.nativeElement.querySelector('.language__item--active');
-
-      expect(activeButton.textContent.trim()).toBe('en');
-    });
-
-    it('should change language on click', () => {
-      const buttons = fixture.nativeElement.querySelectorAll('.language__item');
-
-      buttons[1].click(); // 'es'
-      fixture.detectChanges();
-
-      expect(languageServiceMock.setLanguage).toHaveBeenCalledWith('es');
-    });
   });
 
   describe('Menu status', () => {

@@ -1,4 +1,3 @@
-// DONE GG
 import { signal } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
@@ -7,6 +6,7 @@ import { provideTranslateService } from '@ngx-translate/core';
 import { GameCardsGrid } from '@presentation/components';
 import { SpinnerService } from '@presentation/services';
 import { HomePageStore } from '@presentation/stores';
+import { APP_SETTINGS_PROVIDER_MOCK } from '@testing/mocks';
 import { HomePage } from './home.page';
 
 const storeMock = {
@@ -35,7 +35,7 @@ describe('HomePage', () => {
 
     await TestBed.configureTestingModule({
       imports: [HomePage],
-      providers: [provideTranslateService()],
+      providers: [provideTranslateService(), APP_SETTINGS_PROVIDER_MOCK()],
     })
       .overrideProvider(HomePageStore, { useValue: storeMock })
       .overrideProvider(SpinnerService, { useValue: spinnerServiceMock })

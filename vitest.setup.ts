@@ -1,5 +1,3 @@
-import { Pipe } from '@angular/core';
-import { of } from 'rxjs';
 import { vi } from 'vitest';
 
 class MockIntersectionObserver {
