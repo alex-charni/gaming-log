@@ -1,26 +1,28 @@
 @use 'scss' as *;
 
 .card {
+  @extend .theme-transition;
+
   position: relative;
   aspect-ratio: $card-slim-aspect-ration;
   display: flex;
   flex-direction: row;
   justify-content: center;
   align-items: center;
-  background-color: $fuchsia-color;
+  background-color: var(--primary);
   border-radius: $card-border-radius;
   box-shadow: $card-box-shadow;
   padding: 1rem;
   box-sizing: border-box;
 
   &--loading {
-    animation: card-loading 1s linear infinite alternate;
+    @extend .skeleton-pulse;
   }
 
   .text {
     font-size: 7rem;
     font-weight: 600;
-    color: $white-color;
+    color: $white;
     line-height: 0.85;
   }
 

@@ -3,7 +3,6 @@ export const environment = {
   publicImagesUrl: 'assets/mocks/media/images',
   supabaseAnonKey: 'sb_publishable_5W0EQpV0_7nd05cF75ZE1g_WVmjW3Vj',
   supabaseUrl: 'https://wrpriypmoaorobeeqmcc.supabase.co',
-  startingYear: 2010,
   useDataMocks: true,
   dataMockDelay: 1000,
   useImageMocks: true,

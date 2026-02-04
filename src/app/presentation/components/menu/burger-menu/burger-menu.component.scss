@@ -13,7 +13,7 @@
   width: 100vw;
   max-height: 100vh;
 
-  color: $white-color;
+  color: $white;
   border-radius: 0 0 $card-border-radius $card-border-radius;
 
   box-shadow: 0 18px 40px rgba(0, 0, 0, 0.25);
@@ -39,7 +39,9 @@
 
   &__list,
   &__separator {
-    background-color: $fuchsia-color;
+    @extend .theme-transition;
+
+    background-color: var(--primary);
   }
 
   &__list {
@@ -93,10 +95,9 @@
 
   &__header {
     background-color: transparent;
-    border-bottom: 1px solid $white-color;
-    height: 80px;
+    border-bottom: 1px solid $white;
+    height: var(--header-height);
     pointer-events: none;
-    transition: border-bottom-color 160ms ease;
   }
 
   &__separator {

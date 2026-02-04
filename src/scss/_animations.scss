@@ -16,11 +16,15 @@
   }
 }
 
-@keyframes card-loading {
-  0% {
-    background-color: hsl(200, 20%, 80%);
+@keyframes skeleton-pulse {
+  from {
+    background-color: var(--skeleton-start);
   }
-  100% {
-    background-color: hsl(200, 20%, 95%);
+  to {
+    background-color: var(--skeleton-end);
   }
+}
+
+.skeleton-pulse {
+  animation: skeleton-pulse 0.5s linear infinite alternate;
 }

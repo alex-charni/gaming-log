@@ -1,8 +1,15 @@
 import { GetFeaturedGamesUseCase, GetGamesByYearUseCase } from '@core/application/use-cases';
 import { GamesRepository } from '@core/domain/repositories';
+import { APP_PARAMS } from '@infrastructure/config/app.params';
 import { GamesRepositoryAdapter } from '@infrastructure/http/api';
+import { APP_SETTINGS } from './app.tokens';
 
-export const GAMES_PROVIDERS = [
+const APP_SETTINGS_PROVIDERS = {
+  provide: APP_SETTINGS,
+  useValue: APP_PARAMS,
+};
+
+const GAMES_PROVIDERS = [
   {
     provide: GamesRepository,
     useClass: GamesRepositoryAdapter,
@@ -19,4 +26,4 @@ export const GAMES_PROVIDERS = [
   },
 ];
 
-export const APP_PROVIDERS = [...GAMES_PROVIDERS];
+export const APP_PROVIDERS = [APP_SETTINGS_PROVIDERS, ...GAMES_PROVIDERS];

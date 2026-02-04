@@ -1,26 +1,29 @@
-// DONE
 import { TestBed } from '@angular/core/testing';
 import { patchState } from '@ngrx/signals';
 import { unprotected } from '@ngrx/signals/testing';
 import { of, Subject, throwError } from 'rxjs';
 
 import { GetFeaturedGamesUseCase, GetGamesByYearUseCase } from '@core/application/use-cases';
-import { environment } from '@environments/environment';
+import { APP_PARAMS } from '@infrastructure/config/app.params';
+import { APP_SETTINGS_PROVIDER_MOCK } from '@testing/mocks';
 import { homePageInitialState } from './home-page-initial-state';
 import { HomePageStore } from './home-page.store';
 
 describe('HomePageStore', () => {
   let store: InstanceType<typeof HomePageStore>;
+  let appSettings: typeof APP_PARAMS;
   let getFeaturedUseCaseMock: any;
   let getGamesByYearUseCaseMock: any;
 
   beforeEach(() => {
+    appSettings = APP_PARAMS;
     getFeaturedUseCaseMock = { execute: vi.fn() };
     getGamesByYearUseCaseMock = { execute: vi.fn() };
 
     TestBed.configureTestingModule({
       providers: [
         HomePageStore,
+        APP_SETTINGS_PROVIDER_MOCK(),
         { provide: GetFeaturedGamesUseCase, useValue: getFeaturedUseCaseMock },
         { provide: GetGamesByYearUseCase, useValue: getGamesByYearUseCaseMock },
       ],
@@ -127,11 +130,11 @@ describe('HomePageStore', () => {
 
   describe('Computed Signals', () => {
     it('should compute haventReachedLastYear based on environment.startingYear', () => {
-      patchState(unprotected(store), { nextYearToLoad: environment.startingYear });
+      patchState(unprotected(store), { nextYearToLoad: appSettings.startingYear });
 
       expect(store.haventReachedLastYear()).toBe(true);
 
-      patchState(unprotected(store), { nextYearToLoad: environment.startingYear - 1 });
+      patchState(unprotected(store), { nextYearToLoad: appSettings.startingYear - 1 });
 
       expect(store.haventReachedLastYear()).toBe(false);
     });

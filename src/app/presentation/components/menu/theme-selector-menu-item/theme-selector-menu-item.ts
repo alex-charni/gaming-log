@@ -1,4 +1,4 @@
-import { Component, inject, signal } from '@angular/core';
+import { Component, effect, inject, input, signal } from '@angular/core';
 import { TranslatePipe } from '@ngx-translate/core';
 
 import { ThemeLabelPipe } from '@presentation/pipes';
@@ -16,13 +16,24 @@ export class ThemeSelectorMenuItem {
   private readonly themeService = inject(ThemeService);
   protected readonly uiStore = inject(UiStore);
 
+  readonly isParentMenuOpen = input.required<boolean>();
   protected readonly open = signal(false);
+
+  constructor() {
+    this.watchForParentMenuStatus();
+  }
+
+  private watchForParentMenuStatus(): void {
+    effect(() => {
+      if (!this.isParentMenuOpen()) this.open.set(false);
+    });
+  }
 
   protected toggle(): void {
     this.open.update((v) => !v);
   }
 
   protected changeTheme(theme: Theme): void {
-    this.themeService.setTheme(theme);
+    this.themeService.set(theme);
   }
 }

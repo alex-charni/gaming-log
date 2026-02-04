@@ -1,4 +1,3 @@
-// DONE
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { GameCardPlaceholder } from './game-card-placeholder';

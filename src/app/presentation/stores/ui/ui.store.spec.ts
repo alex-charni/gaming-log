@@ -1,4 +1,4 @@
-import { Language } from '@presentation/schemas/types';
+import { Language, Theme } from '@presentation/schemas/types';
 import { uiInitialState } from './ui-initial-state';
 import { UiStore } from './ui.store';
 
@@ -36,27 +36,47 @@ describe('UiStore', () => {
     expect(store.fullScreenSpinner()).toBe(true);
   });
 
-  it('should set availableLanguages', () => {
-    const languages: Language[] = ['en', 'es'];
-
-    store.setAvailableLanguages(languages);
-
-    expect(store.availableLanguages()).toEqual(languages);
-  });
-
-  it('should set selectedLanguage', () => {
-    const language: Language = 'en';
-
-    store.setSelectedLanguage(language);
-
-    expect(store.selectedLanguage()).toBe(language);
-  });
-
   it('should compute isUiBlocked from fullScreenSpinner', () => {
     expect(store.isUiBlocked()).toBe(false);
 
     store.setFullScreenSpinner(true);
 
     expect(store.isUiBlocked()).toBe(true);
+  });
+
+  describe('Languages', () => {
+    it('should set availableLanguages', () => {
+      const languages: Language[] = ['en', 'es'];
+
+      store.setAvailableLanguages(languages);
+
+      expect(store.availableLanguages()).toEqual(languages);
+    });
+
+    it('should set selectedLanguage', () => {
+      const language: Language = 'en';
+
+      store.setSelectedLanguage(language);
+
+      expect(store.selectedLanguage()).toBe(language);
+    });
+  });
+
+  describe('Themes', () => {
+    it('should set availableLanguages', () => {
+      const themes: Theme[] = ['light', 'dark'];
+
+      store.setAvailableThemes(themes);
+
+      expect(store.availableThemes()).toEqual(themes);
+    });
+
+    it('should set selectedLanguage', () => {
+      const themes: Theme = 'dark';
+
+      store.setSelectedTheme(themes);
+
+      expect(store.selectedTheme()).toBe(themes);
+    });
   });
 });

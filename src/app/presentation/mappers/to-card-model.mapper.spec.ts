@@ -1,4 +1,3 @@
-// DONE
 import { GameEntity } from '@core/domain/entities';
 import { toGameCardModel } from './to-card-model.mapper';
 

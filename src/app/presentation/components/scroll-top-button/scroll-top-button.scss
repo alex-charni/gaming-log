@@ -16,11 +16,11 @@
   cursor: pointer;
   padding: 0;
 
-  background-color: $fuchsia-color;
-  color: $white-pure-color;
+  background-color: var(--primary);
+  color: $white-pure;
 
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.25);
-  z-index: 1000;
+  z-index: 2;
 
   opacity: 0;
   pointer-events: none;
@@ -30,7 +30,7 @@
     background-color 200ms ease;
 
   &:hover {
-    background-color: $black-color;
+    background-color: var(--primary-hover);
   }
 
   &:active {
@@ -38,7 +38,7 @@
   }
 
   &:focus-visible {
-    outline: 2px solid $fuchsia-color;
+    outline: 2px solid var(--primary);
     outline-offset: 2px;
   }
 
