@@ -28,7 +28,7 @@ describe('LanguageService', () => {
 
       const expectedLangs = ['en', 'es'];
 
-      service.initLanguages();
+      service.init();
 
       expect(addLangsSpy).toHaveBeenCalledWith(expectedLangs);
       expect(setFallbackLangSpy).toHaveBeenCalledWith('en');
@@ -42,7 +42,7 @@ describe('LanguageService', () => {
       const setSelectedLanguageSpy = vi.spyOn(uiStoreMock, 'setSelectedLanguage');
       const newLang = 'es';
 
-      service.setLanguage(newLang);
+      service.set(newLang);
 
       expect(useSpy).toHaveBeenCalledWith(newLang);
       expect(setSelectedLanguageSpy).toHaveBeenCalledWith(newLang);

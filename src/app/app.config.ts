@@ -29,11 +29,11 @@ export const appConfig: ApplicationConfig = {
     }),
     provideAppInitializer(() => {
       const languageService = inject(LanguageService);
-      return languageService.initLanguages();
+      return languageService.init();
     }),
     provideAppInitializer(() => {
       const themeService = inject(ThemeService);
-      return themeService.initThemes();
+      return themeService.init();
     }),
     ...APP_PROVIDERS,
   ],
