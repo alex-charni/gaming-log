@@ -1,4 +1,3 @@
-// DONE
 import { GameEntity } from '@core/domain/entities';
 import { toHeroSlideModel } from './to-hero-slide-model.mapper';
 
