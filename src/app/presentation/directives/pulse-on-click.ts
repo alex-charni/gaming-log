@@ -8,9 +8,9 @@ export class PulseOnClickDirective {
   private readonly el = inject(ElementRef);
 
   private readonly colors = {
-    black: 'rgba(0, 0, 0, 0.6)',
-    fuchsia: 'rgba(250, 50, 150, 0.6)',
-    white: 'rgba(255, 255, 255, 0.6)',
+    black: 'rgba(0, 0, 0, 1)',
+    fuchsia: 'rgba(250, 50, 150, 1)',
+    white: 'rgba(255, 255, 255, 1)',
   };
 
   readonly duration = input<number>(300);
