@@ -28,6 +28,10 @@
 
 html,
 body {
+  @extend .theme-transition;
+
+  background-color: var(--bg-app);
+
   margin: 0;
   padding: 0;
   height: 100%;

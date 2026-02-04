@@ -1,7 +1,0 @@
-@use 'scss' as *;
-
-.app-container {
-  @extend .theme-transition;
-
-  background-color: var(--bg-app);
-}
