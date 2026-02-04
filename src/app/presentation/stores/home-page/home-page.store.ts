@@ -5,7 +5,7 @@ import { patchState, signalStore, withComputed, withMethods, withState } from '@
 import { rxMethod } from '@ngrx/signals/rxjs-interop';
 import { distinctUntilChanged, map, pipe, switchMap, tap } from 'rxjs';
 
-import { environment } from '@environments/environment';
+import { APP_SETTINGS } from '@infrastructure/config';
 import { toGameCardModel, toHeroSlideModel } from '@presentation/mappers';
 import { homePageInitialState } from './home-page-initial-state';
 
@@ -16,9 +16,13 @@ export const HomePageStore = signalStore(
       () => (cardsCollection().length < 20 && cardsAreLoading()) || slidesAreLoading(),
     ),
   })),
-  withComputed(({ nextYearToLoad }) => ({
-    haventReachedLastYear: computed(() => nextYearToLoad() >= environment.startingYear),
-  })),
+  withComputed(({ nextYearToLoad }) => {
+    const startingYear = inject(APP_SETTINGS).startingYear;
+
+    return {
+      haventReachedLastYear: computed(() => nextYearToLoad() >= startingYear),
+    };
+  }),
   withMethods(
     (
       store,
