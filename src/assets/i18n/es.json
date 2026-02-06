@@ -1,0 +1,35 @@
+{
+  "app": {
+    "title": "Gaming Log"
+  },
+  "common": {
+    "go_back": "Volver",
+    "now_playing": "Jugando ahora",
+    "now_playing_with_ellipsis": "Jugando ahora..."
+  },
+  "error": {
+    "oops_with_ellipsis": "Ups...",
+    "page_not_found": "No podemos encontrar la página solicitada.",
+    "unexpected_event": "Algo inesperado ha ocurrido en nuestros sistemas."
+  },
+  "languages": {
+    "en": "English",
+    "es": "Español",
+    "jp": "日本語 "
+  },
+  "menu": {
+    "about": "Acerca de...",
+    "filters": "Filtros",
+    "language": "Idioma",
+    "theme": "Tema",
+    "toggle_menu": "Alternar menú",
+    "settings": "Configuración"
+  },
+  "separator": {
+    "already_finished_games": "Juegos terminados"
+  },
+  "themes": {
+    "dark": "Oscuro",
+    "light": "Claro"
+  }
+}

@@ -1,0 +1,32 @@
+@let isOpen = open();
+@let selectedTheme = uiStore.selectedTheme();
+
+<li class="menu-item" (click)="toggle()" [attr.aria-expanded]="isOpen">
+  <button type="button" class="menu-item__trigger">
+    {{ 'menu.theme' | translate }}
+  </button>
+
+  <span class="menu-item__icon" aria-hidden="true">
+    <i class="icon fa-solid fa-brush fa-lg"></i>
+  </span>
+</li>
+
+<div class="menu-item__panel" [class.menu-item__panel--open]="isOpen">
+  <ul class="menu-sublist">
+    @for (theme of uiStore.availableThemes(); track theme) {
+      <li
+        class="menu-sublist__item"
+        [class.menu-sublist__item--active]="selectedTheme === theme"
+        (click)="changeTheme(theme)"
+      >
+        <button class="menu-sublist__button" type="button">
+          {{ theme | themeLabel | translate }}
+        </button>
+
+        <span class="menu-sublist__status-icon" aria-hidden="true">
+          <i class="fa-solid fa-check"></i>
+        </span>
+      </li>
+    }
+  </ul>
+</div>

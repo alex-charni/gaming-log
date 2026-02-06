@@ -2,10 +2,52 @@
 
 ## 🛠️ [Unreleased]
 
-- Signal based state.
 - About page.
+- Japanese language.
 
 ---
+
+## 🚀 [1.2.1] - 2026-02-06
+
+### 🟠 Changed
+
+- Updated global styles.
+
+### 🔴 Fixed
+
+- Added missing header margins.
+- App background color now covers full height.
+
+## [1.2.0] - 2026-02-04
+
+### 🟢 Added
+
+- Dark and light theme support.
+- Language and theme persistence.
+
+### 🟠 Changed
+
+- Burger menu redesign.
+
+## [1.1.3] - 2026-01-29
+
+### 🟢 Added
+
+- Global state now centraliced in UI Store.
+- Header has now a dropdown menu.
+- Language can be changed from header menu.
+
+## [1.1.2] - 2026-01-28
+
+### 🟢 Added
+
+- Home Page now uses signal stores.
+
+## [1.1.1] - 2026-01-27
+
+### 🟢 Added
+
+- App now uses i18n for displaying texts.
 
 ## 🚀 [1.1.0] - 2026-01-27
 

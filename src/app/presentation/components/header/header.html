@@ -1,8 +1,16 @@
-<header class="app-header auto-hide-header" [class.visible]="isVisible" [class.sticky]="isSticky">
-  <div class="app-header__container">
-    <h1 class="title">GAMING LOG</h1>
-    <div class="menu-button" hidden>
-      <app-burger-button [open]="menuOpen()" (toggle)="menuOpen.set($event)" />
+<div
+  class="layout-wrapper"
+  [class.layout-wrapper--visible]="isVisible"
+  [class.layout-wrapper--sticky]="isSticky"
+  [class.layout-wrapper--auto-hide]="true"
+>
+  <header class="app-header">
+    <div class="app-header__container">
+      <h1 class="app-header__title">{{ 'app.title' | translate }}</h1>
+
+      <div class="app-header__menu">
+        <app-burger-menu />
+      </div>
     </div>
-  </div>
-</header>
+  </header>
+</div>

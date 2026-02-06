@@ -1,4 +1,3 @@
-// DONE
 import { GameEntity } from '@core/domain/entities';
 
 describe('GameEntity', () => {

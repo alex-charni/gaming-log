@@ -2,40 +2,50 @@
 
 :host {
   width: 100%;
-  height: 80px;
+  height: var(--header-height);
+
+  .layout-wrapper {
+    width: 100vw;
+
+    &--auto-hide {
+      transform: translateY(0);
+      transition: transform 0.25s ease;
+      z-index: 100;
+    }
+
+    &--sticky {
+      position: fixed;
+    }
+  }
+
+  .layout-wrapper:not(.layout-wrapper--visible) {
+    transform: translateY(-100%);
+  }
 
   .app-header {
-    background-color: $fuchsia-color;
-    color: $white-color;
-    width: 100%;
+    @extend .theme-transition;
+
+    background-color: var(--primary);
+    box-shadow: var(--header-shadow);
+    color: $white;
 
     &__container {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      height: 80px;
+      height: var(--header-height);
       max-width: 1280px;
       margin: 0 auto;
-
-      .menu-button,
-      .title {
-        margin: 0;
-        padding: 0 1rem;
-      }
-    }
-  }
-
-  .auto-hide-header {
-    transform: translateY(0);
-    transition: transform 0.25s ease;
-    z-index: 100;
-
-    &.sticky {
-      position: fixed;
     }
 
-    &:not(.visible) {
-      transform: translateY(-100%);
+    &__menu,
+    &__title {
+      margin: 0;
+      padding: 0 1rem;
+    }
+
+    &__title {
+      text-transform: uppercase;
     }
   }
 }

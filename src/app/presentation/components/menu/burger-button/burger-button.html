@@ -1,0 +1,15 @@
+<button
+  type="button"
+  class="burger"
+  [class.burger--is-open]="open()"
+  [aria-label]="'menu.toggle_menu' | translate"
+  [attr.aria-expanded]="open()"
+  appPulseOnclick
+  [variant]="'white'"
+  [size]="14"
+  (click)="onClick()"
+>
+  <span class="line"></span>
+  <span class="line"></span>
+  <span class="line"></span>
+</button>

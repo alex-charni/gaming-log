@@ -3,7 +3,7 @@ import { inject, Injectable } from '@angular/core';
 import { GameEntity } from '@core/domain/entities';
 import { GamesRepository } from '@core/domain/repositories';
 import { environment } from '@environments/environment';
-import { mapGamesData } from '@infrastructure/http/mappers';
+import { toGamesEntity } from '@infrastructure/http/mappers';
 import { GameApiResponse } from '@infrastructure/http/schemas';
 import { delay, map, Observable } from 'rxjs';
 
@@ -28,7 +28,7 @@ export class GamesRepositoryAdapter implements GamesRepository {
 
     return this.http.get<GameApiResponse[]>(url, { params, observe: 'response' }).pipe(
       delay(environment.dataMockDelay),
-      map((response) => (response.body ? mapGamesData(response.body) : [])),
+      map((response) => (response.body ? toGamesEntity(response.body) : [])),
     );
   }
 
@@ -42,7 +42,7 @@ export class GamesRepositoryAdapter implements GamesRepository {
 
     return this.http.get<GameApiResponse[]>(url, { params, observe: 'response' }).pipe(
       delay(environment.dataMockDelay),
-      map((response) => (response.body ? mapGamesData(response.body) : [])),
+      map((response) => (response.body ? toGamesEntity(response.body) : [])),
     );
   }
 }

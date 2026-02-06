@@ -1,4 +1,5 @@
 import { Routes } from '@angular/router';
+
 import { HomePage } from './presentation/pages';
 
 export const routes: Routes = [
@@ -12,7 +13,7 @@ export const routes: Routes = [
     path: '**',
     data: {
       code: 404,
-      message: "The requested page can't be found.",
+      message: 'error.page_not_found',
       showButton: true,
     },
     loadComponent: () => import('./presentation/pages').then((m) => m.ErrorPage),

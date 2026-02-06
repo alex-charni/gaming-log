@@ -1,18 +1,26 @@
 import { NgOptimizedImage } from '@angular/common';
 import { Component, computed, effect, input, signal } from '@angular/core';
+import { TranslatePipe } from '@ngx-translate/core';
+
 import { SwipeDirective } from '@presentation/directives';
-import { IHeroSlide } from '@presentation/schemas/interfaces';
+import { HeroSlideModel } from '@presentation/schemas/interfaces';
 import { HeroSliderNavButton, HeroSliderNavDots } from './components';
 
 @Component({
   selector: 'app-hero-slider',
   standalone: true,
-  imports: [NgOptimizedImage, SwipeDirective, HeroSliderNavButton, HeroSliderNavDots],
+  imports: [
+    NgOptimizedImage,
+    SwipeDirective,
+    HeroSliderNavButton,
+    HeroSliderNavDots,
+    TranslatePipe,
+  ],
   templateUrl: './hero-slider.html',
   styleUrls: ['./hero-slider.scss'],
 })
 export class HeroSlider {
-  slides = input.required<IHeroSlide[]>();
+  slides = input.required<HeroSlideModel[]>();
   height = input(400);
   autoplay = input(true);
   autoplayInterval = input(5000);

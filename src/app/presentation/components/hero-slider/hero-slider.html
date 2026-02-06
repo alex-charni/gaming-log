@@ -10,7 +10,10 @@
 >
   <div class="hero-slider__stack">
     @for (slide of slides(); track $index) {
-      <div class="hero-slider__slide" [class.is-active]="$index === currentIndex()">
+      <div
+        class="hero-slider__slide"
+        [class.hero-slider__slide--active]="$index === currentIndex()"
+      >
         <img
           #heroImage
           [ngSrc]="slide.imageUrl"
@@ -24,10 +27,10 @@
 
         <div class="overlay__top">
           @if (slide.topLeftText) {
-            <div class="overlay__top--left">{{ slide.topLeftText }}</div>
+            <div class="overlay__top--left">{{ slide.topLeftText | translate }}</div>
           }
 
-          <!-- TODO: enable when ready -->
+          <!-- TODO: awaiting for functionality to be ready -->
           <!-- @if (slide.topRightText) {
             <div class="overlay__top--right">{{ slide.topRightText }}</div>
           } -->
@@ -56,5 +59,5 @@
     />
   }
 
-  <div class="image-loader" [class.is-hidden]="!isLoading()"></div>
+  <div class="image-loader" [class.image-loader--hidden]="!isLoading()"></div>
 </div>

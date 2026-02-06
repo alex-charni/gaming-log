@@ -1,8 +1,17 @@
 import { provideHttpClient, withInterceptors } from '@angular/common/http';
-import { ApplicationConfig, provideBrowserGlobalErrorListeners } from '@angular/core';
+import {
+  ApplicationConfig,
+  inject,
+  provideAppInitializer,
+  provideBrowserGlobalErrorListeners,
+} from '@angular/core';
 import { provideRouter } from '@angular/router';
+import { provideTranslateService } from '@ngx-translate/core';
+import { provideTranslateHttpLoader } from '@ngx-translate/http-loader';
+
 import { APP_PROVIDERS } from '@infrastructure/config';
 import { SupabaseInterceptor } from '@infrastructure/http/interceptors';
+import { LanguageService, ThemeService } from '@presentation/services';
 import { routes } from './app.routes';
 
 export const appConfig: ApplicationConfig = {
@@ -10,6 +19,22 @@ export const appConfig: ApplicationConfig = {
     provideBrowserGlobalErrorListeners(),
     provideRouter(routes),
     provideHttpClient(withInterceptors([SupabaseInterceptor])),
+    provideTranslateService({
+      loader: provideTranslateHttpLoader({
+        prefix: '/assets/i18n/',
+        suffix: '.json',
+      }),
+      fallbackLang: 'en',
+      lang: 'en',
+    }),
+    provideAppInitializer(() => {
+      const languageService = inject(LanguageService);
+      return languageService.init();
+    }),
+    provideAppInitializer(() => {
+      const themeService = inject(ThemeService);
+      return themeService.init();
+    }),
     ...APP_PROVIDERS,
   ],
 };

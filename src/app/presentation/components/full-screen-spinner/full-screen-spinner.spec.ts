@@ -1,9 +1,8 @@
-// DONE
 import { signal } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 
-import { Spinner } from '@presentation/services';
+import { SpinnerService } from '@presentation/services';
 import { FullScreenSpinner } from './full-screen-spinner';
 
 class SpinnerMock {
@@ -16,47 +15,43 @@ class SpinnerMock {
 
 describe('FullScreenSpinner', () => {
   let component: FullScreenSpinner;
-  let spinnerServiceMock: Spinner;
+  let spinnerServiceMock: SpinnerService;
   let fixture: ComponentFixture<FullScreenSpinner>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [FullScreenSpinner],
-      providers: [
-        {
-          provide: Spinner,
-          useClass: SpinnerMock,
-        },
-      ],
+      providers: [{ provide: SpinnerService, useClass: SpinnerMock }],
     }).compileComponents();
 
     fixture = TestBed.createComponent(FullScreenSpinner);
     component = fixture.componentInstance;
-    spinnerServiceMock = TestBed.inject(Spinner);
+    spinnerServiceMock = TestBed.inject(SpinnerService);
+
     await fixture.whenStable();
   });
 
-  it('should create', () => {
-    expect(component).toBeTruthy();
-  });
+  describe('Visibility', () => {
+    it('should set visible to true when spinner service requires it', () => {
+      spinnerServiceMock.setVisible(true);
+      fixture.detectChanges();
 
-  it('should set visible to true when spinner service requires it', () => {
-    spinnerServiceMock.setVisible(true);
-    fixture.detectChanges();
+      const overlay = fixture.debugElement.query(By.css('.overlay'))
+        ?.nativeElement as HTMLDivElement;
 
-    const overlay = fixture.debugElement.query(By.css('.overlay'))?.nativeElement as HTMLDivElement;
+      expect(component.visible()).toBe(true);
+      expect(overlay).toBeDefined();
+    });
 
-    expect(component.visible()).toBe(true);
-    expect(overlay).toBeDefined();
-  });
+    it('should set visible to false when spinner service requires it', () => {
+      spinnerServiceMock.setVisible(false);
+      fixture.detectChanges();
 
-  it('should set visible to false when spinner service requires it', () => {
-    spinnerServiceMock.setVisible(false);
-    fixture.detectChanges();
+      const overlay = fixture.debugElement.query(By.css('.overlay'))
+        ?.nativeElement as HTMLDivElement;
 
-    const overlay = fixture.debugElement.query(By.css('.overlay'))?.nativeElement as HTMLDivElement;
-
-    expect(component.visible()).toBe(false);
-    expect(overlay).toBeUndefined();
+      expect(component.visible()).toBe(false);
+      expect(overlay).toBeUndefined();
+    });
   });
 });

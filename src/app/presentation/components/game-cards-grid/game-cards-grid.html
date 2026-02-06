@@ -1,5 +1,5 @@
 <div #grid class="grid">
-  @for (card of cardsCollection(); track card.id; let index = $index; let last = $last) {
+  @for (card of store.cardsCollection(); track card.id; let index = $index; let last = $last) {
     <li class="grid__item">
       @if (isGameCard(card)) {
         @if (last) {
@@ -19,14 +19,14 @@
   }
 
   <li class="grid__item">
-    @if (haventReachedLastYear()) {
-      <app-year-card [year]="nextYearToLoad()" [isLoading]="isLoading()" />
+    @if (keepTriggeringLoadMore()) {
+      <app-year-card [year]="store.nextYearToLoad()" [isLoading]="store.cardsAreLoading()" />
     } @else {
       <app-text-card [text]="'·'" />
     }
   </li>
 
-  @if (isLoading()) {
+  @if (store.cardsAreLoading()) {
     @for (item of [].constructor(19); track $index) {
       <li class="grid__item">
         <app-game-card-placeholder />

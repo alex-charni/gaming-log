@@ -16,21 +16,23 @@
   cursor: pointer;
   padding: 0;
 
-  background-color: $fuchsia-color;
-  color: $white-pure-color;
+  background-color: var(--primary);
+  color: $white-pure;
 
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.25);
-  z-index: 1000;
+  z-index: 2;
 
   opacity: 0;
   pointer-events: none;
 
   transition:
+    transform 100ms ease,
     opacity 200ms ease,
     background-color 200ms ease;
 
   &:hover {
-    background-color: $black-color;
+    background-color: var(--primary-hover);
+    transform: scale(1.08);
   }
 
   &:active {
@@ -38,7 +40,7 @@
   }
 
   &:focus-visible {
-    outline: 2px solid $fuchsia-color;
+    outline: 2px solid var(--primary);
     outline-offset: 2px;
   }
 
@@ -47,18 +49,8 @@
     pointer-events: auto;
   }
 
-  &--clicked {
-    background-color: $fuchsia-color;
-    animation: button-pulse--black 300ms ease-out;
-
-    &:hover {
-      background-color: $fuchsia-color;
-    }
-  }
-
   &__icon {
     height: 2rem;
     width: 2rem;
-    pointer-events: none;
   }
 }

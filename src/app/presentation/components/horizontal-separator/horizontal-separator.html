@@ -1,9 +1,24 @@
+@let theme = color();
+
 <div class="separator">
-  <span class="separator__line"></span>
+  <span
+    class="separator__line"
+    [class.separator__line--fuchsia]="theme === 'fuchsia'"
+    [class.separator__line--white]="theme === 'white'"
+  ></span>
 
   @if (text()) {
-    <span class="separator__text">{{ text() }}</span>
+    <span
+      class="separator__text"
+      [class.separator__text--fuchsia]="theme === 'fuchsia'"
+      [class.separator__text--white]="theme === 'white'"
+      >{{ text() }}</span
+    >
   }
 
-  <span class="separator__line"></span>
+  <span
+    class="separator__line"
+    [class.separator__line--fuchsia]="theme === 'fuchsia'"
+    [class.separator__line--white]="theme === 'white'"
+  ></span>
 </div>

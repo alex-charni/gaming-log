@@ -1,0 +1,25 @@
+<main class="error-page">
+  <section class="error-page__container">
+    @if (code()) {
+      <span class="code">{{ code() }}</span>
+    } @else {
+      <i class="icon fa-solid fa-exclamation"></i>
+    }
+
+    <h1 class="title">{{ title() }}</h1>
+    <p class="message">{{ message() }}</p>
+
+    @if (showButton()) {
+      <button
+        type="button"
+        class="button"
+        appPulseOnclick
+        [variant]="'black'"
+        [size]="8"
+        (click)="handleButtonAction()"
+      >
+        {{ buttonText() }}
+      </button>
+    }
+  </section>
+</main>

@@ -1,9 +1,11 @@
 import { AfterViewInit, Component, HostListener, input, signal } from '@angular/core';
-import { BurgerButton } from '@presentation/components';
+import { TranslatePipe } from '@ngx-translate/core';
+
+import { BurgerMenuComponent } from '../menu/burger-menu/burger-menu.component';
 
 @Component({
   selector: 'app-header',
-  imports: [BurgerButton],
+  imports: [TranslatePipe, BurgerMenuComponent],
   templateUrl: './header.html',
   styleUrl: './header.scss',
 })
@@ -16,8 +18,6 @@ export class Header implements AfterViewInit {
 
   private lastScrollTop = 0;
   private hasScrolled = false;
-
-  protected menuOpen = signal(false);
 
   ngAfterViewInit(): void {
     const scrollTop = window.pageYOffset || document.documentElement.scrollTop;

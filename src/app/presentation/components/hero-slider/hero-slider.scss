@@ -3,7 +3,7 @@
 .hero-slider {
   position: relative;
   overflow: hidden;
-  border-radius: 0.75rem;
+  border-radius: 1.5rem;
 
   &__slide {
     min-width: 100%;
@@ -14,7 +14,7 @@
     pointer-events: none;
     transition: opacity 0.8s ease-in-out;
 
-    &.is-active {
+    &--active {
       opacity: 1;
       pointer-events: auto;
       z-index: 1;
@@ -22,7 +22,6 @@
   }
 
   &__image {
-    border-radius: inherit;
     object-fit: cover;
     width: 100%;
     height: 100%;
@@ -39,7 +38,7 @@
   &__top,
   &__bottom {
     position: absolute;
-    color: $white-pure-color;
+    color: $white-pure;
     display: flex;
     justify-content: center;
   }
@@ -113,16 +112,16 @@
 }
 
 .image-loader {
+  @extend .skeleton-pulse;
+
   position: absolute;
   inset: 0;
   z-index: 2;
   pointer-events: none;
 
-  animation: card-loading 1s linear infinite alternate;
-
   transition: opacity 500ms ease;
 
-  &.is-hidden {
+  &--hidden {
     opacity: 0;
   }
 }

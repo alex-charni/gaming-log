@@ -6,5 +6,6 @@ import { Component, input } from '@angular/core';
   styleUrl: './horizontal-separator.scss',
 })
 export class HorizontalSeparator {
+  readonly color = input<'fuchsia' | 'white'>('fuchsia');
   readonly text = input('');
 }

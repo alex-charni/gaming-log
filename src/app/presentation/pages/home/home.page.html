@@ -1,0 +1,20 @@
+<main class="home-page">
+  <div class="home-page__container">
+    <app-header class="home-page__header" />
+
+    <section class="home-page__hero">
+      <app-hero-slider [slides]="store.slidesCollection()" [isLoading]="store.slidesAreLoading()" />
+    </section>
+
+    <div class="home-page__separator">
+      <app-horizontal-separator [text]="'separator.already_finished_games' | translate" />
+    </div>
+
+    <section class="home-page__cards-grid">
+      <app-game-cards-grid
+        [keepTriggeringLoadMore]="store.haventReachedLastYear()"
+        (loadMore)="handleFetchMore()"
+      />
+    </section>
+  </div>
+</main>

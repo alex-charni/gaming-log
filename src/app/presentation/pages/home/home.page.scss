@@ -1,0 +1,29 @@
+@use 'scss' as *;
+
+.home-page {
+  &__container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  &__cards-grid,
+  &__separator,
+  &__hero,
+  &__header {
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  &__cards-grid,
+  &__separator,
+  &__hero {
+    max-width: 1280px;
+    padding: 0.75rem 1rem;
+  }
+
+  &__header {
+    margin-block-end: 0.75rem;
+    z-index: 1100;
+  }
+}

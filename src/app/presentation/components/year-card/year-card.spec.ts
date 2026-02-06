@@ -1,4 +1,3 @@
-// DONE
 import { ComponentRef } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
@@ -18,11 +17,8 @@ describe('YearCard', () => {
     fixture = TestBed.createComponent(YearCard);
     component = fixture.componentInstance;
     componenRef = fixture.componentRef;
-    await fixture.whenStable();
-  });
 
-  it('should create', () => {
-    expect(component).toBeTruthy();
+    await fixture.whenStable();
   });
 
   it('should receive data in year input', () => {

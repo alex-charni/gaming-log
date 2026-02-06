@@ -12,3 +12,14 @@ class MockIntersectionObserver {
 }
 
 vi.stubGlobal('IntersectionObserver', MockIntersectionObserver);
+
+// Web Animations API global mock.
+HTMLElement.prototype.animate = vi.fn().mockReturnValue({
+  finished: Promise.resolve(),
+  play: vi.fn(),
+  pause: vi.fn(),
+  cancel: vi.fn(),
+  onfinish: null,
+  addEventListener: vi.fn(),
+  removeEventListener: vi.fn(),
+});

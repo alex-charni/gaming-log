@@ -8,12 +8,12 @@ describe('HorizontalSeparator', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [HorizontalSeparator]
-    })
-    .compileComponents();
+      imports: [HorizontalSeparator],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(HorizontalSeparator);
     component = fixture.componentInstance;
+
     await fixture.whenStable();
   });
 

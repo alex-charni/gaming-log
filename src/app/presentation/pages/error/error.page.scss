@@ -1,0 +1,82 @@
+@use 'scss' as *;
+
+$container-max-width: 480px;
+
+.error-page {
+  background-color: var(--bg-app);
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  &__container {
+    border-radius: 0;
+    max-width: $container-max-width;
+    padding: 2rem;
+    text-align: center;
+    transition:
+      background-color 0.25s ease-in-out,
+      box-shadow 0.25s ease-in-out,
+      border-radius 0.25s ease-in-out;
+
+    @media screen and (min-width: calc($container-max-width + 2rem * 4)) {
+      background-color: var(--bg-surface);
+      border-radius: 0.5rem;
+      box-shadow: var(--card-shadow);
+    }
+
+    .code,
+    .icon {
+      color: var(--primary);
+      font-size: 3.5rem;
+      font-weight: 600;
+      margin-bottom: 1rem;
+    }
+
+    .title,
+    .message {
+      color: var(--text-main);
+    }
+
+    .title {
+      font-size: $font-xl;
+      margin: 0 0 1rem;
+    }
+
+    .message {
+      font-size: $font-md;
+      line-height: 1.5;
+      margin-bottom: 1.5rem;
+    }
+
+    .button {
+      cursor: pointer;
+      font-size: $font-sm;
+      font-weight: 600;
+      padding: 0.6rem 1.2rem;
+
+      background: var(--primary);
+      color: $white-pure;
+      border: none;
+      border-radius: 0.5rem;
+
+      transition:
+        transform 0.3s ease,
+        opacity 0.2s ease,
+        background-color 0.2s ease;
+
+      &:hover {
+        background-color: var(--primary-hover);
+      }
+
+      &:active {
+        transform: scale(0.92);
+      }
+
+      &:focus-visible {
+        outline: 2px solid var(--primary);
+        outline-offset: 2px;
+      }
+    }
+  }
+}

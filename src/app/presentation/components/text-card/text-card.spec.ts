@@ -1,4 +1,3 @@
-// DONE
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ComponentRef } from '@angular/core';
 
@@ -17,15 +16,13 @@ describe('TextCard', () => {
     fixture = TestBed.createComponent(TextCard);
     component = fixture.componentInstance;
     componenRef = fixture.componentRef;
-    await fixture.whenStable();
-  });
 
-  it('should create', () => {
-    expect(component).toBeTruthy();
+    await fixture.whenStable();
   });
 
   it('should receive data in text input', () => {
     componenRef.setInput('text', 'demo test');
+
     fixture.detectChanges();
 
     const textSpan = fixture.nativeElement.querySelector('span.text');

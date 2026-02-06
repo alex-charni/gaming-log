@@ -1,5 +1,8 @@
 @use 'scss' as *;
 
 .app-container {
-  background-color: $white-color;
+  @extend .theme-transition;
+
+  background-color: var(--bg-app);
+  min-height: 100%;
 }
