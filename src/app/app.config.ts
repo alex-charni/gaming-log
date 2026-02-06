@@ -21,7 +21,7 @@ export const appConfig: ApplicationConfig = {
     provideHttpClient(withInterceptors([SupabaseInterceptor])),
     provideTranslateService({
       loader: provideTranslateHttpLoader({
-        prefix: '/assets/i18n/',
+        prefix: 'assets/i18n/',
         suffix: '.json',
       }),
       fallbackLang: 'en',
