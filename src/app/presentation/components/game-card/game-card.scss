@@ -4,11 +4,12 @@
   position: relative;
   overflow: hidden;
   aspect-ratio: $card-aspect-ratio;
+  background-color: var(--bg-surface);
+  border-radius: $card-border-radius;
   box-shadow: var(--card-shadow);
 
   &__image {
     aspect-ratio: $card-aspect-ratio;
-    border-radius: $card-border-radius;
     display: block;
     object-fit: cover;
     width: 100%;
@@ -52,7 +53,6 @@
 
   &__info {
     background-color: rgba(0, 0, 0, 0.8);
-    border-radius: $card-border-radius;
     display: flex;
     flex-direction: column;
     align-items: center;
