@@ -11,6 +11,7 @@ export class ThemeService {
 
   init(): void {
     const themes: Theme[] = this.settings.supportedThemes as Theme[];
+
     this.uiStore.setAvailableThemes(themes);
 
     const storageTheme = localStorage.getItem('theme');

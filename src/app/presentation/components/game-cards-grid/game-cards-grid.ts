@@ -25,16 +25,16 @@ export class GameCardsGrid {
     if (!this.store.cardsAreLoading() && this.keepTriggeringLoadMore()) this.loadMore.emit();
   }
 
-  protected isGameCard(arg: Card): arg is GameCardModel {
-    return arg.type === 'game';
+  protected isGameCard(card: Card): card is GameCardModel {
+    return card.type === 'game';
   }
 
-  protected isTextCard(arg: Card): arg is TextCardModel {
-    return arg.type === 'text';
+  protected isTextCard(card: Card): card is TextCardModel {
+    return card.type === 'text';
   }
 
-  protected isYearCard(arg: Card): arg is YearCardModel {
-    return arg.type === 'year';
+  protected isYearCard(card: Card): card is YearCardModel {
+    return card.type === 'year';
   }
 
   // @ViewChild('grid') grid!: ElementRef<HTMLDivElement>;
