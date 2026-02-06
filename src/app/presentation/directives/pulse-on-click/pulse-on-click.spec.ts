@@ -47,7 +47,7 @@ describe('PulseOnClickDirective', () => {
 
     expect(animateSpy).toHaveBeenCalledWith(
       [
-        { boxShadow: '0 0 0 0 rgba(250, 50, 150, 0.6)' },
+        { boxShadow: '0 0 0 0 rgba(250, 50, 150, 1)' },
         { boxShadow: '0 0 0 20px rgba(0, 0, 0, 0)' },
       ],
       {
