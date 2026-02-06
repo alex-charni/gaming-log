@@ -106,15 +106,15 @@ describe('HeroSlider', () => {
     it('should apply active class only to the current slide', () => {
       const slides = fixture.debugElement.queryAll(By.css('.hero-slider__slide'));
 
-      expect(slides[0].nativeElement.classList.contains('is-active')).toBe(true);
-      expect(slides[1].nativeElement.classList.contains('is-active')).toBe(false);
+      expect(slides[0].nativeElement.classList.contains('hero-slider__slide--active')).toBe(true);
+      expect(slides[1].nativeElement.classList.contains('hero-slider__slide--active')).toBe(false);
 
       component['currentIndex'].set(1);
 
       fixture.detectChanges();
 
-      expect(slides[0].nativeElement.classList.contains('is-active')).toBe(false);
-      expect(slides[1].nativeElement.classList.contains('is-active')).toBe(true);
+      expect(slides[0].nativeElement.classList.contains('hero-slider__slide--active')).toBe(false);
+      expect(slides[1].nativeElement.classList.contains('hero-slider__slide--active')).toBe(true);
     });
 
     it('should set the slider height based on the input', () => {
