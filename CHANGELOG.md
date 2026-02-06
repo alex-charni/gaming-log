@@ -7,7 +7,18 @@
 
 ---
 
-## 🚀 [1.2.0] - 2026-02-04
+## 🚀 [1.2.1] - 2026-02-06
+
+### 🟠 Changed
+
+- Updated global styles.
+
+### 🔴 Fixed
+
+- Added missing header margins.
+- App background color now covers full height.
+
+## [1.2.0] - 2026-02-04
 
 ### 🟢 Added
 
