@@ -26,11 +26,13 @@
   pointer-events: none;
 
   transition:
+    transform 100ms ease,
     opacity 200ms ease,
     background-color 200ms ease;
 
   &:hover {
     background-color: var(--primary-hover);
+    transform: scale(1.08);
   }
 
   &:active {
