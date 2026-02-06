@@ -1,9 +1,12 @@
+@use 'scss' as *;
+
 .grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(13rem, 1fr));
   gap: 1rem;
 
   &__item {
+    aspect-ratio: $card-aspect-ratio;
     list-style-type: none;
   }
 }
