@@ -4,6 +4,7 @@
   position: relative;
   overflow: hidden;
   aspect-ratio: $card-aspect-ratio;
+  box-shadow: var(--card-shadow);
 
   &__image {
     aspect-ratio: $card-aspect-ratio;
