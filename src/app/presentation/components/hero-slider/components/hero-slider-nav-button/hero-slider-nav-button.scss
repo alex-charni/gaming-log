@@ -12,14 +12,16 @@
   z-index: 2;
   padding: 0;
   background-color: $white;
-  transition: background-color 200ms ease;
+  transition:
+    transform 100ms ease,
+    background-color 200ms ease;
 
   &--left {
     left: 1rem;
 
     .nav__icon {
       transform: rotate(270deg);
-      scale: 50%;
+      scale: 60%;
     }
   }
 
@@ -28,7 +30,7 @@
 
     .nav__icon {
       transform: rotate(90deg);
-      scale: 50%;
+      scale: 60%;
     }
   }
 

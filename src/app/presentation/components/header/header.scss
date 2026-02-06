@@ -26,6 +26,7 @@
     @extend .theme-transition;
 
     background-color: var(--primary);
+    box-shadow: var(--header-shadow);
     color: $white;
 
     &__container {

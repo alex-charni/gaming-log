@@ -22,7 +22,7 @@ $container-max-width: 480px;
     @media screen and (min-width: calc($container-max-width + 2rem * 4)) {
       background-color: var(--bg-surface);
       border-radius: 0.5rem;
-      box-shadow: $card-box-shadow;
+      box-shadow: var(--card-shadow);
     }
 
     .code,

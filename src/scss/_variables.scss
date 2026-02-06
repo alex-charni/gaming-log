@@ -1,5 +1,5 @@
 // Aspect ratios
-$card-slim-aspect-ration: 2.5; // 250 /100;
+$card-slim-aspect-ratio: 2.5; // 250 /100;
 $card-aspect-ratio: 0.75; // 75 / 100;
 
 // Colors
@@ -12,7 +12,7 @@ $white-pure: #fff;
 $white: #f9f9f9;
 
 // Borders
-$card-border-radius: 0.75rem;
+$card-border-radius: 1rem;
 
 // Font sizes
 $font-sm: 0.9rem;
@@ -23,6 +23,3 @@ $font-xl: 2rem;
 // Screen breakpoints
 $screen-sm: 464px;
 $screen-md: 768px;
-
-// Shadows
-$card-box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
