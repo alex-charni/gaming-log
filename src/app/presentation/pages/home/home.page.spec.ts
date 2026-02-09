@@ -18,6 +18,7 @@ const storeMock = {
   cardsCollection: signal([]),
   haventReachedLastYear: signal(true),
 
+  addYearCard: vi.fn(),
   getHeroBannerSlidesRx: vi.fn(),
   getCardsRx: vi.fn(),
 };
@@ -74,13 +75,13 @@ describe('HomePage', () => {
       expect(storeMock.getCardsRx).not.toHaveBeenCalled();
     });
 
-    it('should call fetchGamesByYear when handleFetchMore is invoked', () => {
+    it('should call fetchGamesByYear when handleFetchMoreGames is invoked', () => {
       storeMock.cardsAreLoading.set(false);
       storeMock.nextYearToLoad.set(2020);
 
       fixture.detectChanges();
 
-      component['handleFetchMore']();
+      component['handleFetchMoreGames']();
 
       expect(storeMock.getCardsRx).toHaveBeenCalledWith(2020);
     });
@@ -103,9 +104,9 @@ describe('HomePage', () => {
   });
 
   describe('Template', () => {
-    it('should trigger handleFetchMore on handleFetchMore emit ', () => {
+    it('should trigger handleFetchMoreGames on handleFetchMore emit ', () => {
       // @ts-ignore
-      const spy = vi.spyOn(component, 'handleFetchMore');
+      const spy = vi.spyOn(component, 'handleFetchMoreGames');
 
       const componentDebugElement = fixture.debugElement.query(By.directive(GameCardsGrid));
       const componentInstance = componentDebugElement.componentInstance as GameCardsGrid;

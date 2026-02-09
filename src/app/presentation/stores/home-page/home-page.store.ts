@@ -29,6 +29,14 @@ export const HomePageStore = signalStore(
       getFeaturedGamesUseCase = inject(GetFeaturedGamesUseCase),
       getGamesByYearUseCase = inject(GetGamesByYearUseCase),
     ) => ({
+      addYearCard(year: number): void {
+        patchState(store, {
+          cardsCollection: [
+            ...store.cardsCollection(),
+            { id: `${year}-card`, type: 'year', year: `${year}` },
+          ],
+        });
+      },
       getHeroBannerSlidesRx: rxMethod<number>(
         pipe(
           distinctUntilChanged(),
@@ -58,12 +66,7 @@ export const HomePageStore = signalStore(
               tapResponse({
                 next: (games) =>
                   patchState(store, {
-                    // TODO: simplify with mapper
-                    cardsCollection: [
-                      ...store.cardsCollection(),
-                      { id: `${year}-card`, type: 'year', year: `${year}` },
-                      ...games,
-                    ],
+                    cardsCollection: [...store.cardsCollection(), ...games],
                     cardsAreLoading: false,
                     nextYearToLoad: store.nextYearToLoad() - 1,
                   }),

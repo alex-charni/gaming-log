@@ -13,7 +13,7 @@
     <section class="home-page__cards-grid">
       <app-game-cards-grid
         [keepTriggeringLoadMore]="store.haventReachedLastYear()"
-        (loadMore)="handleFetchMore()"
+        (loadMore)="handleFetchMoreGames()"
       />
     </section>
   </div>

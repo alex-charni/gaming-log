@@ -98,6 +98,15 @@ describe('HomePageStore', () => {
     });
   });
 
+  describe('addYearCard', () => {
+    it('should add a year card after calling addYearCard', () => {
+      store.addYearCard(2025);
+
+      expect(store.cardsCollection().length).toBe(1);
+      expect(store.cardsCollection()[0].type).toBe('year');
+    });
+  });
+
   describe('getCardsRx', () => {
     it('should append new games to cardsCollection and decrement nextYearToLoad', () => {
       const initialYear = 2024;
@@ -109,9 +118,8 @@ describe('HomePageStore', () => {
 
       store.getCardsRx(initialYear);
 
-      expect(store.cardsCollection().length).toBe(homePageInitialState.cardsCollection.length + 2);
-      expect(store.cardsCollection()[0].type).toBe('year');
-      expect(store.cardsCollection()[1].type).toBe('game');
+      expect(store.cardsCollection().length).toBe(homePageInitialState.cardsCollection.length + 1);
+      expect(store.cardsCollection()[0].type).toBe('game');
       expect(store.nextYearToLoad()).toBe(initialYear - 1);
       expect(store.cardsAreLoading()).toBe(false);
     });
