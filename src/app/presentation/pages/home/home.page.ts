@@ -31,7 +31,7 @@ export class HomePage {
     this.fetchGamesByYear(this.store.nextYearToLoad());
   }
 
-  protected handleFetchMore(): void {
+  protected handleFetchMoreGames(): void {
     this.fetchGamesByYear(this.store.nextYearToLoad());
   }
 
@@ -44,6 +44,7 @@ export class HomePage {
   private fetchGamesByYear(year: number): void {
     if (this.store.cardsAreLoading()) return;
 
+    this.store.addYearCard(this.store.nextYearToLoad());
     this.store.getCardsRx(year);
   }
 }
