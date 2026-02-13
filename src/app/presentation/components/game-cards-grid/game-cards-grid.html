@@ -1,18 +1,20 @@
 <ul #grid class="grid">
   @for (card of store.cardsCollection(); track card.id; let index = $index; let last = $last) {
-    @if (isGameCard(card)) {
-      <app-game-card
-        [game]="card"
-        [priority]="index < 10"
-        [viewportEnter]="last"
-        (viewPortEntered)="onEnterViewport()"
-      />
-    } @else if (isYearCard(card)) {
-      <app-year-card
-        [year]="card.year"
-        [isLoading]="card.year === `${store.nextYearToLoad()}` && store.cardsAreLoading()"
-      />
-    }
+    <li class="grid__item">
+      @if (isGameCard(card)) {
+        <app-game-card
+          [game]="card"
+          [priority]="index < 10"
+          [viewportEnter]="last"
+          (viewPortEntered)="onEnterViewport()"
+        />
+      } @else if (isYearCard(card)) {
+        <app-year-card
+          [year]="card.year"
+          [isLoading]="card.year === `${store.nextYearToLoad()}` && store.cardsAreLoading()"
+        />
+      }
+    </li>
   }
 
   @if (store.cardsAreLoading() && keepTriggeringLoadMore()) {
@@ -22,6 +24,8 @@
       </li>
     }
   } @else if (!keepTriggeringLoadMore()) {
-    <app-text-card [text]="'·'" />
+    <li class="grid__item">
+      <app-text-card [text]="'·'" />
+    </li>
   }
 </ul>
