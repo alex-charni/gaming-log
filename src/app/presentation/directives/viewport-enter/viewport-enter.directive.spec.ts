@@ -19,7 +19,7 @@ class IntersectionObserverMock {
 @Component({
   standalone: true,
   imports: [ViewportEnterDirective],
-  template: ` <div [viewportEnter]="true" (viewPortEntered)="onEnter()"></div> `,
+  template: ` <div viewportEnter (viewportEntered)="onEnter()"></div> `,
 })
 class TestHostComponent {
   entered = false;
