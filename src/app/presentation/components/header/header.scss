@@ -1,51 +1,47 @@
 @use 'scss' as *;
+@use 'sass:math';
 
 :host {
+  display: block;
   width: 100%;
   height: var(--header-height);
 
   .layout-wrapper {
+    position: fixed;
+    top: calc(var(--header-height) * -1);
+    left: 0;
     width: 100vw;
+    height: var(--header-height);
+    z-index: 100;
 
-    &--auto-hide {
-      transform: translateY(0);
-      transition: transform 0.25s ease;
-      z-index: 100;
+    transition: top 0.25s ease-in-out;
+    background-color: var(--primary, #000);
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+
+    &--visible {
+      top: 0;
     }
 
-    &--sticky {
-      position: fixed;
-    }
-  }
-
-  .layout-wrapper:not(.layout-wrapper--visible) {
-    transform: translateY(-100%);
-  }
-
-  .app-header {
-    @extend .theme-transition;
-
-    background-color: var(--primary);
-    box-shadow: var(--header-shadow);
-    color: $white;
-
-    &__container {
+    .app-header {
+      height: 100%;
       display: flex;
       align-items: center;
-      justify-content: space-between;
-      height: var(--header-height);
-      max-width: 1280px;
-      margin: 0 auto;
-    }
 
-    &__menu,
-    &__title {
-      margin: 0;
-      padding: 0 1rem;
-    }
+      &__container {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        width: 100%;
+        max-width: 1280px;
+        margin: 0 auto;
+        padding: 0 1rem;
+      }
 
-    &__title {
-      text-transform: uppercase;
+      &__title {
+        margin: 0;
+        text-transform: uppercase;
+        color: $white;
+      }
     }
   }
 }
