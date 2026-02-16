@@ -4,7 +4,7 @@ export const environment = {
   supabaseAnonKey: 'sb_publishable_5W0EQpV0_7nd05cF75ZE1g_WVmjW3Vj',
   supabaseUrl: 'https://wrpriypmoaorobeeqmcc.supabase.co',
   useDataMocks: true,
-  dataMockDelay: 1000,
+  dataMockDelay: 0,
   useImageMocks: true,
   production: false,
 };
