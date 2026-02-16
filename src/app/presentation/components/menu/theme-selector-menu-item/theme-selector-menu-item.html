@@ -1,8 +1,14 @@
 @let isOpen = open();
 @let selectedTheme = uiStore.selectedTheme();
 
-<li class="menu-item" (click)="toggle()" [attr.aria-expanded]="isOpen">
-  <button type="button" class="menu-item__trigger">
+<li class="menu-item" (click)="toggle()">
+  <button
+    type="button"
+    id="theme-selector-button"
+    class="menu-item__trigger"
+    [attr.aria-expanded]="isOpen"
+    aria-controls="theme-selector-panel"
+  >
     {{ 'menu.theme' | translate }}
   </button>
 
@@ -11,7 +17,7 @@
   </span>
 </li>
 
-<div class="menu-item__panel" [class.menu-item__panel--open]="isOpen">
+<div id="theme-selector-panel" class="menu-item__panel" [class.menu-item__panel--open]="isOpen">
   <ul class="menu-sublist">
     @for (theme of uiStore.availableThemes(); track theme) {
       <li
