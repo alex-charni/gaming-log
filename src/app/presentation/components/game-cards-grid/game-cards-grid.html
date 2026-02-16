@@ -1,13 +1,15 @@
 <ul #grid class="grid">
-  @for (card of store.cardsCollection(); track card.id; let index = $index; let last = $last) {
+  @for (card of store.cardsCollection(); track card.id) {
     <li class="grid__item">
-      @if (isGameCard(card)) {
+      @if ($last && isGameCard(card)) {
         <app-game-card
           [game]="card"
-          [priority]="index < 10"
-          [viewportEnter]="last"
-          (viewPortEntered)="onEnterViewport()"
+          [priority]="$index < 10"
+          viewportEnter
+          (viewportEntered)="onEnterViewport()"
         />
+      } @else if (isGameCard(card)) {
+        <app-game-card [game]="card" [priority]="$index < 10" />
       } @else if (isYearCard(card)) {
         <app-year-card
           [year]="card.year"
