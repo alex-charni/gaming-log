@@ -147,7 +147,7 @@ describe('GameCardsGrid', () => {
 
     expect(viewportDirective).not.toBeNull();
 
-    viewportDirective?.viewPortEntered.emit();
+    viewportDirective?.viewportEntered.emit();
 
     expect(spy).toHaveBeenCalledTimes(1);
   });
