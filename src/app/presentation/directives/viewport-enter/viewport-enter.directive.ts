@@ -14,13 +14,15 @@ export class ViewportEnterDirective implements OnInit, OnDestroy {
   private observer?: IntersectionObserver;
 
   ngOnInit(): void {
+    this.initIntersectionObserver();
+  }
+
+  private initIntersectionObserver(): void {
     this.observer = new IntersectionObserver(
       ([entry]) => {
         if (!entry.isIntersecting) return;
 
         this.viewportEntered.emit();
-
-        this.observer?.disconnect();
       },
       {
         threshold: this.threshold(),
