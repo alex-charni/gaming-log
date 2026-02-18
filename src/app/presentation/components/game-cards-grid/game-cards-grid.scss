@@ -11,4 +11,11 @@
   &__item {
     list-style-type: none;
   }
+
+  &__sentinel {
+    width: 1px;
+    height: 1px;
+    opacity: 0;
+    pointer-events: none;
+  }
 }

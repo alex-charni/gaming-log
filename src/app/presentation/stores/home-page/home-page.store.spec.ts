@@ -137,7 +137,7 @@ describe('HomePageStore', () => {
   });
 
   describe('Computed Signals', () => {
-    it('should compute haventReachedLastYear based on environment.startingYear', () => {
+    it('should compute haventReachedLastYear based on appSettings.startingYear', () => {
       patchState(unprotected(store), { nextYearToLoad: appSettings.startingYear });
 
       expect(store.haventReachedLastYear()).toBe(true);

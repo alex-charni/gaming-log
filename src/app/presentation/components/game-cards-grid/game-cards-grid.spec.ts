@@ -3,10 +3,8 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 
 import { ViewportEnterDirective } from '@presentation/directives';
-import { GameCardModel, TextCardModel, YearCardModel } from '@presentation/schemas/interfaces';
 import { Card } from '@presentation/schemas/types';
 import { HomePageStore } from '@presentation/stores';
-import { GameCard } from '../game-card/game-card';
 import { GameCardsGrid } from './game-cards-grid';
 
 const CardsCollectionMock: Card[] = [
@@ -49,7 +47,7 @@ function createHomePageStoreMock() {
     slidesAreLoading: signal(false),
     spinner: signal(false),
     nextYearToLoad: signal(2026),
-
+    haventReachedLastYear: signal(true),
     getCardsRx: vi.fn(),
     getHeroBannerSlidesRx: vi.fn(),
   };
@@ -73,16 +71,15 @@ describe('GameCardsGrid', () => {
     component = fixture.componentInstance;
     componentRef = fixture.componentRef;
 
-    componentRef.setInput('keepTriggeringLoadMore', true);
-
     await fixture.whenStable();
   });
 
-  it('should trigger loadMore onEnterViewport when not loading and keepTriggeringLoadMore is true', () => {
+  it('should trigger loadMore onEnterViewport when not loading and haventReachedLastYear is true', () => {
     const loadMoreSpy = vi.spyOn(component.loadMore, 'emit');
 
     storeMock.cardsAreLoading.set(false);
-    componentRef.setInput('keepTriggeringLoadMore', true);
+    storeMock.haventReachedLastYear.set(true);
+
     fixture.detectChanges();
 
     component['onEnterViewport']();
@@ -90,11 +87,12 @@ describe('GameCardsGrid', () => {
     expect(loadMoreSpy).toHaveBeenCalled();
   });
 
-  it('should not trigger loadMore onEnterViewport when loading and  keepTriggeringLoadMore is true', () => {
+  it('should not trigger loadMore onEnterViewport when loading and haventReachedLastYear is true', () => {
     const loadMoreSpy = vi.spyOn(component.loadMore, 'emit');
 
     storeMock.cardsAreLoading.set(true);
-    componentRef.setInput('keepTriggeringLoadMore', true);
+    storeMock.haventReachedLastYear.set(true);
+
     fixture.detectChanges();
 
     component['onEnterViewport']();
@@ -102,11 +100,12 @@ describe('GameCardsGrid', () => {
     expect(loadMoreSpy).not.toHaveBeenCalled();
   });
 
-  it('should not trigger loadMore onEnterViewport when not loading and keepTriggeringLoadMore is false', () => {
+  it('should not trigger loadMore onEnterViewport when not loading and haventReachedLastYear is false', () => {
     const loadMoreSpy = vi.spyOn(component.loadMore, 'emit');
 
     storeMock.cardsAreLoading.set(false);
-    componentRef.setInput('keepTriggeringLoadMore', false);
+    storeMock.haventReachedLastYear.set(false);
+
     fixture.detectChanges();
 
     component['onEnterViewport']();
@@ -114,36 +113,19 @@ describe('GameCardsGrid', () => {
     expect(loadMoreSpy).not.toHaveBeenCalled();
   });
 
-  it('should return true when passing a valid argument to isGameCard', () => {
-    const check = component['isGameCard']({ type: 'game' } as GameCardModel);
-
-    expect(check).toBe(true);
-  });
-
-  it('should return true when passing a valid argument to isTextCard', () => {
-    const check = component['isTextCard']({ type: 'text' } as TextCardModel);
-
-    expect(check).toBe(true);
-  });
-
-  it('should return true when passing a valid argument to isYearCard', () => {
-    const check = component['isYearCard']({ type: 'year' } as YearCardModel);
-
-    expect(check).toBe(true);
-  });
-
-  it('should call onEnterViewport when last game card emits viewPortEntered', () => {
+  it('should call onEnterViewport when sentinel emits viewPortEntered', () => {
     const spy = vi.spyOn(component as any, 'onEnterViewport');
 
     storeMock.cardsCollection.set(CardsCollectionMock);
+    storeMock.haventReachedLastYear.set(true);
     storeMock.cardsAreLoading.set(false);
     storeMock.nextYearToLoad.set(2025);
 
     fixture.detectChanges();
 
-    const cards = fixture.debugElement.queryAll(By.directive(GameCard));
-    const lastCard = cards[cards.length - 1];
-    const viewportDirective = lastCard.injector.get(ViewportEnterDirective, null);
+    const sentinel = fixture.debugElement.query(By.css('.grid__sentinel'));
+
+    const viewportDirective = sentinel.injector.get(ViewportEnterDirective, null);
 
     expect(viewportDirective).not.toBeNull();
 

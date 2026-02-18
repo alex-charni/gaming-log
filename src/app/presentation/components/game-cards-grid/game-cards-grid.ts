@@ -1,8 +1,6 @@
-import { Component, inject, input, output } from '@angular/core';
+import { Component, inject, output } from '@angular/core';
 
 import { ViewportEnterDirective } from '@presentation/directives';
-import { GameCardModel, TextCardModel, YearCardModel } from '@presentation/schemas/interfaces';
-import { Card } from '@presentation/schemas/types';
 import { HomePageStore } from '@presentation/stores';
 import { GameCardPlaceholder } from '../game-card-placeholder/game-card-placeholder';
 import { GameCard } from '../game-card/game-card';
@@ -18,23 +16,12 @@ import { YearCard } from '../year-card/year-card';
 export class GameCardsGrid {
   protected readonly store = inject(HomePageStore);
 
-  loadMore = output<void>();
-  keepTriggeringLoadMore = input.required<boolean>();
+  readonly loadMore = output<void>();
+
+  protected readonly placeholders = Array.from({ length: 9 });
 
   protected onEnterViewport(): void {
-    if (!this.store.cardsAreLoading() && this.keepTriggeringLoadMore()) this.loadMore.emit();
-  }
-
-  protected isGameCard(card: Card): card is GameCardModel {
-    return card.type === 'game';
-  }
-
-  protected isTextCard(card: Card): card is TextCardModel {
-    return card.type === 'text';
-  }
-
-  protected isYearCard(card: Card): card is YearCardModel {
-    return card.type === 'year';
+    if (!this.store.cardsAreLoading() && this.store.haventReachedLastYear()) this.loadMore.emit();
   }
 
   // @ViewChild('grid') grid!: ElementRef<HTMLDivElement>;

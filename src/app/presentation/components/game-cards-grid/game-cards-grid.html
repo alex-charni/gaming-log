@@ -1,33 +1,31 @@
+@let cardsLoading = store.cardsAreLoading();
+@let moreCardsAvailable = store.haventReachedLastYear();
+
 <ul #grid class="grid">
   @for (card of store.cardsCollection(); track card.id) {
     <li class="grid__item">
-      @if ($last && isGameCard(card)) {
-        <app-game-card
-          [game]="card"
-          [priority]="$index < 10"
-          viewportEnter
-          (viewportEntered)="onEnterViewport()"
-        />
-      } @else if (isGameCard(card)) {
+      @if (card.type === 'game') {
         <app-game-card [game]="card" [priority]="$index < 10" />
-      } @else if (isYearCard(card)) {
+      } @else if (card.type === 'year') {
         <app-year-card
           [year]="card.year"
-          [isLoading]="card.year === `${store.nextYearToLoad()}` && store.cardsAreLoading()"
+          [isLoading]="card.year === `${store.nextYearToLoad()}` && cardsLoading"
         />
       }
     </li>
   }
 
-  @if (store.cardsAreLoading() && keepTriggeringLoadMore()) {
-    @for (item of [].constructor(19); track $index) {
+  @if (!moreCardsAvailable) {
+    <li class="grid__item">
+      <app-text-card [text]="'·'" />
+    </li>
+  } @else if (cardsLoading) {
+    @for (item of placeholders; track $index) {
       <li class="grid__item">
         <app-game-card-placeholder />
       </li>
     }
-  } @else if (!keepTriggeringLoadMore()) {
-    <li class="grid__item">
-      <app-text-card [text]="'·'" />
-    </li>
+  } @else {
+    <li class="grid__sentinel" viewportEnter (viewportEntered)="onEnterViewport()"></li>
   }
 </ul>
