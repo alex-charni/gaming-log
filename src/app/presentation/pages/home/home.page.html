@@ -11,10 +11,7 @@
     </div>
 
     <section class="home-page__cards-grid">
-      <app-game-cards-grid
-        [keepTriggeringLoadMore]="store.haventReachedLastYear()"
-        (loadMore)="handleFetchMoreGames()"
-      />
+      <app-game-cards-grid (loadMore)="handleFetchMoreGames()" />
     </section>
   </div>
 </main>
