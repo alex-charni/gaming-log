@@ -74,7 +74,7 @@ describe('GameCard', () => {
     expect(cardContainer).not.toBeDefined();
   });
 
-  it('should render fa-star icon when provided game has rating 5', () => {
+  it('should have class game-card--rainbow when provided game has rating 5', () => {
     const GameWithRatingFiveMock: GameCardModel = {
       ...GameMock,
       rating: 5,
@@ -84,10 +84,10 @@ describe('GameCard', () => {
 
     fixture.detectChanges();
 
-    const ratingContainer = fixture.debugElement.query(By.css('.game-card__rating'))
+    const ratingContainer = fixture.debugElement.query(By.css('.game-card'))
       ?.nativeElement as HTMLDivElement;
 
-    expect(ratingContainer).toBeDefined();
+    expect(ratingContainer.classList.contains('game-card--rainbow')).toBe(true);
   });
 
   it('should render long dash icon when provided game has no rating', () => {
