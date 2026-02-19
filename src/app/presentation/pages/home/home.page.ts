@@ -1,9 +1,10 @@
 import { Component, effect, inject, signal } from '@angular/core';
 import { TranslatePipe } from '@ngx-translate/core';
 
-import { GameCardsGrid, Header, HeroSlider, HorizontalSeparator } from '@presentation/components';
+import { GameCardsGrid, Header, HeroSlider } from '@presentation/components';
 import { SpinnerService } from '@presentation/services';
 import { HomePageStore } from '@presentation/stores';
+import { HorizontalSeparator } from '@presentation/ui';
 
 @Component({
   selector: 'app-home-page',

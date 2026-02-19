@@ -2,7 +2,7 @@ import { GetFeaturedGamesUseCase, GetGamesByYearUseCase } from '@core/applicatio
 import { GamesRepository } from '@core/domain/repositories';
 import { APP_PARAMS } from '@infrastructure/config/app.params';
 import { GamesRepositoryAdapter } from '@infrastructure/http/api';
-import { APP_SETTINGS } from './app.tokens';
+import { APP_SETTINGS } from '../config/app.tokens';
 
 const APP_SETTINGS_PROVIDERS = {
   provide: APP_SETTINGS,

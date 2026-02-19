@@ -9,7 +9,7 @@ import { provideRouter } from '@angular/router';
 import { provideTranslateService } from '@ngx-translate/core';
 import { provideTranslateHttpLoader } from '@ngx-translate/http-loader';
 
-import { APP_PROVIDERS } from '@infrastructure/config';
+import { APP_PROVIDERS } from '@infrastructure/di';
 import { SupabaseInterceptor } from '@infrastructure/http/interceptors';
 import { LanguageService, ThemeService } from '@presentation/services';
 import { routes } from './app.routes';

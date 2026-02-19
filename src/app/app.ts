@@ -1,11 +1,7 @@
 import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 
-import {
-  FullScreenBackdropComponent,
-  FullScreenSpinner,
-  ScrollTopButton,
-} from '@presentation/components';
+import { FullScreenBackdropComponent, FullScreenSpinner, ScrollTopButton } from '@presentation/ui';
 
 @Component({
   selector: 'app-root',

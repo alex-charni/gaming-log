@@ -3,3 +3,5 @@ export const APP_PARAMS = {
   supportedLanguages: ['en', 'es'],
   supportedThemes: ['dark', 'light'],
 };
+
+export type AppConfig = typeof APP_PARAMS;
