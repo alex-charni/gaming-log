@@ -1,6 +1,6 @@
 import { AfterViewInit, Component, computed, HostListener, inject, input } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
-import { NavigationEnd, Router } from '@angular/router';
+import { NavigationEnd, Router, RouterLink } from '@angular/router';
 import { TranslatePipe } from '@ngx-translate/core';
 import { filter, map } from 'rxjs';
 
@@ -10,7 +10,7 @@ import { BurgerMenuComponent } from '../menu/burger-menu/burger-menu.component';
   selector: 'app-header',
   templateUrl: './header.html',
   styleUrl: './header.scss',
-  imports: [TranslatePipe, BurgerMenuComponent],
+  imports: [TranslatePipe, BurgerMenuComponent, RouterLink],
 })
 export class Header implements AfterViewInit {
   readonly offset = input(10);

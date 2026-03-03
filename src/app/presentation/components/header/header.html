@@ -1,7 +1,7 @@
 <div id="app-header-wrapper" class="layout-wrapper" [class.layout-wrapper--visible]="isVisible">
   <header id="app-header" class="app-header">
     <div class="app-header__container">
-      <div class="app-header__brand">
+      <div class="app-header__brand" [routerLink]="'/home'">
         <img
           class="app-header__image"
           src="assets/media/images/logos/main-logo.svg"
