@@ -42,6 +42,7 @@
         display: flex;
         align-items: center;
         gap: 0.5rem;
+        cursor: pointer;
       }
 
       &__title {
@@ -50,6 +51,7 @@
         color: $white;
         font-size: $font-lg;
         font-weight: 700;
+        transition: font-size 0.2s ease-in-out;
 
         @media screen and (min-width: $screen-sm) {
           font-size: $font-xl;
@@ -58,6 +60,7 @@
 
       &__image {
         width: 48px;
+        transition: width 0.2s ease-in-out;
 
         @media screen and (min-width: $screen-sm) {
           width: 64px;
