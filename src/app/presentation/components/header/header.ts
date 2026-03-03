@@ -1,29 +1,46 @@
-import { AfterViewInit, Component, HostListener, input, signal } from '@angular/core';
+import { AfterViewInit, Component, computed, HostListener, inject, input } from '@angular/core';
+import { toSignal } from '@angular/core/rxjs-interop';
+import { NavigationEnd, Router, RouterLink } from '@angular/router';
 import { TranslatePipe } from '@ngx-translate/core';
+import { filter, map } from 'rxjs';
 
 import { BurgerMenuComponent } from '../menu/burger-menu/burger-menu.component';
 
 @Component({
   selector: 'app-header',
-  imports: [TranslatePipe, BurgerMenuComponent],
   templateUrl: './header.html',
   styleUrl: './header.scss',
+  imports: [TranslatePipe, BurgerMenuComponent, RouterLink],
 })
 export class Header implements AfterViewInit {
-  offset = input(10);
-  stickyAfter = input(0);
+  readonly offset = input(10);
+  readonly stickyAfter = input(0);
+
+  private readonly router = inject(Router);
 
   isVisible = true;
-  isSticky = false;
 
   private lastScrollTop = 0;
   private hasScrolled = false;
+
+  private readonly navEnd = toSignal(
+    this.router.events.pipe(
+      filter((event) => event instanceof NavigationEnd),
+      map((event) => (event as NavigationEnd).urlAfterRedirects),
+    ),
+    { initialValue: this.router.url },
+  );
+
+  protected readonly isHome = computed(() => {
+    const url = this.navEnd();
+
+    return url === '/' || url === '/home' || url === undefined;
+  });
 
   ngAfterViewInit(): void {
     const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
 
     this.isVisible = true;
-    this.isSticky = scrollTop > this.stickyAfter();
     this.lastScrollTop = scrollTop;
   }
 
@@ -41,11 +58,9 @@ export class Header implements AfterViewInit {
       this.isVisible = false;
     } else if (currentScroll < this.lastScrollTop - this.offset()) {
       this.isVisible = true;
-      this.isSticky = currentScroll > this.stickyAfter();
     }
 
     if (currentScroll <= this.stickyAfter()) {
-      this.isSticky = false;
       this.isVisible = true;
     }
 
