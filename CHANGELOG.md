@@ -6,6 +6,12 @@
 - Japanese language.
 
 ---
+## [1.2.4] - 2026-03-03
+
+### 🟢 Added
+
+- Logo in header.
+- New favicon.
 
 ## 🚀 [1.2.3] - 2026-02-09
 
