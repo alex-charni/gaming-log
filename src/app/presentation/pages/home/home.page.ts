@@ -9,7 +9,6 @@ import { HorizontalSeparator } from '@presentation/ui';
 @Component({
   selector: 'app-home-page',
   imports: [GameCardsGrid, Header, HeroSlider, HorizontalSeparator, TranslatePipe],
-  providers: [HomePageStore],
   templateUrl: './home.page.html',
   styleUrl: './home.page.scss',
 })
@@ -28,8 +27,8 @@ export class HomePage {
   }
 
   ngOnInit(): void {
-    this.fetchFeaturedGames();
-    this.fetchGamesByYear(this.store.nextYearToLoad());
+    if (!this.store.slidesCollection().length) this.fetchFeaturedGames();
+    if (!this.store.cardsCollection().length) this.fetchGamesByYear(this.store.nextYearToLoad());
   }
 
   protected handleFetchMoreGames(): void {

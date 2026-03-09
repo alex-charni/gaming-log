@@ -1,0 +1,76 @@
+<main class="page">
+  <div class="page__container">
+    <app-header class="page__header" />
+
+    <app-title-banner class="page__title" [text]="'common.about' | translate" [height]="200" />
+
+    <section class="page__section">
+      <div class="card">
+        <p>
+          <span class="branded-text">{{ 'app.title' | translate }}</span>
+          {{ 'pages.about.main_section.intro' | translate }}
+        </p>
+
+        <ul>
+          <li>{{ 'pages.about.main_section.visual_format' | translate }}</li>
+          <li>{{ 'pages.about.main_section.practice_angular' | translate }}</li>
+        </ul>
+      </div>
+    </section>
+
+    <div class="page__separator">
+      <app-horizontal-separator
+        [text]="'common.games_log' | translate"
+        role="heading"
+        aria-level="2"
+      />
+    </div>
+
+    <section class="page__section">
+      <div class="card">
+        <p>{{ 'pages.about.game_log_section.intro' | translate }}</p>
+
+        <ul>
+          <li>{{ 'pages.about.game_log_section.now_playing' | translate }}</li>
+          <li>{{ 'pages.about.game_log_section.finished_games' | translate }}</li>
+          <li>{{ 'pages.about.game_log_section.upcoming_games' | translate }}</li>
+        </ul>
+
+        <p>{{ 'pages.about.game_log_section.disclaimer' | translate }}</p>
+      </div>
+    </section>
+
+    <div class="page__separator">
+      <app-horizontal-separator
+        [text]="'pages.about.ratings_section.title' | translate"
+        role="heading"
+        aria-level="2"
+      />
+    </div>
+
+    <section class="page__section">
+      <div class="card">
+        <ul class="ratings">
+          @for (item of ratings(); track item.label) {
+            <li class="ratings__item">
+              <app-rating [rating]="item.value" />
+
+              <p class="ratings__description">
+                {{ 'pages.about.ratings_section.' + item.label | translate }}
+              </p>
+            </li>
+          }
+
+          <li class="ratings__item">
+            <app-rating />
+
+            <p class="ratings__description">
+              {{ 'pages.about.ratings_section.undefined' | translate }}
+              <i class="fa-regular fa-face-frown sad"></i>
+            </p>
+          </li>
+        </ul>
+      </div>
+    </section>
+  </div>
+</main>

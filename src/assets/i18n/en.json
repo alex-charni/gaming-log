@@ -3,6 +3,8 @@
     "title": "Gaming Log"
   },
   "common": {
+    "about": "About",
+    "games_log": "Games Log",
     "go_back": "Go back",
     "now_playing": "Now playing",
     "now_playing_with_ellipsis": "Now playing..."
@@ -18,8 +20,8 @@
     "jp": "日本語 "
   },
   "menu": {
-    "about": "About",
     "filters": "Filters",
+    "home": "Home",
     "language": "Language",
     "theme": "Theme",
     "toggle_menu": "Toggle menu",
@@ -31,5 +33,30 @@
   "themes": {
     "dark": "Dark",
     "light": "Light"
+  },
+  "pages": {
+    "about": {
+      "main_section": {
+        "intro": "is a small personal project developed with two goals in mind:",
+        "visual_format": "Moving my completed games log from a notepad to a visual format.",
+        "practice_angular": "Putting into practice the new Angular tools that appear with each version."
+      },
+      "game_log_section": {
+        "intro": "The game log serves several purposes:",
+        "now_playing": "Showing the games I am currently playing.",
+        "finished_games": "Showing already completed games.",
+        "upcoming_games": "Showing the games I will be playing shortly.",
+        "disclaimer": "Each finished game should have an associated rating, which is entirely personal, subjective, and should not be taken as a reference."
+      },
+      "ratings_section": {
+        "title": "Ratings",
+        "five": "Excellent: it has particularly outstanding aspects and is very well executed as a whole.",
+        "four": "Very good: it hits its main gameplay premise and takes it a step further than expected.",
+        "three": "Good game: it's entertaining, enjoyable, and has no major flaws, but nothing that makes it stand out either.",
+        "two": "Mediocre: it barely offers interesting ideas or does so in an erratic or unsuccessful way.",
+        "one": "Very bad: its main aspects are poorly executed or it has bugs that ruin the experience.",
+        "undefined": "Pending: its rating was lost for some reason"
+      }
+    }
   }
 }

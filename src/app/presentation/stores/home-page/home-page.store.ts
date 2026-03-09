@@ -10,6 +10,7 @@ import { toGameCardModel, toHeroSlideModel } from '@presentation/mappers';
 import { homePageInitialState } from './home-page-initial-state';
 
 export const HomePageStore = signalStore(
+  { providedIn: 'root' },
   withState(homePageInitialState),
   withComputed(({ cardsCollection, slidesAreLoading, cardsAreLoading }) => ({
     spinner: computed(
