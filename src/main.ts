@@ -5,13 +5,9 @@ import { appConfig } from './app/app.config';
 
 async function enableMocks(): Promise<void> {
   if (environment.useDataMocks) {
-    const { finishedGamesWorker, featuredGamesWorker } = await import('./mocks/browser');
+    const { gamesWorker } = await import('./mocks/browser');
 
-    await finishedGamesWorker.start({
-      onUnhandledRequest: 'bypass',
-    });
-
-    await featuredGamesWorker.start({
+    await gamesWorker.start({
       onUnhandledRequest: 'bypass',
     });
   }
