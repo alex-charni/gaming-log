@@ -41,46 +41,15 @@
     transition: opacity 0.25s ease-in-out;
 
     .title,
-    .rating,
-    .platform {
-      font-size: $font-lg;
-      text-align: center;
-    }
-
-    .title,
     .platform {
       color: $white-pure;
-    }
-
-    .rating {
-      color: $fuchsia;
-
-      &--rainbow {
-        background: linear-gradient(90deg, var(--rainbow-colors));
-
-        background-size: 300% 100%;
-        background-position: 0% 50%;
-
-        -webkit-background-clip: text;
-        background-clip: text;
-        color: transparent;
-
-        animation: rainbow-text 6s linear infinite;
-      }
+      font-size: $font-lg;
+      text-align: center;
     }
   }
 
   &:hover &__info {
     opacity: 1;
-  }
-}
-
-@keyframes rainbow-text {
-  0% {
-    background-position: 0% 50%;
-  }
-  100% {
-    background-position: 300% 50%;
   }
 }
 

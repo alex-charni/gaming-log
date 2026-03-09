@@ -1,12 +1,14 @@
 import { IMAGE_CONFIG, NgOptimizedImage } from '@angular/common';
 import { Component, input } from '@angular/core';
+
+import { Rating } from '@presentation/components/rating/rating';
 import { GameCardModel } from '@presentation/schemas/interfaces';
 
 @Component({
   selector: 'app-game-card',
-  imports: [NgOptimizedImage],
   templateUrl: './game-card.html',
   styleUrl: './game-card.scss',
+  imports: [NgOptimizedImage, Rating],
   providers: [{ provide: IMAGE_CONFIG, useValue: { placeholderResolution: 40 } }],
 })
 export class GameCard {

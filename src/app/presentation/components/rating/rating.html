@@ -1,0 +1,9 @@
+<div class="rating" [class]="classes()">
+  @if (!rating()) {
+    <span>—</span>
+  } @else {
+    @for (point of icons(); track $index) {
+      <i class="fa-solid fa-star"></i>
+    }
+  }
+</div>
