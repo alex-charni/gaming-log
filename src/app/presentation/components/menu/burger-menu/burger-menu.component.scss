@@ -84,7 +84,9 @@
 
     font-size: $font-md;
 
-    @media screen and (min-width: $screen-sm) {
+    cursor: inherit;
+
+    @media screen and (min-width: $screen-lg) {
       text-align: left;
     }
   }
