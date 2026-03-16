@@ -3,28 +3,41 @@
     @if (authStore.isLoggedIn()) {
       <i class="auth-card__icon fa-solid fa-unlock"></i>
 
-      <h1 class="auth-card__title">{{ 'Log out' }}</h1>
+      <h1 class="auth-card__title">{{ 'pages.auth.logout' | translate }}</h1>
 
-      <app-button [type]="'button'" [text]="'Logout'" (action)="onLogout()" />
+      <app-button
+        [type]="'button'"
+        [text]="'pages.auth.logout' | translate"
+        (action)="onLogout()"
+      />
     } @else {
       <i class="auth-card__icon fa-solid fa-lock"></i>
 
-      <h1 class="auth-card__title">{{ 'Log in' }}</h1>
+      <h1 class="auth-card__title">{{ 'pages.auth.login' | translate }}</h1>
 
       <form class="auth-form" (submit)="onSubmit($event)">
-        <app-form-field id="email" label="Email" type="email" [field]="loginForm.email()" />
+        <app-form-field
+          type="email"
+          id="email"
+          [label]="'forms.email' | translate"
+          [field]="loginForm.email()"
+        />
 
         <app-form-field
-          id="password"
-          label="Password"
           type="password"
+          id="password"
+          [label]="'forms.password' | translate"
           [field]="loginForm.password()"
         />
 
-        <app-button [type]="'submit'" [text]="'Login'" [disabled]="loginForm().invalid()" />
+        <app-button
+          type="submit"
+          [text]="'pages.auth.login' | translate"
+          [disabled]="loginForm().invalid()"
+        />
 
         <p class="auth-form__feedback" [class.auth-form__feedback--visible]="error()">
-          {{ error() }}
+          {{ error() | translate }}
         </p>
       </form>
     }

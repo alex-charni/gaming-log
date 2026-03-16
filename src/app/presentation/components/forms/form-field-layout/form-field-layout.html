@@ -11,7 +11,7 @@
 
   <ul class="form-field__errors" [class.form-field__errors--visible]="showErrors()">
     @for (error of field().errors(); track error) {
-      <li class="form-field__error">{{ error.message }}</li>
+      <li class="form-field__error">{{ error.message | translate }}</li>
     }
   </ul>
 </div>
