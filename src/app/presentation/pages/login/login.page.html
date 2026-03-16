@@ -1,0 +1,32 @@
+<main class="auth-page">
+  <section class="auth-card">
+    @if (authStore.isLoggedIn()) {
+      <i class="auth-card__icon fa-solid fa-unlock"></i>
+
+      <h1 class="auth-card__title">{{ 'Log out' }}</h1>
+
+      <app-button [type]="'button'" [text]="'Logout'" (action)="onLogout()" />
+    } @else {
+      <i class="auth-card__icon fa-solid fa-lock"></i>
+
+      <h1 class="auth-card__title">{{ 'Log in' }}</h1>
+
+      <form class="auth-form" (submit)="onSubmit($event)">
+        <app-form-field id="email" label="Email" type="email" [field]="loginForm.email()" />
+
+        <app-form-field
+          id="password"
+          label="Password"
+          type="password"
+          [field]="loginForm.password()"
+        />
+
+        <app-button [type]="'submit'" [text]="'Login'" [disabled]="loginForm().invalid()" />
+
+        <p class="auth-form__feedback" [class.auth-form__feedback--visible]="error()">
+          {{ error() }}
+        </p>
+      </form>
+    }
+  </section>
+</main>

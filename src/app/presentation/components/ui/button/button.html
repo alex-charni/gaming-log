@@ -1,0 +1,13 @@
+<button
+  [type]="type()"
+  class="button button--primary"
+  [style.height]="height()"
+  [style.width]="width()"
+  appPulseOnclick
+  [variant]="'fuchsia'"
+  [size]="8"
+  [disabled]="disabled()"
+  (click)="handleClick()"
+>
+  {{ text() }}
+</button>

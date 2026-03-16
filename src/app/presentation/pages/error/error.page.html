@@ -10,16 +10,12 @@
     <p class="message">{{ message() }}</p>
 
     @if (showButton()) {
-      <button
-        type="button"
-        class="button"
-        appPulseOnclick
-        [variant]="'black'"
-        [size]="8"
-        (click)="handleButtonAction()"
-      >
-        {{ buttonText() }}
-      </button>
+      <app-button
+        [type]="'button'"
+        [text]="buttonText()"
+        [width]="'50%'"
+        (action)="handleButtonAction()"
+      />
     }
   </section>
 </main>

@@ -1,15 +1,16 @@
 import { Location } from '@angular/common';
-import { Component, inject, signal } from '@angular/core';
+import { Component, inject, Signal, signal } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { ActivatedRoute } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
-import { PulseOnClickDirective } from '@presentation/directives';
+
+import { Button } from '@presentation/components';
 
 @Component({
   selector: 'app-error-page',
   templateUrl: './error.page.html',
   styleUrl: './error.page.scss',
-  imports: [PulseOnClickDirective],
+  imports: [Button],
 })
 export class ErrorPage {
   private readonly location = inject(Location);
@@ -38,7 +39,7 @@ export class ErrorPage {
     'buttonText' in this.routeData()
       ? this.translate.stream(this.routeData().buttonText)
       : this.translate.stream('common.go_back'),
-  );
+  ) as Signal<string>;
 
   readonly showButton = signal(
     'showButton' in this.routeData() ? !!this.routeData().showButton : true,
