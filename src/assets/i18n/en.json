@@ -14,6 +14,14 @@
     "page_not_found": "The requested page can't be found.",
     "unexpected_event": "Something unexpected happened on our end."
   },
+  "forms": {
+    "email": "Email",
+    "email_required": "Email is required",
+    "invalid_format": "Invalid format",
+    "password": "Password",
+    "password_required": "Password is required",
+    "required": "Required"
+  },
   "languages": {
     "en": "English",
     "es": "Español",
@@ -57,6 +65,11 @@
         "one": "Very bad: its main aspects are poorly executed or it has bugs that ruin the experience.",
         "undefined": "Pending: its rating was lost for some reason"
       }
+    },
+    "auth": {
+      "login": "Log in",
+      "login_failed": "Login failed",
+      "logout": "Log out"
     }
   }
 }

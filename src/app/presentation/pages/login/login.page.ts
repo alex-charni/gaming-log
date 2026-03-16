@@ -1,6 +1,7 @@
 import { Component, inject, signal } from '@angular/core';
 import { email, form, required, submit } from '@angular/forms/signals';
 import { Router } from '@angular/router';
+import { TranslatePipe } from '@ngx-translate/core';
 import { finalize } from 'rxjs';
 
 import { LoginUseCase, LogoutUseCase } from '@core/application/use-cases';
@@ -22,7 +23,7 @@ const INITIAL_FORM_MODEL = {
   selector: 'app-login-page',
   templateUrl: './login.page.html',
   styleUrl: './login.page.scss',
-  imports: [Button, FormFieldComponent],
+  imports: [Button, FormFieldComponent, TranslatePipe],
 })
 export class LoginPage {
   private readonly router = inject(Router);
@@ -36,10 +37,10 @@ export class LoginPage {
   private readonly loginModel = signal<LoginData>({ ...INITIAL_FORM_MODEL });
 
   protected readonly loginForm = form(this.loginModel, (schemaPath) => {
-    required(schemaPath.email, { message: 'Email is required' });
-    email(schemaPath.email, { message: 'Enter a valid email address' });
+    required(schemaPath.email, { message: 'forms.email_required' });
+    email(schemaPath.email, { message: 'forms.invalid_format' });
 
-    required(schemaPath.password, { message: 'Password is required' });
+    required(schemaPath.password, { message: 'forms.password_required' });
   });
 
   protected onSubmit(event: Event) {
@@ -64,7 +65,7 @@ export class LoginPage {
           },
           error: (error) => {
             console.error(error);
-            this.error.set('Login failed');
+            this.error.set('pages.auth.login_failed');
           },
         });
     });

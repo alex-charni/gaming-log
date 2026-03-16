@@ -1,11 +1,12 @@
 import { Component, computed, input } from '@angular/core';
 import { FieldState } from '@angular/forms/signals';
-
+import { TranslatePipe } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-form-field-layout',
   templateUrl: './form-field-layout.html',
   styleUrl: './form-field-layout.scss',
+  imports: [TranslatePipe],
 })
 export class FormFieldLayout {
   readonly field = input.required<FieldState<any, string>>();
