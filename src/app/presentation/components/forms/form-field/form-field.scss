@@ -1,0 +1,45 @@
+@use 'scss' as *;
+
+.form-field {
+  &__input {
+    text-align: center;
+    padding: 0.8rem 1rem;
+    border: 2px solid var(--bg-app);
+    border-radius: calc($card-border-radius / 2);
+    font-size: $font-md;
+    background-color: var(--bg-app);
+
+    transition: all 0.3s ease;
+
+    &:focus {
+      outline: none;
+      border-color: var(--primary);
+      background-color: var(--bg-surface);
+    }
+
+    &.ng-invalid.ng-touched {
+      border-color: var(--primary);
+    }
+
+    &--number {
+      appearance: textfield;
+      -moz-appearance: textfield;
+    }
+
+    &--number::-webkit-outer-spin-button,
+    &--number::-webkit-inner-spin-button {
+      -webkit-appearance: none;
+      margin: 0;
+    }
+
+    &--date {
+      appearance: none;
+      -moz-appearance: none;
+      text-align: center;
+    }
+
+    &--select {
+      padding-right: 1rem;
+    }
+  }
+}

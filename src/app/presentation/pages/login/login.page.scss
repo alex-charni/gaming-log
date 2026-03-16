@@ -1,0 +1,86 @@
+@use 'scss' as *;
+
+$container-max-width: $screen-sm;
+$auth-card-breakpoint: calc($container-max-width + 8rem);
+
+@mixin desktop-view {
+  @media screen and (min-width: #{$auth-card-breakpoint}) {
+    @content;
+  }
+}
+
+.auth-page {
+  background-color: var(--bg-surface);
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  transition: background-color 0.25s;
+
+  @include desktop-view {
+    background-color: var(--bg-app);
+  }
+}
+
+.auth-card {
+  border-radius: 0;
+  background-color: var(--bg-surface);
+  width: 100%;
+  max-width: $container-max-width;
+  padding: 2rem 2rem 1.5rem 2rem;
+  text-align: center;
+
+  transition:
+    background-color 0.25s,
+    box-shadow 0.25s,
+    border-radius 0.25s;
+
+  @include desktop-view {
+    border-radius: 0.5rem;
+    box-shadow: var(--card-shadow);
+  }
+
+  &__icon {
+    font-size: $font-2xl;
+    color: $fuchsia;
+    margin-bottom: 1rem;
+    display: inline-block; // Para asegurar que el margen funcione bien
+  }
+
+  &__title {
+    color: var(--text-main);
+    font-size: $font-xl;
+    margin: 0 0 1.5rem;
+  }
+}
+
+.auth-form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+
+  &__feedback {
+    color: var(--primary);
+    font-size: $font-sm;
+    margin-block: 0.5rem 0;
+
+    padding: 0;
+    margin: 0;
+    min-height: 1.2rem;
+
+    opacity: 0;
+    transform: translateY(-5px);
+
+    transition:
+      opacity 0.3s ease,
+      transform 0.3s ease;
+
+    pointer-events: none;
+
+    &--visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+}
