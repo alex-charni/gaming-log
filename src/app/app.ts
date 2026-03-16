@@ -1,6 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 
+import { AuthStore } from '@presentation/stores/auth';
 import { FullScreenBackdropComponent, FullScreenSpinner, ScrollTopButton } from '@presentation/ui';
 
 @Component({
@@ -9,4 +10,10 @@ import { FullScreenBackdropComponent, FullScreenSpinner, ScrollTopButton } from 
   templateUrl: './app.html',
   styleUrl: './app.scss',
 })
-export class App {}
+export class App {
+  private readonly authStore = inject(AuthStore);
+
+  constructor() {
+    this.authStore.init();
+  }
+}
