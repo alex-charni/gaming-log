@@ -1,4 +1,5 @@
 import {
+  AddGameUseCase,
   GetFeaturedGamesUseCase,
   GetGamesByYearUseCase,
   GetUserUseCase,
