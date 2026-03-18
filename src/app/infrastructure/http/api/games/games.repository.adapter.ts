@@ -1,6 +1,6 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
-import { delay, map, Observable } from 'rxjs';
+import { delay, firstValueFrom, map, Observable } from 'rxjs';
 
 import { GameEntity } from '@core/domain/entities';
 import { GamesRepository } from '@core/domain/repositories';
@@ -12,12 +12,21 @@ import { GameApiResponse } from '@infrastructure/http/schemas';
 export class GamesRepositoryAdapter implements GamesRepository {
   private readonly http = inject(HttpClient);
 
-  public addGame(game: GameEntity): Observable<GameEntity> {
+  public addGame(game: GameEntity): Promise<GameEntity> {
     const url = `${environment.apiUrl}/items`;
 
-    return this.http
-      .post<GameEntity>(url, game, { observe: 'response' })
-      .pipe(map((res) => res.body as GameEntity));
+    return firstValueFrom(
+      this.http
+        .post<GameEntity>(url, game, { observe: 'response' })
+        .pipe(map((res) => res.body as GameEntity)),
+    );
+  }
+
+  public async addGameCover(gameId: string, cover: File, extension: string): Promise<any> {
+    const path = `covers/${gameId}.${extension}`;
+    const url = `${environment.supabaseUrl}/${environment.supabaseStorageEndpoint}/object/images/${path}`;
+
+    return await firstValueFrom(this.http.post(url, cover));
   }
 
   public getFeaturedGames(quantity?: number): Observable<GameEntity[]> {

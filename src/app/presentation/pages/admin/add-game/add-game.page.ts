@@ -4,10 +4,9 @@ import { form, required } from '@angular/forms/signals';
 import { TranslatePipe } from '@ngx-translate/core';
 import { v4 as uuidv4 } from 'uuid';
 
-import { AddGameUseCase } from '@core/application/use-cases';
+import { AddGameCoverUseCase, AddGameUseCase } from '@core/application/use-cases';
 import { GameEntity } from '@core/domain/entities';
 import { GameStatus, Rating } from '@core/domain/schemas/types';
-import { Supabase } from '@infrastructure/supabase';
 import { Button, FormFieldComponent, ImageFormField } from '@presentation/components';
 
 interface AddGameData {
@@ -27,8 +26,8 @@ interface AddGameData {
   imports: [ReactiveFormsModule, ImageFormField, Button, FormFieldComponent, TranslatePipe],
 })
 export class AddGamePage {
-  private readonly supabaseService = inject(Supabase);
   private readonly addGameUseCase = inject(AddGameUseCase);
+  private readonly addGameCoverUseCase = inject(AddGameCoverUseCase);
 
   protected readonly ratingOptions = [
     { label: '0', value: 0 },
@@ -52,11 +51,11 @@ export class AddGamePage {
     platform: '',
     rating: '0',
     date: '',
-    status: 'finished',
+    status: 'finished' as GameStatus,
     cover: null,
   };
 
-  private readonly formModel = signal<AddGameData>({ ...this.INITIAL_MODEL } as AddGameData);
+  private readonly formModel = signal<AddGameData>({ ...this.INITIAL_MODEL });
 
   protected readonly form = form(this.formModel, (schemaPath) => {
     required(schemaPath.title, { message: 'forms.required' });
@@ -72,41 +71,29 @@ export class AddGamePage {
 
     if (this.form().invalid()) return;
 
-    const { date, id, platform, rating, status, title } = this.formModel();
+    try {
+      const { date, id, platform, rating, status, title, cover } = this.formModel();
 
-    const identifier = id ? id : uuidv4();
+      if (!cover) throw 'NO FILE';
 
-    await this.uploadCover(identifier);
+      const identifier = id ? id : uuidv4();
 
-    const game: GameEntity = {
-      date,
-      id: identifier,
-      platform,
-      rating: rating as unknown as Rating,
-      status,
-      title,
-    };
+      await this.addGameCoverUseCase.execute(identifier, cover, 'webp');
 
-    this.addGameUseCase.execute(game).subscribe({
-      next: () => {
-        this.formModel.set({ ...this.INITIAL_MODEL } as AddGameData);
-      },
-      error: (error) => {
-        console.error(error);
-      },
-    });
-  }
+      const game: GameEntity = {
+        date,
+        id: identifier,
+        platform,
+        rating: parseInt(rating) as Rating,
+        status,
+        title,
+      };
 
-  private async uploadCover(id: string) {
-    const path = `covers/${id}.webp`;
+      await this.addGameUseCase.execute(game);
 
-    const { error } = await this.supabaseService.client.storage
-      .from('images')
-      .upload(path, this.form.cover().value(), {
-        upsert: false,
-        contentType: 'image/webp',
-      });
-
-    if (error) throw error;
+      this.formModel.set({ ...this.INITIAL_MODEL });
+    } catch (error) {
+      console.error(error);
+    }
   }
 }

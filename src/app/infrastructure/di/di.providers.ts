@@ -50,6 +50,11 @@ const GAMES_PROVIDERS = [
     deps: [GamesRepository],
   },
   {
+    provide: AddGameCoverUseCase,
+    useFactory: (repository: GamesRepository) => new AddGameCoverUseCase(repository),
+    deps: [GamesRepository],
+  },
+  {
     provide: GetGamesByYearUseCase,
     useFactory: (repository: GamesRepository) => new GetGamesByYearUseCase(repository),
     deps: [GamesRepository],
