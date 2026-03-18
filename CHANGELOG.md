@@ -3,13 +3,14 @@
 ## 🛠️ [Unreleased]
 
 - About page.
+- Add game page.
 - Japanese language.
 
 ## [1.2.6] - 2026-03-16
 
 ### 🟢 Added
 
-- About page.
+- Add game page.
 
 ## [1.2.5] - 2026-03-09
 
