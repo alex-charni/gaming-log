@@ -14,6 +14,7 @@ export function toGameEntity(game: GameApiResponse): GameEntity {
     game.platform,
     game.rating,
     game.date,
+    game.status,
   );
 
   return mappedGame;
