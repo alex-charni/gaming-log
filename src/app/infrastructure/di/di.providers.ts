@@ -44,6 +44,11 @@ const GAMES_PROVIDERS = [
     useClass: GamesRepositoryAdapter,
   },
   {
+    provide: AddGameUseCase,
+    useFactory: (repository: GamesRepository) => new AddGameUseCase(repository),
+    deps: [GamesRepository],
+  },
+  {
     provide: GetGamesByYearUseCase,
     useFactory: (repository: GamesRepository) => new GetGamesByYearUseCase(repository),
     deps: [GamesRepository],
