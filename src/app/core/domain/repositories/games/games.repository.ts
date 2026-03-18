@@ -1,5 +1,6 @@
-import { GameEntity } from '@core/domain/entities';
 import { Observable } from 'rxjs';
+
+import { GameEntity } from '@core/domain/entities';
 
 export abstract class GamesRepository {
   abstract addGame(game: GameEntity): Observable<GameEntity>;
