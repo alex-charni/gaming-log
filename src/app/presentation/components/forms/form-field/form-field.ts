@@ -1,5 +1,6 @@
 import { Component, computed, input } from '@angular/core';
 import { FieldState, FormField } from '@angular/forms/signals';
+import { TranslatePipe } from '@ngx-translate/core';
 
 import { FormFieldLayout } from '../form-field-layout/form-field-layout';
 
@@ -14,7 +15,7 @@ type FieldType = 'text' | 'number' | 'date' | 'email' | 'password' | 'select';
   selector: 'app-form-field',
   templateUrl: './form-field.html',
   styleUrl: './form-field.scss',
-  imports: [FormField, FormFieldLayout],
+  imports: [FormField, FormFieldLayout, TranslatePipe],
 })
 export class FormFieldComponent {
   readonly field = input.required<FieldState<string, string>>();

@@ -1,11 +1,12 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
+import { delay, map, Observable } from 'rxjs';
+
 import { GameEntity } from '@core/domain/entities';
 import { GamesRepository } from '@core/domain/repositories';
 import { environment } from '@environments/environment';
 import { toGamesEntity } from '@infrastructure/http/mappers';
 import { GameApiResponse } from '@infrastructure/http/schemas';
-import { delay, map, Observable } from 'rxjs';
 
 @Injectable()
 export class GamesRepositoryAdapter implements GamesRepository {

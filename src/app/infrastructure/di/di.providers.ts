@@ -1,4 +1,5 @@
 import {
+  AddGameUseCase,
   GetFeaturedGamesUseCase,
   GetGamesByYearUseCase,
   GetUserUseCase,
@@ -42,6 +43,11 @@ const GAMES_PROVIDERS = [
   {
     provide: GamesRepository,
     useClass: GamesRepositoryAdapter,
+  },
+  {
+    provide: AddGameUseCase,
+    useFactory: (repository: GamesRepository) => new AddGameUseCase(repository),
+    deps: [GamesRepository],
   },
   {
     provide: GetGamesByYearUseCase,

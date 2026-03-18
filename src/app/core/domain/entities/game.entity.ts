@@ -1,4 +1,4 @@
-import { Rating } from '../schemas/types';
+import { GameStatus, Rating } from '../schemas/types';
 
 export class GameEntity {
   constructor(
@@ -7,5 +7,6 @@ export class GameEntity {
     public readonly platform: string,
     public readonly rating: Rating,
     public readonly date: string,
+    public readonly status: GameStatus,
   ) {}
 }
