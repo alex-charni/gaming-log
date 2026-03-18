@@ -1,4 +1,5 @@
 import {
+  AddGameCoverUseCase,
   AddGameUseCase,
   GetFeaturedGamesUseCase,
   GetGamesByYearUseCase,
@@ -12,10 +13,12 @@ import { GamesRepositoryAdapter } from '@infrastructure/http/api';
 import { AuthRepositoryAdapter } from '@infrastructure/http/api/auth/auth.repository.adapter';
 import { APP_SETTINGS } from '../config/app.tokens';
 
-const APP_SETTINGS_PROVIDERS = {
-  provide: APP_SETTINGS,
-  useValue: APP_PARAMS,
-};
+const APP_SETTINGS_PROVIDERS = [
+  {
+    provide: APP_SETTINGS,
+    useValue: APP_PARAMS,
+  },
+];
 
 const AUTH_PROVIDERS = [
   {
@@ -66,4 +69,4 @@ const GAMES_PROVIDERS = [
   },
 ];
 
-export const APP_PROVIDERS = [AUTH_PROVIDERS, APP_SETTINGS_PROVIDERS, ...GAMES_PROVIDERS];
+export const APP_PROVIDERS = [...AUTH_PROVIDERS, ...APP_SETTINGS_PROVIDERS, ...GAMES_PROVIDERS];
