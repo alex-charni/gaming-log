@@ -4,10 +4,21 @@
   },
   "common": {
     "about": "About",
+    "cover": "Cover",
+    "dropped": "Dropped",
+    "finished": "Finished",
+    "finished_date": "Finished date",
     "games_log": "Games Log",
     "go_back": "Go back",
+    "id": "ID",
     "now_playing": "Now playing",
-    "now_playing_with_ellipsis": "Now playing..."
+    "now_playing_with_ellipsis": "Now playing...",
+    "pending": "Pending",
+    "platform": "Platform",
+    "playing": "Now playing",
+    "rating": "Rating",
+    "status": "Status",
+    "title": "Title"
   },
   "error": {
     "oops_with_ellipsis": "Oops...",
@@ -15,12 +26,14 @@
     "unexpected_event": "Something unexpected happened on our end."
   },
   "forms": {
+    "change_file": "Change file",
     "email": "Email",
     "email_required": "Email is required",
     "invalid_format": "Invalid format",
     "password": "Password",
     "password_required": "Password is required",
-    "required": "Required"
+    "required": "Required",
+    "select_file": "Select file"
   },
   "languages": {
     "en": "English",
@@ -64,6 +77,14 @@
         "two": "Mediocre: it barely offers interesting ideas or does so in an erratic or unsuccessful way.",
         "one": "Very bad: its main aspects are poorly executed or it has bugs that ruin the experience.",
         "undefined": "Pending: its rating was lost for some reason"
+      }
+    },
+    "admin": {
+      "add_game": {
+        "change_cover": "Change cover",
+        "save": "Save game",
+        "select_cover": "Select cover",
+        "title": "Add game"
       }
     },
     "auth": {

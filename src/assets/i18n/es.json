@@ -4,10 +4,21 @@
   },
   "common": {
     "about": "Acerca de...",
+    "cover": "Carátula",
+    "dropped": "Abandonado",
+    "finished": "Completado",
+    "finished_date": "Fecha de finalización",
     "games_log": "Log de juegos",
     "go_back": "Volver",
+    "id": "ID",
     "now_playing": "Jugando ahora",
-    "now_playing_with_ellipsis": "Jugando ahora..."
+    "now_playing_with_ellipsis": "Jugando ahora...",
+    "pending": "Pendiente",
+    "platform": "Plataforma",
+    "playing": "Jugando ahora",
+    "rating": "Puntuación",
+    "status": "Estado",
+    "title": "Título"
   },
   "error": {
     "oops_with_ellipsis": "Ups...",
@@ -15,12 +26,14 @@
     "unexpected_event": "Algo inesperado ha ocurrido en nuestros sistemas."
   },
   "forms": {
+    "change_file": "Cambiar archivo",
     "email": "Email",
     "email_required": "Campo obligatorio",
     "invalid_format": "Formato incorrecto",
     "password": "Password",
     "password_required": "Campo obligatorio",
-    "required": "Obligatorio"
+    "required": "Obligatorio",
+    "select_file": "Seleccionar archivo"
   },
   "languages": {
     "en": "English",
@@ -64,6 +77,14 @@
         "two": "Regular: apenas propone cosas interesantes o lo hace de manera errática o poco acertada.",
         "one": "Muy malo: sus aspectos principales están mal llevados a cabo o tiene errores que echan por tierra la experiencia.",
         "undefined": "Pendiente: su puntuación se perdió por algún motivo"
+      }
+    },
+    "admin": {
+      "add_game": {
+        "change_cover": "Cambiar portada",
+        "save": "Guardar juego",
+        "select_cover": "Seleccionar portada",
+        "title": "Añadir juego"
       }
     },
     "auth": {
