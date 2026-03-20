@@ -1,2 +1,2 @@
-export * from './game-status.type';
-export * from './rating.type';
+export * from './auth';
+export * from './games';
