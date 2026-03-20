@@ -1,1 +1,2 @@
-export * from './games/games.mapper';
+export * from './auth';
+export * from './games';
