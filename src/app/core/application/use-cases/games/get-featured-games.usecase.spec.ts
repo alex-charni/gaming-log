@@ -5,8 +5,8 @@ import { GamesRepository } from '@core/domain/repositories';
 import { GetFeaturedGamesUseCase } from './get-featured-games.usecase';
 
 const games: GameEntity[] = [
-  { id: '1', title: 'Game 1', platform: 'PS4', date: '2024-12-31', rating: 5 },
-  { id: '2', title: 'Game 1', platform: 'PS3', date: '2025-12-31', rating: 5 },
+  { id: '1', title: 'Game 1', platform: 'PS4', date: '2024-12-31', rating: 5, status: 'finished' },
+  { id: '2', title: 'Game 1', platform: 'PS3', date: '2025-12-31', rating: 5, status: 'finished' },
 ];
 
 describe('GetGamesByYearUseCase', () => {
