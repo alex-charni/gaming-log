@@ -1,10 +1,10 @@
 import { SessionEntity } from '@core/domain/entities';
 import { AuthRepository } from '@core/domain/repositories';
 
-export class LoginUseCase {
+export class GetSessionUseCase {
   constructor(private readonly authRepository: AuthRepository) {}
 
-  public execute(email: string, password: string): Promise<SessionEntity> {
-    return this.authRepository.login(email, password);
+  public execute(): Promise<SessionEntity | null> {
+    return this.authRepository.getSession();
   }
 }

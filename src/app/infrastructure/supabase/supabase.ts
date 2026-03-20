@@ -5,11 +5,9 @@ import { environment } from '@environments/environment';
 
 @Injectable({ providedIn: 'root' })
 export class Supabase {
-  readonly supabase: SupabaseClient;
+  readonly client: SupabaseClient;
 
   constructor() {
-    this.supabase = createClient(environment.supabaseUrl, environment.supabaseAnonKey);
+    this.client = createClient(environment.supabaseUrl, environment.supabaseAnonKey);
   }
 }
-
-export type { Session, User, WeakPassword } from '@supabase/supabase-js';

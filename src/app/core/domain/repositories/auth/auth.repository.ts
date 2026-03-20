@@ -1,7 +1,11 @@
-import { Observable } from 'rxjs';
+import { SessionEntity } from '@core/domain/entities';
+import { AuthChangeEvent } from '@core/domain/schemas/types';
 
 export abstract class AuthRepository {
-  abstract getUser(): Observable<any>;
-  abstract login(email: string, password: string): Observable<any>;
-  abstract logout(): Observable<any>;
+  abstract getSession(): Promise<SessionEntity | null>;
+  abstract login(email: string, password: string): Promise<SessionEntity>;
+  abstract logout(): Promise<void>;
+  abstract onAuthStateChange(
+    callback: (state: { event: AuthChangeEvent; session: SessionEntity | null }) => void,
+  ): () => void;
 }

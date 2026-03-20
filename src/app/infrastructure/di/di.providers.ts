@@ -3,10 +3,11 @@ import {
   AddGameUseCase,
   GetFeaturedGamesUseCase,
   GetGamesByYearUseCase,
-  GetUserUseCase,
+  GetSessionUseCase,
   LoginUseCase,
   LogoutUseCase,
 } from '@core/application/use-cases';
+import { OnAuthStateChangeUseCase } from '@core/application/use-cases/auth/on-auth-state-change.usecase';
 import { AuthRepository, GamesRepository } from '@core/domain/repositories';
 import { APP_PARAMS } from '@infrastructure/config/app.params';
 import { GamesRepositoryAdapter } from '@infrastructure/http/api';
@@ -26,8 +27,8 @@ const AUTH_PROVIDERS = [
     useClass: AuthRepositoryAdapter,
   },
   {
-    provide: GetUserUseCase,
-    useFactory: (repository: AuthRepository) => new GetUserUseCase(repository),
+    provide: GetSessionUseCase,
+    useFactory: (repository: AuthRepository) => new GetSessionUseCase(repository),
     deps: [AuthRepository],
   },
   {
@@ -38,6 +39,11 @@ const AUTH_PROVIDERS = [
   {
     provide: LogoutUseCase,
     useFactory: (repository: AuthRepository) => new LogoutUseCase(repository),
+    deps: [AuthRepository],
+  },
+  {
+    provide: OnAuthStateChangeUseCase,
+    useFactory: (repository: AuthRepository) => new OnAuthStateChangeUseCase(repository),
     deps: [AuthRepository],
   },
 ];
