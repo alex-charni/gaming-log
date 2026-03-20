@@ -1,1 +1,3 @@
-export * from './game-api-response.interface';
+export * from './auth';
+export * from './games';
+
