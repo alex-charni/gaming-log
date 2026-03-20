@@ -12,6 +12,7 @@ describe('mapGamesData', () => {
         title: 'Immortals Fenyx Rising',
         platform: 'PC',
         date: '2025-11-27',
+        status: 'finished',
       },
     ];
 

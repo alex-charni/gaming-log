@@ -1,4 +1,4 @@
-import { GameStatus, Rating } from '../schemas/types';
+import { GameStatus, Rating } from '@core/domain/schemas/types';
 
 export class GameEntity {
   constructor(

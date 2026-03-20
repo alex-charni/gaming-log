@@ -45,7 +45,7 @@ $auth-card-breakpoint: calc($container-max-width + 8rem);
     font-size: $font-2xl;
     color: $fuchsia;
     margin-bottom: 1rem;
-    display: inline-block; // Para asegurar que el margen funcione bien
+    display: inline-block;
   }
 
   &__title {
