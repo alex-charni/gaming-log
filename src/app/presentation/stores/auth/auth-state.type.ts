@@ -1,4 +1,5 @@
+import { SessionEntity } from '@core/domain/entities';
+
 export type AuthState = {
-  user: any | null;
-  loading: boolean;
+  session: SessionEntity | null;
 };

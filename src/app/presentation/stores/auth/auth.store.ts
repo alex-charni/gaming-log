@@ -1,43 +1,54 @@
 import { computed, inject } from '@angular/core';
 import { patchState, signalStore, withComputed, withMethods, withState } from '@ngrx/signals';
-import { User } from '@supabase/supabase-js';
 
-import { Supabase } from '@infrastructure/supabase';
+import { GetSessionUseCase, OnAuthStateChangeUseCase } from '@core/application/use-cases';
+import { SessionEntity } from '@core/domain/entities';
 import { authInitialState } from './auth-initial-state';
 
 export const AuthStore = signalStore(
   { providedIn: 'root' },
 
-  withState(authInitialState),
+  withState({ ...authInitialState, unsubscribe: null as (() => void) | null }),
 
-  withComputed(({ user }) => ({
-    isLoggedIn: computed(() => user() !== null),
+  withComputed(({ session }) => ({
+    isLoggedIn: computed(() => session() !== null),
   })),
 
   withMethods((store) => {
-    const supabase = inject(Supabase).supabase;
+    const getSessionUsecase = inject(GetSessionUseCase);
+    const onAuthStateChange = inject(OnAuthStateChangeUseCase);
 
     return {
-      async init() {
-        const { data } = await supabase.auth.getSession();
+      async init(): Promise<void> {
+        try {
+          const currentUnsub = store.unsubscribe();
 
-        patchState(store, {
-          user: data.session?.user ?? null,
-        });
+          if (currentUnsub) currentUnsub();
 
-        supabase.auth.onAuthStateChange((_event, session) => {
-          patchState(store, {
-            user: session?.user ?? null,
+          const session = await getSessionUsecase.execute();
+
+          patchState(store, { session });
+
+          const unsubscribe = onAuthStateChange.execute((state) => {
+            patchState(store, { session: state.session });
           });
-        });
+
+          patchState(store, { unsubscribe });
+        } catch {
+          patchState(store, { session: null });
+        }
       },
 
-      login(user: User): void {
-        patchState(store, { user });
+      login(session: SessionEntity): void {
+        patchState(store, { session });
       },
 
       logout(): void {
-        patchState(store, { user: null });
+        const unsubscribe = store.unsubscribe();
+
+        if (unsubscribe) unsubscribe();
+
+        patchState(store, { session: null, unsubscribe: null });
       },
     };
   }),

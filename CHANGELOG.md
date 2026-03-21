@@ -4,7 +4,14 @@
 
 - About page.
 - Add game page.
+- Auth system.
 - Japanese language.
+
+## [1.2.7] - 2026-03-20
+
+### 🟢 Added
+
+- Add authentication capabilities.
 
 ## [1.2.6] - 2026-03-16
 

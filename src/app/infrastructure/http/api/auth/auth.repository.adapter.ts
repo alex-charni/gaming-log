@@ -1,43 +1,53 @@
 import { inject, Injectable } from '@angular/core';
-import { from, map, Observable } from 'rxjs';
 
+import { SessionEntity } from '@core/domain/entities';
 import { AuthRepository } from '@core/domain/repositories';
-import { Session, Supabase, User, WeakPassword } from '@infrastructure/supabase';
+import { AuthChangeEvent } from '@core/domain/schemas/types';
+import { toSessionEntity } from '@infrastructure/http/mappers';
+import { Supabase } from '@infrastructure/supabase';
 
 @Injectable({ providedIn: 'root' })
 export class AuthRepositoryAdapter implements AuthRepository {
   private readonly supabase = inject(Supabase);
 
-  public login(
-    email: string,
-    password: string,
-  ): Observable<{
-    user: User;
-    session: Session;
-    weakPassword?: WeakPassword;
-  }> {
-    return from(this.supabase.supabase.auth.signInWithPassword({ email, password })).pipe(
-      map(({ data, error }) => {
-        if (error) throw error;
-        return data;
-      }),
-    );
+  public async login(email: string, password: string): Promise<SessionEntity> {
+    const { data, error } = await this.supabase.client.auth.signInWithPassword({ email, password });
+
+    if (error) throw new Error('There was a problem with the login attempt', error);
+
+    if (!data.session) throw new Error('There was a problem getting the session');
+
+    return toSessionEntity(data.session);
   }
 
-  public logout(): Observable<void> {
-    return from(this.supabase.supabase.auth.signOut()).pipe(
-      map(({ error }) => {
-        if (error) throw error;
-      }),
-    );
+  public async logout(): Promise<void> {
+    const { error } = await this.supabase.client.auth.signOut();
+
+    if (error) throw new Error('There was a problem with the logout attempt', error);
   }
 
-  public getUser(): Observable<User | null> {
-    return from(this.supabase.supabase.auth.getUser()).pipe(
-      map(({ data, error }) => {
-        if (error) throw error;
-        return data.user;
-      }),
-    );
+  public async getSession(): Promise<SessionEntity | null> {
+    const { data, error } = await this.supabase.client.auth.getSession();
+
+    if (error) throw new Error('There was a problem getting the session', error);
+
+    if (!data?.session) return null;
+
+    return toSessionEntity(data.session);
+  }
+
+  public onAuthStateChange(
+    callback: (state: { event: AuthChangeEvent; session: SessionEntity | null }) => void,
+  ): () => void {
+    const { data } = this.supabase.client.auth.onAuthStateChange((event, session) => {
+      callback({
+        event,
+        session: session ? toSessionEntity(session) : null,
+      });
+    });
+
+    return () => {
+      data.subscription.unsubscribe();
+    };
   }
 }

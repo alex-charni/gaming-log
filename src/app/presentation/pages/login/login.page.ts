@@ -2,7 +2,6 @@ import { Component, inject, signal } from '@angular/core';
 import { email, form, required, submit } from '@angular/forms/signals';
 import { Router } from '@angular/router';
 import { TranslatePipe } from '@ngx-translate/core';
-import { finalize } from 'rxjs';
 
 import { LoginUseCase, LogoutUseCase } from '@core/application/use-cases';
 import { Button, FormFieldComponent } from '@presentation/components';
@@ -47,49 +46,37 @@ export class LoginPage {
     event.preventDefault();
 
     submit(this.loginForm, async () => {
-      this.spinnerService.setVisible(true);
-
       const { email, password } = this.loginModel();
 
-      this.loginUseCase
-        .execute(email, password)
-        .pipe(
-          finalize(() => {
-            this.spinnerService.setVisible(false);
-          }),
-        )
-        .subscribe({
-          next: (response) => {
-            this.authStore.login(response);
-            this.router.navigateByUrl('/add-game');
-          },
-          error: (error) => {
-            console.error(error);
-            this.error.set('pages.auth.login_failed');
-          },
-        });
+      this.spinnerService.setVisible(true);
+
+      try {
+        const session = await this.loginUseCase.execute(email, password);
+
+        this.authStore.login(session);
+        this.router.navigateByUrl('/add-game');
+      } catch (error) {
+        console.error(error);
+        this.error.set('pages.auth.login_failed');
+      } finally {
+        this.spinnerService.setVisible(false);
+      }
     });
   }
 
-  protected onLogout(): void {
+  protected async onLogout(): Promise<void> {
     this.spinnerService.setVisible(true);
 
-    this.logoutUseCase
-      .execute()
-      .pipe(
-        finalize(() => {
-          this.spinnerService.setVisible(false);
-        }),
-      )
-      .subscribe({
-        next: () => {
-          this.authStore.logout();
-          this.router.navigateByUrl('/home');
-        },
-        error: (error) => {
-          console.error(error);
-          this.error.set('Logout failed');
-        },
-      });
+    try {
+      await this.logoutUseCase.execute();
+
+      this.authStore.logout();
+      this.router.navigateByUrl('/home');
+    } catch (error) {
+      console.error(error);
+      this.error.set('Logout failed');
+    } finally {
+      this.spinnerService.setVisible(false);
+    }
   }
 }
