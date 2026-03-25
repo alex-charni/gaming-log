@@ -4,7 +4,7 @@ import { toSignal } from '@angular/core/rxjs-interop';
 import { ActivatedRoute } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 
-import { Button } from '@presentation/components';
+import { Button } from '@presentation/ui';
 
 @Component({
   selector: 'app-error-page',
