@@ -14,6 +14,12 @@ export const routes: Routes = [
     loadComponent: () => import('./presentation/pages').then((c) => c.AddGamePage),
   },
   {
+    path: 'add-featured-game',
+    canActivate: [authGuard],
+    data: { isFeatured: true },
+    loadComponent: () => import('./presentation/pages').then((c) => c.AddGamePage),
+  },
+  {
     path: 'error',
     loadComponent: () => import('./presentation/pages').then((c) => c.ErrorPage),
   },

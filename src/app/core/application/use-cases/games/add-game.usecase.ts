@@ -8,16 +8,16 @@ export class AddGameUseCase {
   async execute(
     title: string,
     platform: string,
-    rating: string,
-    date: string,
     status: GameStatus,
-    cover: File,
+    image: File,
     placeholder: File,
+    date: string,
+    rating: string,
     id?: string,
   ): Promise<void> {
     const identifier = id?.trim() ? id : crypto.randomUUID();
 
-    await this.gamesRepository.addGameCover(identifier, cover, placeholder);
+    await this.gamesRepository.addGameCover(identifier, image, placeholder);
 
     const game: GameEntity = {
       id: identifier,

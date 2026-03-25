@@ -1,8 +1,16 @@
+@let featured = isFeatured();
+
 <main class="add-game-page">
   <section class="add-game-card">
     <i class="add-game-card__icon fa-solid fa-circle-plus"></i>
 
-    <h1 class="add-game-card__title">{{ 'pages.admin.add_game.title' | translate }}</h1>
+    <h1 class="add-game-card__title">
+      {{
+        featured
+          ? ('pages.admin.add_game.add_featured_game' | translate)
+          : ('pages.admin.add_game.add_game' | translate)
+      }}
+    </h1>
 
     <form class="add-game-form" (submit)="submit($event)">
       <div class="add-game-form__group">
@@ -53,11 +61,15 @@
         <app-form-field type="text" id="id" [label]="'common.id'" [field]="form.id()" />
 
         <app-image-form-field
-          id="cover"
-          [label]="'common.cover' | translate"
-          [field]="form.cover()"
-          [selectText]="'pages.admin.add_game.select_cover'"
-          [changeText]="'pages.admin.add_game.change_cover'"
+          [id]="featured ? 'image' : 'cover'"
+          [label]="featured ? 'common.image' : 'common.cover'"
+          [field]="form.image()"
+          [selectText]="
+            featured ? 'pages.admin.add_game.select_image' : 'pages.admin.add_game.select_cover'
+          "
+          [changeText]="
+            featured ? 'pages.admin.add_game.change_image' : 'pages.admin.add_game.change_cover'
+          "
         />
       </div>
 
