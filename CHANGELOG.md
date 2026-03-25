@@ -7,6 +7,12 @@
 - Auth system.
 - Japanese language.
 
+## [1.2.9] - 2026-03-26
+
+### 🟢 Added
+
+- Update add game page to allow uploading featured games.
+
 ## [1.2.8] - 2026-03-25
 
 ### 🟢 Added
