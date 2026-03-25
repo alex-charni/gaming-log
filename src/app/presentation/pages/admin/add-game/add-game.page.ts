@@ -2,12 +2,12 @@ import { Component, inject, signal } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { form, required } from '@angular/forms/signals';
 import { TranslatePipe } from '@ngx-translate/core';
-import { v4 as uuidv4 } from 'uuid';
 
-import { AddGameCoverUseCase, AddGameUseCase } from '@core/application/use-cases';
-import { GameEntity } from '@core/domain/entities';
-import { GameStatus, Rating } from '@core/domain/schemas/types';
-import { Button, FormFieldComponent, ImageFormField } from '@presentation/components';
+import { AddGameUseCase } from '@core/application/use-cases';
+import { GameStatus } from '@core/domain/schemas/types';
+import { FormFieldComponent, ImageFormField } from '@presentation/components';
+import { ImageProcessorService, SpinnerService, ToastService } from '@presentation/services';
+import { Button } from '@presentation/ui';
 
 interface AddGameData {
   id: string;
@@ -27,7 +27,9 @@ interface AddGameData {
 })
 export class AddGamePage {
   private readonly addGameUseCase = inject(AddGameUseCase);
-  private readonly addGameCoverUseCase = inject(AddGameCoverUseCase);
+  private readonly imageProcessor = inject(ImageProcessorService);
+  private readonly spinnerService = inject(SpinnerService);
+  private readonly toastService = inject(ToastService);
 
   protected readonly ratingOptions = [
     { label: '0', value: 0 },
@@ -72,28 +74,60 @@ export class AddGamePage {
     if (this.form().invalid()) return;
 
     try {
-      const { date, id, platform, rating, status, title, cover } = this.formModel();
+      const { cover, date, id, platform, rating, status, title } = this.formModel();
 
-      if (!cover) throw 'NO FILE';
+      if (!cover) throw new Error('NO FILE');
 
-      const identifier = id ? id : uuidv4();
+      this.spinnerService.setVisible(true);
 
-      await this.addGameCoverUseCase.execute(identifier, cover, 'webp');
+      const placeholder = await this.imageProcessor.generatePlaceholder(cover, 32);
 
-      const game: GameEntity = {
-        date,
-        id: identifier,
-        platform,
-        rating: parseInt(rating) as Rating,
-        status,
+      if (!placeholder) throw new Error('NO PLACEHOLDER');
+
+      await this.addGameUseCase.execute(
         title,
-      };
+        platform,
+        rating,
+        date,
+        status,
+        cover,
+        placeholder,
+        id,
+      );
 
-      await this.addGameUseCase.execute(game);
+      this.showSuccessToast();
+      this.scrollTop();
 
       this.formModel.set({ ...this.INITIAL_MODEL });
     } catch (error) {
+      this.showFailureToast();
       console.error(error);
+    } finally {
+      this.spinnerService.setVisible(false);
     }
+  }
+
+  private scrollTop(): void {
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth',
+    });
+  }
+  private showSuccessToast(): void {
+    this.toastService.show({
+      title: 'common.success_exclamation',
+      message: 'pages.admin.add_game.game_added',
+      icon: 'fa-file-circle-check',
+      type: 'success',
+    });
+  }
+
+  private showFailureToast(): void {
+    this.toastService.show({
+      title: 'error.oops_exclamation',
+      message: 'pages.admin.add_game.game_not_added',
+      icon: 'fa-file-circle-xmark',
+      type: 'error',
+    });
   }
 }
