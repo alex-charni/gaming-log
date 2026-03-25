@@ -7,6 +7,12 @@
 - Auth system.
 - Japanese language.
 
+## [1.2.10] - 2026-03-26
+
+### 🟢 Added
+
+- Add admin capabilities to burger menu.
+
 ## [1.2.9] - 2026-03-26
 
 ### 🟢 Added
