@@ -1,10 +1,19 @@
-import { Component, ElementRef, HostListener, inject, signal, ViewChild } from '@angular/core';
+import {
+  Component,
+  computed,
+  ElementRef,
+  HostListener,
+  inject,
+  signal,
+  ViewChild,
+} from '@angular/core';
 import { Router } from '@angular/router';
-import { TranslatePipe } from '@ngx-translate/core';
 
+import { AuthStore } from '@presentation/stores/auth';
 import { UiStore } from '@presentation/stores/ui';
 import { HorizontalSeparator } from '@presentation/ui';
 import { BurgerButton } from '../burger-button/burger-button';
+import { BurgerMenuList } from '../burger-menu-list/burger-menu-list';
 import { LanguageSelectorMenuItem } from '../language-selector-menu-item/language-selector-menu-item';
 import { ThemeSelectorMenuItem } from '../theme-selector-menu-item/theme-selector-menu-item';
 
@@ -16,8 +25,8 @@ import { ThemeSelectorMenuItem } from '../theme-selector-menu-item/theme-selecto
     BurgerButton,
     LanguageSelectorMenuItem,
     ThemeSelectorMenuItem,
-    TranslatePipe,
     HorizontalSeparator,
+    BurgerMenuList,
   ],
 })
 export class BurgerMenuComponent {
@@ -28,6 +37,7 @@ export class BurgerMenuComponent {
   private anchorRef!: ElementRef<HTMLDivElement>;
 
   private readonly router = inject(Router);
+  private readonly authStore = inject(AuthStore);
   protected readonly uiStore = inject(UiStore);
 
   readonly isOpen = signal(false);
@@ -37,6 +47,16 @@ export class BurgerMenuComponent {
     // { label: 'menu.filters', icon: 'fa-filter', route: '/filter' },
     { label: 'common.about', icon: 'fa-circle-question', route: '/about' },
   ];
+
+  protected readonly adminItems = computed(() => {
+    return this.authStore.isLoggedIn()
+      ? [
+          { label: 'Add game', icon: 'fa-plus', route: '/add-game' },
+          { label: 'Add featured', icon: 'fa-star', route: '/add-featured-game' },
+          { label: 'Logout', icon: 'fa-arrow-right-from-bracket', route: '/login' },
+        ]
+      : [];
+  });
 
   protected toggleMenu(value: boolean): void {
     this.isOpen.set(value);
