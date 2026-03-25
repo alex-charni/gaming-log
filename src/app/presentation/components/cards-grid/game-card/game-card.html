@@ -1,12 +1,16 @@
 @if (game(); as game) {
-  <div class="game-card" [class.game-card--rainbow]="game.rating === 5">
+  <div
+    class="game-card"
+    [class.game-card--rainbow]="game.rating === 5"
+    [attr.aria-label]="'Cover of ' + game.title"
+  >
     <img
       class="game-card__image"
       [ngSrc]="game.coverUrl"
       fill
       [priority]="priority()"
       [placeholder]="game.coverPlaceholderUrl"
-      alt="Cover image of {{ game.title }}"
+      alt="''"
       (error)="handleImageError($event)"
     />
 

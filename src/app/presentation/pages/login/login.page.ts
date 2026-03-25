@@ -4,9 +4,10 @@ import { Router } from '@angular/router';
 import { TranslatePipe } from '@ngx-translate/core';
 
 import { LoginUseCase, LogoutUseCase } from '@core/application/use-cases';
-import { Button, FormFieldComponent } from '@presentation/components';
+import { FormFieldComponent } from '@presentation/components';
 import { SpinnerService } from '@presentation/services';
 import { AuthStore } from '@presentation/stores/auth';
+import { Button } from '@presentation/ui';
 
 interface LoginData {
   email: string;

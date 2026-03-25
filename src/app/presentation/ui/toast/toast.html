@@ -1,0 +1,22 @@
+@let title = toastStore.title();
+@let message = toastStore.message();
+
+@if (toastStore.isOpen()) {
+  <div class="toast" [class]="classes()">
+    <div class="toast__body">
+      <i class="toast__icon fa-solid fa-2xl" [class]="toastStore.icon()"></i>
+
+      <div class="toast__content">
+        @if (title) {
+          <strong class="toast__title">{{ title | translate }}</strong>
+        }
+
+        @if (message) {
+          <p class="toast__message">{{ message | translate }}</p>
+        }
+      </div>
+    </div>
+
+    <button class="toast__close" (click)="hide()">&times;</button>
+  </div>
+}

@@ -19,3 +19,16 @@ export function toGameEntity(game: GameApiResponse): GameEntity {
 
   return mappedGame;
 }
+
+export function toGameApi(game: GameEntity): GameApiResponse {
+  const mappedGame: GameApiResponse = {
+    date: game.date,
+    id: game.id,
+    platform: game.platform,
+    rating: game.rating,
+    status: game.status,
+    title: game.title,
+  };
+
+  return mappedGame;
+}

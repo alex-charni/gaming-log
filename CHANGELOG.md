@@ -7,6 +7,12 @@
 - Auth system.
 - Japanese language.
 
+## [1.2.8] - 2026-03-25
+
+### 🟢 Added
+
+- Add toasts system.
+
 ## [1.2.7] - 2026-03-20
 
 ### 🟢 Added

@@ -18,10 +18,13 @@
     "playing": "Jugando ahora",
     "rating": "Puntuación",
     "status": "Estado",
+    "success": "Hecho",
+    "success_exclamation": "Hecho!",
     "title": "Título"
   },
   "error": {
     "oops_with_ellipsis": "Ups...",
+    "oops_exclamation": "Ups!",
     "page_not_found": "No podemos encontrar la página solicitada.",
     "unexpected_event": "Algo inesperado ha ocurrido en nuestros sistemas."
   },
@@ -82,6 +85,8 @@
     "admin": {
       "add_game": {
         "change_cover": "Cambiar portada",
+        "game_added": "¡Juego añadido al catálogo!",
+        "game_not_added": "No se puede añadir el juego en estos momentos.",
         "save": "Guardar juego",
         "select_cover": "Seleccionar portada",
         "title": "Añadir juego"
