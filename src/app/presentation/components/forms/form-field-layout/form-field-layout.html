@@ -1,6 +1,6 @@
 <div class="form-field">
   <label class="form-field__label" [for]="id()">
-    {{ label() }}
+    {{ label() | translate }}
 
     @if (showAsterisk()) {
       <i class="form-field--required fa-solid fa-asterisk fa-2xs"></i>
