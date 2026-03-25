@@ -2,7 +2,7 @@ import { GameEntity } from '@core/domain/entities';
 import { GamesRepository } from '@core/domain/repositories';
 import { GameStatus, Rating } from '@core/domain/schemas/types';
 
-export class AddGameUseCase {
+export class AddFeaturedGameUseCase {
   constructor(private readonly gamesRepository: GamesRepository) {}
 
   async execute(
@@ -12,22 +12,22 @@ export class AddGameUseCase {
     image: File,
     placeholder: File,
     date: string,
-    rating: string,
+    rating?: string,
     id?: string,
   ): Promise<void> {
     const identifier = id?.trim() ? id : crypto.randomUUID();
 
-    await this.gamesRepository.addGameCover(identifier, image, placeholder);
+    await this.gamesRepository.addFeaturedGameImage(identifier, image, placeholder);
 
     const game: GameEntity = {
       id: identifier,
       title,
       platform,
-      rating: parseInt(rating) as Rating,
-      date,
+      rating: rating ? (parseInt(rating) as Rating) : 0,
+      date: date ? date : '',
       status,
     };
 
-    await this.gamesRepository.addGame(game);
+    await this.gamesRepository.addFeaturedGame(game);
   }
 }

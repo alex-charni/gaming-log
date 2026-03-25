@@ -11,6 +11,7 @@
     "games_log": "Games Log",
     "go_back": "Go back",
     "id": "ID",
+    "image": "Image",
     "now_playing": "Now playing",
     "now_playing_with_ellipsis": "Now playing...",
     "pending": "Pending",
@@ -84,12 +85,15 @@
     },
     "admin": {
       "add_game": {
+        "add_game": "Add game",
+        "add_featured_game": "Add featured game",
         "change_cover": "Change cover",
+        "change_image": "Change image",
         "game_added": "Game added to the catalog!",
         "game_not_added": "Game cannot be added right now.",
         "save": "Save game",
         "select_cover": "Select cover",
-        "title": "Add game"
+        "select_image": "Select image"
       }
     },
     "auth": {

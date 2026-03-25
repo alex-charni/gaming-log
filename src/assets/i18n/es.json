@@ -11,6 +11,7 @@
     "games_log": "Log de juegos",
     "go_back": "Volver",
     "id": "ID",
+    "image": "Imagen",
     "now_playing": "Jugando ahora",
     "now_playing_with_ellipsis": "Jugando ahora...",
     "pending": "Pendiente",
@@ -84,12 +85,15 @@
     },
     "admin": {
       "add_game": {
+        "add_game": "Añadir juego",
+        "add_featured_game": "Añadir juego destacado",
         "change_cover": "Cambiar portada",
+        "change_image": "Cambiar imagen",
         "game_added": "¡Juego añadido al catálogo!",
         "game_not_added": "No se puede añadir el juego en estos momentos.",
         "save": "Guardar juego",
         "select_cover": "Seleccionar portada",
-        "title": "Añadir juego"
+        "select_image": "Seleccionar imagen"
       }
     },
     "auth": {

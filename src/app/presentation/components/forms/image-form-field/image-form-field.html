@@ -19,7 +19,7 @@
 
     @if (preview) {
       <div class="form-field__preview">
-        <img [src]="preview" alt="Game cover preview" />
+        <img [src]="preview" [alt]="(label() | translate) + ' preview'" />
       </div>
 
       <div class="form-field__overlay">{{ changeText() | translate }}</div>

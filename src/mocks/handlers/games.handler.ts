@@ -2,7 +2,7 @@ import { http, HttpResponse } from 'msw';
 import { FEATURED_GAMES, GAMES } from '../data';
 import { GameMock } from '../schemas';
 
-type SortableField = 'date';
+type SortableField = 'created_at' | 'date';
 type SortDirection = 'asc' | 'desc';
 
 const FINISHED_GAMES_URL = 'https://wrpriypmoaorobeeqmcc.supabase.co/rest/v1/items';
@@ -72,6 +72,11 @@ function sortItems(items: GameMock[], direction: SortDirection, field: SortableF
     let bValue: string;
 
     switch (field) {
+      case 'created_at':
+        aValue = a.date as string;
+        bValue = b.date as string;
+        break;
+
       case 'date':
         aValue = a.date as string;
         bValue = b.date as string;
