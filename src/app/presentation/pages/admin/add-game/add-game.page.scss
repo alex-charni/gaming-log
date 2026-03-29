@@ -1,77 +1,36 @@
 @use 'scss' as *;
 
-$container-max-width: $screen-md;
-
-.add-game-page {
-  background-color: var(--bg-surface);
-  min-height: 100vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  transition: background-color 0.25s;
-
-  @media screen and (min-width: calc($container-max-width + 2rem * 4)) {
-    background-color: var(--bg-app);
-  }
-}
-
-.add-game-card {
-  border-radius: 0;
-  background-color: var(--bg-surface);
+.add-game {
   width: 100%;
-  max-width: $container-max-width;
-  padding: 2rem;
-  text-align: center;
+  padding-block: 0.75rem;
+  box-sizing: border-box;
 
-  transition:
-    background-color 0.25s,
-    box-shadow 0.25s,
-    border-radius 0.25s;
+  .form {
+    display: grid;
 
-  @media screen and (min-width: calc($container-max-width + 2rem * 4)) {
-    border-radius: 0.5rem;
-    box-shadow: var(--card-shadow);
-  }
+    grid-template-columns: 1fr;
 
-  &__icon {
-    font-size: $font-2xl;
-    color: $fuchsia;
-    margin-bottom: 1rem;
-  }
+    @include desktop-view--md {
+      grid-template-columns: repeat(2, 1fr);
+      column-gap: 2rem;
+    }
 
-  &__title {
-    color: var(--text-main);
-    font-size: $font-xl;
-    margin: 0 0 1.5rem;
-  }
-}
+    &__group {
+      display: flex;
+      flex-direction: column;
+    }
 
-.add-game-form {
-  display: grid;
+    &__submit {
+      display: flex;
+      justify-content: center;
+      grid-column: span 1;
+      width: 100%;
 
-  grid-template-columns: 1fr;
-
-  @media screen and (min-width: calc($container-max-width + 2rem * 4)) {
-    grid-template-columns: repeat(2, 1fr);
-    column-gap: 2rem;
-  }
-
-  &__group {
-    display: flex;
-    flex-direction: column;
-  }
-
-  &__submit {
-    display: flex;
-    justify-content: center;
-    grid-column: span 1;
-    width: 100%;
-
-    @media screen and (min-width: calc($container-max-width + 2rem * 4)) {
-      grid-column: span 2;
-      margin-inline: auto;
-      max-width: 20rem;
+      @include desktop-view--md {
+        grid-column: span 2;
+        margin-inline: auto;
+        max-width: 20rem;
+      }
     }
   }
 }

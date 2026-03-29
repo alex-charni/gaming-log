@@ -1,85 +1,81 @@
 @let featured = isFeatured();
+@let title =
+  featured
+    ? ('pages.admin.add_game.add_featured_game' | translate)
+    : ('pages.admin.add_game.add_game' | translate);
 
-<main class="add-game-page">
-  <section class="add-game-card">
-    <i class="add-game-card__icon fa-solid fa-circle-plus"></i>
+<app-page-layout [contentMaxSize]="'md'">
+  <section class="add-game">
+    <app-content-card-layout [width]="'md'" icon="fa-solid fa-circle-plus" [title]="title">
+      <form class="form" (submit)="submit($event)">
+        <div class="form__group">
+          <app-form-field
+            type="text"
+            id="title"
+            [label]="'common.title'"
+            [field]="form.title()"
+            [displayErrors]="false"
+          />
 
-    <h1 class="add-game-card__title">
-      {{
-        featured
-          ? ('pages.admin.add_game.add_featured_game' | translate)
-          : ('pages.admin.add_game.add_game' | translate)
-      }}
-    </h1>
+          <app-form-field
+            type="text"
+            id="platform"
+            [label]="'common.platform'"
+            [field]="form.platform()"
+            [displayErrors]="false"
+          />
 
-    <form class="add-game-form" (submit)="submit($event)">
-      <div class="add-game-form__group">
-        <app-form-field
-          type="text"
-          id="title"
-          [label]="'common.title'"
-          [field]="form.title()"
-          [displayErrors]="false"
-        />
+          <app-form-field
+            type="date"
+            id="date"
+            [label]="'common.finished_date'"
+            [field]="form.date()"
+            [displayErrors]="false"
+          />
 
-        <app-form-field
-          type="text"
-          id="platform"
-          [label]="'common.platform'"
-          [field]="form.platform()"
-          [displayErrors]="false"
-        />
+          <app-form-field
+            type="select"
+            id="rating"
+            [label]="'common.rating'"
+            [field]="form.rating()"
+            [options]="ratingOptions"
+            [displayErrors]="false"
+          />
 
-        <app-form-field
-          type="date"
-          id="date"
-          [label]="'common.finished_date'"
-          [field]="form.date()"
-          [displayErrors]="false"
-        />
+          <app-form-field
+            type="select"
+            id="status"
+            [label]="'common.status'"
+            [field]="form.status()"
+            [options]="statusOptions"
+            [displayErrors]="false"
+          />
+        </div>
 
-        <app-form-field
-          type="select"
-          id="rating"
-          [label]="'common.rating'"
-          [field]="form.rating()"
-          [options]="ratingOptions"
-          [displayErrors]="false"
-        />
+        <div class="form__group">
+          <app-form-field type="text" id="id" [label]="'common.id'" [field]="form.id()" />
 
-        <app-form-field
-          type="select"
-          id="status"
-          [label]="'common.status'"
-          [field]="form.status()"
-          [options]="statusOptions"
-          [displayErrors]="false"
-        />
-      </div>
+          <app-image-form-field
+            [id]="featured ? 'image' : 'cover'"
+            [label]="featured ? 'common.image' : 'common.cover'"
+            [field]="form.image()"
+            [selectText]="
+              featured ? 'pages.admin.add_game.select_image' : 'pages.admin.add_game.select_cover'
+            "
+            [changeText]="
+              featured ? 'pages.admin.add_game.change_image' : 'pages.admin.add_game.change_cover'
+            "
+          />
+        </div>
 
-      <div class="add-game-form__group">
-        <app-form-field type="text" id="id" [label]="'common.id'" [field]="form.id()" />
-
-        <app-image-form-field
-          [id]="featured ? 'image' : 'cover'"
-          [label]="featured ? 'common.image' : 'common.cover'"
-          [field]="form.image()"
-          [selectText]="
-            featured ? 'pages.admin.add_game.select_image' : 'pages.admin.add_game.select_cover'
-          "
-          [changeText]="
-            featured ? 'pages.admin.add_game.change_image' : 'pages.admin.add_game.change_cover'
-          "
-        />
-      </div>
-
-      <div class="add-game-form__submit">
-        <app-button
-          [type]="'submit'"
-          [text]="'pages.admin.add_game.save' | translate"
-          [disabled]="form().invalid()"
-        />
-      </div>
-    </form>
+        <div class="form__submit">
+          <app-button
+            [type]="'submit'"
+            [text]="'pages.admin.add_game.save' | translate"
+            [disabled]="form().invalid()"
+          />
+        </div>
+      </form>
+    </app-content-card-layout>
   </section>
-</main>
+</app-page-layout>
