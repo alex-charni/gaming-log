@@ -7,6 +7,13 @@
 - Auth system.
 - Japanese language.
 
+## [1.3.0] - 2026-03-30
+
+### 🟠 Changed
+
+- Added common layouts for pages consistency.
+- Login page now shows toasts on success and on error.
+
 ## [1.2.10] - 2026-03-26
 
 ### 🟢 Added
