@@ -1,16 +1,17 @@
 import { Component, effect, inject, signal } from '@angular/core';
 import { TranslatePipe } from '@ngx-translate/core';
 
-import { GameCardsGrid, Header, HeroSlider } from '@presentation/components';
+import { GameCardsGrid, HeroSlider } from '@presentation/components';
+import { PageLayout } from '@presentation/pages/page-layout/page-layout';
 import { SpinnerService } from '@presentation/services';
 import { HomePageStore } from '@presentation/stores';
 import { HorizontalSeparator } from '@presentation/ui';
 
 @Component({
   selector: 'app-home-page',
-  imports: [GameCardsGrid, Header, HeroSlider, HorizontalSeparator, TranslatePipe],
   templateUrl: './home.page.html',
   styleUrl: './home.page.scss',
+  imports: [GameCardsGrid, HeroSlider, HorizontalSeparator, TranslatePipe, PageLayout],
 })
 export class HomePage {
   protected readonly store = inject(HomePageStore);
