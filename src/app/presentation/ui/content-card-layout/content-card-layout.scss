@@ -1,0 +1,65 @@
+@use 'scss' as *;
+
+.card {
+  width: 100%;
+  padding: 2rem 1.5rem;
+  box-sizing: border-box;
+
+  background-color: var(--bg-surface);
+
+  text-align: center;
+
+  transition:
+    background-color 0.25s,
+    box-shadow 0.25s,
+    border-radius 0.25s,
+    padding 0.25s;
+
+  &--sm {
+    @include desktop-view--sm {
+      padding: 2rem 3rem;
+      border-radius: 1rem;
+      box-shadow: var(--card-shadow);
+    }
+  }
+
+  &--md {
+    @include desktop-view--md {
+      padding: 2rem 3rem;
+      border-radius: 1rem;
+      box-shadow: var(--card-shadow);
+    }
+  }
+
+  &__emphasized-text,
+  &__icon {
+    color: var(--primary);
+    font-size: $font-2xl;
+    line-height: normal;
+    margin-bottom: 1rem;
+  }
+
+  &__emphasized-text {
+    display: block;
+    font-weight: 600;
+  }
+
+  &__icon {
+    height: 50px;
+  }
+
+  &__title {
+    color: var(--text-main);
+    font-size: $font-xl;
+    margin: 0 0 1.5rem;
+  }
+
+  &__content {
+    &--left {
+      text-align: left;
+    }
+    &--right {
+      text-align: right;
+    }
+  }
+}
