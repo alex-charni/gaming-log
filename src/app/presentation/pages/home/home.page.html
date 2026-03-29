@@ -1,17 +1,13 @@
-<main class="home-page">
-  <div class="home-page__container">
-    <app-header class="home-page__header" />
+<app-page-layout>
+  <section class="page__hero">
+    <app-hero-slider [slides]="store.slidesCollection()" [isLoading]="store.slidesAreLoading()" />
+  </section>
 
-    <section class="home-page__hero">
-      <app-hero-slider [slides]="store.slidesCollection()" [isLoading]="store.slidesAreLoading()" />
-    </section>
-
-    <div class="home-page__separator">
-      <app-horizontal-separator [text]="'separator.already_finished_games' | translate" />
-    </div>
-
-    <section class="home-page__cards-grid">
-      <app-game-cards-grid (loadMore)="handleFetchMoreGames()" />
-    </section>
+  <div class="page__separator">
+    <app-horizontal-separator [text]="'separator.already_finished_games' | translate" />
   </div>
-</main>
+
+  <section class="page__cards-grid">
+    <app-game-cards-grid (loadMore)="handleFetchMoreGames()" />
+  </section>
+</app-page-layout>
