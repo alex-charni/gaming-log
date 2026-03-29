@@ -99,7 +99,10 @@
     "auth": {
       "login": "Log in",
       "login_failed": "Login failed",
-      "logout": "Log out"
+      "login_success": "You're in!",
+      "logout": "Log out",
+      "logout_failed": "Logout failed",
+      "logout_success": "You're out!"
     }
   }
 }
