@@ -1,16 +1,17 @@
 import { Location } from '@angular/common';
-import { Component, inject, Signal, signal } from '@angular/core';
+import { Component, computed, inject, Signal, signal } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { ActivatedRoute } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 
-import { Button } from '@presentation/ui';
+import { PageLayout } from '@presentation/pages/page-layout/page-layout';
+import { Button, ContentCardLayout } from '@presentation/ui';
 
 @Component({
   selector: 'app-error-page',
   templateUrl: './error.page.html',
   styleUrl: './error.page.scss',
-  imports: [Button],
+  imports: [Button, PageLayout, ContentCardLayout],
 })
 export class ErrorPage {
   private readonly location = inject(Location);
@@ -27,31 +28,36 @@ export class ErrorPage {
     },
   });
 
-  readonly code = signal<string | number>('code' in this.routeData() ? this.routeData().code : '');
+  protected readonly code = signal<string | number>(
+    'code' in this.routeData() ? this.routeData().code : '',
+  );
 
-  readonly message = toSignal<string>(
+  protected readonly emphasizedText = computed(() => (this.code() ? `${this.code()}` : ''));
+  protected readonly icon = computed(() => (this.code() ? '' : 'fa-solid fa-exclamation'));
+
+  protected readonly message = toSignal<string>(
     'message' in this.routeData()
       ? this.translate.stream(this.routeData().message)
       : this.translate.stream('error.unexpected_event'),
   );
 
-  readonly buttonText = toSignal<string>(
+  protected readonly buttonText = toSignal<string>(
     'buttonText' in this.routeData()
       ? this.translate.stream(this.routeData().buttonText)
       : this.translate.stream('common.go_back'),
   ) as Signal<string>;
 
-  readonly showButton = signal(
+  protected readonly showButton = signal(
     'showButton' in this.routeData() ? !!this.routeData().showButton : true,
   );
 
-  readonly title = toSignal<string>(
+  protected readonly title = toSignal<string>(
     'buttonText' in this.routeData()
       ? this.translate.stream(this.routeData().title)
       : this.translate.stream('error.oops_with_ellipsis'),
   );
 
-  readonly buttonAction = signal<() => void>(() => this.location.back());
+  protected readonly buttonAction = signal<() => void>(() => this.location.back());
 
   protected handleButtonAction(): void {
     this.buttonAction()?.();
