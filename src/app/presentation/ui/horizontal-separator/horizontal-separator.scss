@@ -13,23 +13,24 @@
     &--fuchsia {
       background-color: var(--primary);
     }
-
     &--white {
       background-color: $white;
     }
   }
 
   &__text {
-    font-size: $font-xl;
-    letter-spacing: 0.05em;
+    margin-block: 0;
     padding-inline: 1rem;
+
+    font-size: $font-xl;
+    font-weight: normal;
+    letter-spacing: 0.05em;
     white-space: nowrap;
     text-transform: uppercase;
 
     &--fuchsia {
       color: var(--primary);
     }
-
     &--white {
       color: $white;
     }
