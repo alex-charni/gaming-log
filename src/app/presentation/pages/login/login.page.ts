@@ -1,13 +1,14 @@
-import { Component, inject, signal } from '@angular/core';
+import { Component, computed, inject, signal } from '@angular/core';
 import { email, form, required, submit } from '@angular/forms/signals';
 import { Router } from '@angular/router';
 import { TranslatePipe } from '@ngx-translate/core';
 
 import { LoginUseCase, LogoutUseCase } from '@core/application/use-cases';
 import { FormFieldComponent } from '@presentation/components';
-import { SpinnerService } from '@presentation/services';
+import { PageLayout } from '@presentation/pages/page-layout/page-layout';
+import { SpinnerService, ToastService } from '@presentation/services';
 import { AuthStore } from '@presentation/stores/auth';
-import { Button } from '@presentation/ui';
+import { Button, ContentCardLayout } from '@presentation/ui';
 
 interface LoginData {
   email: string;
@@ -23,16 +24,25 @@ const INITIAL_FORM_MODEL = {
   selector: 'app-login-page',
   templateUrl: './login.page.html',
   styleUrl: './login.page.scss',
-  imports: [Button, FormFieldComponent, TranslatePipe],
+  imports: [Button, FormFieldComponent, TranslatePipe, PageLayout, ContentCardLayout],
 })
 export class LoginPage {
   private readonly router = inject(Router);
   private readonly loginUseCase = inject(LoginUseCase);
   private readonly logoutUseCase = inject(LogoutUseCase);
   private readonly spinnerService = inject(SpinnerService);
-  protected readonly authStore = inject(AuthStore);
+  private readonly toastService = inject(ToastService);
+  private readonly authStore = inject(AuthStore);
 
-  protected readonly error = signal<string | null>(null);
+  protected readonly isLoggedIn = computed(() => this.authStore.isLoggedIn());
+
+  protected readonly icon = computed(() =>
+    this.isLoggedIn() ? 'fa-solid fa-unlock' : 'fa-solid fa-lock',
+  );
+
+  protected readonly title = computed(() =>
+    this.isLoggedIn() ? 'pages.auth.logout' : 'pages.auth.login',
+  );
 
   private readonly loginModel = signal<LoginData>({ ...INITIAL_FORM_MODEL });
 
@@ -43,7 +53,7 @@ export class LoginPage {
     required(schemaPath.password, { message: 'forms.password_required' });
   });
 
-  protected onSubmit(event: Event) {
+  protected onSubmit(event: Event): void {
     event.preventDefault();
 
     submit(this.loginForm, async () => {
@@ -55,10 +65,11 @@ export class LoginPage {
         const session = await this.loginUseCase.execute(email, password);
 
         this.authStore.login(session);
+        this.showSuccessToast('pages.auth.login_success', '', 'fa-lock-open');
         this.router.navigateByUrl('/add-game');
       } catch (error) {
         console.error(error);
-        this.error.set('pages.auth.login_failed');
+        this.showFailureToast('error.oops_exclamation', 'pages.auth.login_failed', 'fa-lock');
       } finally {
         this.spinnerService.setVisible(false);
       }
@@ -72,12 +83,31 @@ export class LoginPage {
       await this.logoutUseCase.execute();
 
       this.authStore.logout();
+      this.showSuccessToast('pages.auth.logout_success', '', 'fa-lock');
       this.router.navigateByUrl('/home');
     } catch (error) {
       console.error(error);
-      this.error.set('Logout failed');
+      this.showFailureToast('error.oops_exclamation', 'pages.auth.logout_failed', 'fa-lock');
     } finally {
       this.spinnerService.setVisible(false);
     }
+  }
+
+  private showSuccessToast(title: string, message: string, icon: string): void {
+    this.toastService.show({
+      title,
+      message,
+      icon,
+      type: 'success',
+    });
+  }
+
+  private showFailureToast(title: string, message: string, icon: string): void {
+    this.toastService.show({
+      title,
+      message,
+      icon,
+      type: 'error',
+    });
   }
 }

@@ -9,7 +9,7 @@ export class ToastService {
 
   show(config: Partial<ToastState>): void {
     this.toastStore.show(config);
-    setTimeout(() => this.hide(), 4000);
+    setTimeout(() => this.hide(), 3000);
   }
 
   hide(): void {

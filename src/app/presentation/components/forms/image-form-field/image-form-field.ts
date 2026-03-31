@@ -59,7 +59,7 @@ export class ImageFormField {
 
     const file = input.files[0];
 
-    this.field().setControlValue(file);
+    this.field().controlValue.set(file);
     this.field().markAsTouched();
   }
 }

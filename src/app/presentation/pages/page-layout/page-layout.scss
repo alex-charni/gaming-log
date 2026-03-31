@@ -1,0 +1,57 @@
+@use 'scss' as *;
+
+.page {
+  min-height: 100vh;
+
+  background-color: var(--bg-surface);
+
+  transition: background-color 0.25s ease;
+
+  &--sm {
+    @include desktop-view--sm {
+      background-color: var(--bg-app);
+    }
+  }
+  &--md {
+    @include desktop-view--md {
+      background-color: var(--bg-app);
+    }
+  }
+
+  &--static-bg {
+    background-color: var(--bg-app);
+  }
+
+  &__container {
+    min-height: 100vh;
+    margin: 0 auto;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    &--center-Y {
+      justify-content: center;
+    }
+
+    &--sm {
+      max-width: $screen-sm;
+    }
+    &--md {
+      max-width: $screen-md;
+    }
+    &--lg {
+      max-width: $screen-lg;
+    }
+    &--xl {
+      max-width: $screen-xl;
+    }
+  }
+
+  &__header {
+    width: 100%;
+    box-sizing: border-box;
+    margin-block-end: 0.75rem;
+    z-index: 1100;
+  }
+}

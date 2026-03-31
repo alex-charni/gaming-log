@@ -1,45 +1,42 @@
-<main class="auth-page">
-  <section class="auth-card">
-    @if (authStore.isLoggedIn()) {
-      <i class="auth-card__icon fa-solid fa-unlock"></i>
-
-      <h1 class="auth-card__title">{{ 'pages.auth.logout' | translate }}</h1>
-
-      <app-button
-        [type]="'button'"
-        [text]="'pages.auth.logout' | translate"
-        (action)="onLogout()"
-      />
-    } @else {
-      <i class="auth-card__icon fa-solid fa-lock"></i>
-
-      <h1 class="auth-card__title">{{ 'pages.auth.login' | translate }}</h1>
-
-      <form class="auth-form" (submit)="onSubmit($event)">
-        <app-form-field
-          type="email"
-          id="email"
-          [label]="'forms.email' | translate"
-          [field]="loginForm.email()"
-        />
-
-        <app-form-field
-          type="password"
-          id="password"
-          [label]="'forms.password' | translate"
-          [field]="loginForm.password()"
-        />
-
+<app-page-layout [contentMaxSize]="'sm'" [centerVertically]="true" [showHeader]="false">
+  <section class="auth">
+    <app-content-card-layout
+      [width]="'sm'"
+      [icon]="icon()"
+      [title]="title() | translate"
+      [titleLevel]="'h1'"
+    >
+      @if (isLoggedIn()) {
         <app-button
-          type="submit"
-          [text]="'pages.auth.login' | translate"
-          [disabled]="loginForm().invalid()"
+          [type]="'button'"
+          [text]="'pages.auth.logout' | translate"
+          [width]="'50%'"
+          (action)="onLogout()"
         />
+      } @else {
+        <form class="form" (submit)="onSubmit($event)">
+          <app-form-field
+            type="email"
+            id="email"
+            [label]="'forms.email' | translate"
+            [field]="loginForm.email()"
+          />
 
-        <p class="auth-form__feedback" [class.auth-form__feedback--visible]="error()">
-          {{ error() | translate }}
-        </p>
-      </form>
-    }
+          <app-form-field
+            type="password"
+            id="password"
+            [label]="'forms.password' | translate"
+            [field]="loginForm.password()"
+          />
+
+          <app-button
+            type="submit"
+            [text]="'pages.auth.login' | translate"
+            [width]="'50%'"
+            [disabled]="loginForm().invalid()"
+          />
+        </form>
+      }
+    </app-content-card-layout>
   </section>
-</main>
+</app-page-layout>

@@ -99,7 +99,10 @@
     "auth": {
       "login": "Iniciar sesión",
       "login_failed": "Inicio de sesión incorrecto",
-      "logout": "Cerrar sesión"
+      "login_success": "¡Estás dentro!",
+      "logout": "Log out",
+      "logout_failed": "Cierre de sesión incorrecto",
+      "logout_success": "¡Estás fuera!"
     }
   }
 }
