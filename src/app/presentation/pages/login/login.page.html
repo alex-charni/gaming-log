@@ -1,6 +1,11 @@
 <app-page-layout [contentMaxSize]="'sm'" [centerVertically]="true" [showHeader]="false">
   <section class="auth">
-    <app-content-card-layout [width]="'sm'" [icon]="icon()" [title]="title() | translate">
+    <app-content-card-layout
+      [width]="'sm'"
+      [icon]="icon()"
+      [title]="title() | translate"
+      [titleLevel]="'h1'"
+    >
       @if (isLoggedIn()) {
         <app-button
           [type]="'button'"

@@ -6,7 +6,12 @@
 
 <app-page-layout [contentMaxSize]="'md'">
   <section class="add-game">
-    <app-content-card-layout [width]="'md'" icon="fa-solid fa-circle-plus" [title]="title">
+    <app-content-card-layout
+      [width]="'md'"
+      icon="fa-solid fa-circle-plus"
+      [title]="title"
+      [titleLevel]="'h1'"
+    >
       <form class="form" (submit)="submit($event)">
         <div class="form__group">
           <app-form-field

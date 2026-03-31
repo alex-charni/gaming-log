@@ -8,6 +8,16 @@
     box-sizing: border-box;
     padding: 1rem;
   }
+
+  &__list {
+    padding-inline: 1.5rem;
+
+    transition: padding 0.25s ease;
+
+    @include desktop-view--sm {
+      padding-inline: 2.25rem;
+    }
+  }
 }
 
 .ratings {
