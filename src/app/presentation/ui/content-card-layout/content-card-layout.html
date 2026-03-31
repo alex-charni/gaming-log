@@ -1,8 +1,9 @@
-@let emphasized = emphasizedText();
 @let cardIcon = icon();
 @let cardTitle = title();
+@let emphasized = emphasizedText();
+@let level = titleLevel();
 
-<div class="card" [class]="cardWidthClasses()">
+<div class="card" [class]="cardClasses()">
   @if (emphasized) {
     <span class="card__emphasized-text">{{ emphasized }}</span>
   } @else if (cardIcon) {
@@ -10,8 +11,17 @@
   }
 
   @if (cardTitle) {
-    <!-- TODO: customize to allow different h levels -->
-    <h2 class="card__title">{{ cardTitle }}</h2>
+    @switch (level) {
+      @case ('h1') {
+        <h1 class="card__title">{{ cardTitle }}</h1>
+      }
+      @case ('h3') {
+        <h3 class="card__title">{{ cardTitle }}</h3>
+      }
+      @default {
+        <h2 class="card__title">{{ cardTitle }}</h2>
+      }
+    }
   }
 
   <div class="card__content" [class]="cardContentClasses()">

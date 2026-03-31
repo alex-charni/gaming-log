@@ -3,6 +3,25 @@
 .page {
   min-height: 100vh;
 
+  background-color: var(--bg-surface);
+
+  transition: background-color 0.25s ease;
+
+  &--sm {
+    @include desktop-view--sm {
+      background-color: var(--bg-app);
+    }
+  }
+  &--md {
+    @include desktop-view--md {
+      background-color: var(--bg-app);
+    }
+  }
+
+  &--static-bg {
+    background-color: var(--bg-app);
+  }
+
   &__container {
     min-height: 100vh;
     margin: 0 auto;

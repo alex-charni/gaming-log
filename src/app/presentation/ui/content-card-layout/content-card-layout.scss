@@ -31,6 +31,15 @@
     }
   }
 
+  &--static {
+    border-radius: 1rem;
+    box-shadow: var(--card-shadow);
+
+    @include desktop-view--sm {
+      padding: 2rem 3rem;
+    }
+  }
+
   &__emphasized-text,
   &__icon {
     color: var(--primary);

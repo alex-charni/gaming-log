@@ -10,13 +10,16 @@ export class ContentCardLayout {
   readonly emphasizedText = input<string>();
   readonly icon = input<string>();
   readonly title = input<string>();
+  readonly titleLevel = input<'h1' | 'h2' | 'h3'>('h2');
+  readonly transformOnResize = input(false);
   readonly width = input<'sm' | 'md'>('md');
 
   protected readonly cardContentClasses = computed(() => ({
     [`card__content--${this.alignContent()}`]: true,
   }));
 
-  protected readonly cardWidthClasses = computed(() => ({
+  protected readonly cardClasses = computed(() => ({
     [`card--${this.width()}`]: true,
+    [`card--static`]: this.transformOnResize(),
   }));
 }

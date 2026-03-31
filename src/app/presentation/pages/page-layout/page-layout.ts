@@ -12,9 +12,15 @@ export class PageLayout {
   readonly centerVertically = input(false);
   readonly contentMaxSize = input<string>('xl');
   readonly showHeader = input(true);
+  readonly transformOnResize = input(true);
 
-  protected readonly classes = computed(() => ({
+  protected readonly containerClasses = computed(() => ({
     [`page__container--${this.contentMaxSize()}`]: true,
     'page__container--center-Y': this.centerVertically(),
+  }));
+
+  protected readonly pageClasses = computed(() => ({
+    [`page--${this.contentMaxSize()}`]: true,
+    [`page--static-bg`]: !this.transformOnResize(),
   }));
 }
