@@ -7,6 +7,13 @@
 - Auth system.
 - Japanese language.
 
+## [1.3.1] - 2026-04-03
+
+### 🟠 Changed
+
+- Merged card components into a single one.
+- Updated Angular version.
+
 ## [1.3.0] - 2026-03-31
 
 ### 🟠 Changed
