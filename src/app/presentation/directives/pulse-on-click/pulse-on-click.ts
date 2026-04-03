@@ -2,7 +2,6 @@ import { Directive, ElementRef, HostListener, inject, input } from '@angular/cor
 
 @Directive({
   selector: '[appPulseOnclick]',
-  standalone: true,
 })
 export class PulseOnClickDirective {
   private readonly el = inject(ElementRef);

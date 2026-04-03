@@ -4,7 +4,6 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { SwipeDirective } from './swipe.directive';
 
 @Component({
-  standalone: true,
   imports: [SwipeDirective],
   template: `
     <div

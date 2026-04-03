@@ -4,7 +4,7 @@ import { SpinnerService } from '@presentation/services';
 @Component({
   selector: 'app-full-screen-spinner',
   templateUrl: './full-screen-spinner.html',
-  styleUrls: ['./full-screen-spinner.scss'],
+  styleUrl: './full-screen-spinner.scss',
 })
 export class FullScreenSpinner {
   private readonly spinnerService = inject(SpinnerService);

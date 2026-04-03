@@ -4,9 +4,8 @@ import { PulseOnClickDirective } from '@presentation/directives';
 
 @Component({
   selector: 'app-scroll-top-button',
-  standalone: true,
   templateUrl: './scroll-top-button.html',
-  styleUrls: ['./scroll-top-button.scss'],
+  styleUrl: './scroll-top-button.scss',
   imports: [PulseOnClickDirective],
 })
 export class ScrollTopButton {

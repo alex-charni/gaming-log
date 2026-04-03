@@ -14,7 +14,6 @@ const languageServiceMock = {
 
 @Directive({
   selector: '[appPulseOnclick]',
-  standalone: true,
 })
 class PulseOnClickStub {}
 
