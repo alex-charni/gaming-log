@@ -19,8 +19,8 @@ import { ThemeSelectorMenuItem } from '../theme-selector-menu-item/theme-selecto
 
 @Component({
   selector: 'app-burger-menu',
-  templateUrl: './burger-menu.component.html',
-  styleUrl: './burger-menu.component.scss',
+  templateUrl: './burger-menu.html',
+  styleUrl: './burger-menu.scss',
   imports: [
     BurgerButton,
     LanguageSelectorMenuItem,
@@ -29,7 +29,7 @@ import { ThemeSelectorMenuItem } from '../theme-selector-menu-item/theme-selecto
     BurgerMenuList,
   ],
 })
-export class BurgerMenuComponent {
+export class BurgerMenu {
   @ViewChild('menu')
   private menuRef!: ElementRef<HTMLDivElement>;
 

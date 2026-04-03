@@ -4,9 +4,9 @@ import { UiStore } from '@presentation/stores/ui';
 
 @Component({
   selector: 'app-full-screen-backdrop',
-  templateUrl: './full-screen-backdrop.component.html',
-  styleUrl: './full-screen-backdrop.component.scss',
+  templateUrl: './full-screen-backdrop.html',
+  styleUrl: './full-screen-backdrop.scss',
 })
-export class FullScreenBackdropComponent {
+export class FullScreenBackdrop {
   protected readonly uiStore = inject(UiStore);
 }

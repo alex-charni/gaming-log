@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 
 import {
-  FullScreenBackdropComponent,
+  FullScreenBackdrop,
   FullScreenSpinner,
   ScrollTopButton,
   ToastComponent,
@@ -12,12 +12,6 @@ import {
   selector: 'app-root',
   templateUrl: './app.html',
   styleUrl: './app.scss',
-  imports: [
-    FullScreenSpinner,
-    RouterOutlet,
-    ScrollTopButton,
-    FullScreenBackdropComponent,
-    ToastComponent,
-  ],
+  imports: [FullScreenSpinner, RouterOutlet, ScrollTopButton, FullScreenBackdrop, ToastComponent],
 })
 export class App {}

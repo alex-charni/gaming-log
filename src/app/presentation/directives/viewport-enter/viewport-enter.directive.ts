@@ -1,7 +1,7 @@
 import { Directive, ElementRef, inject, input, OnDestroy, OnInit, output } from '@angular/core';
 
 @Directive({
-  selector: '[viewportEnter]',
+  selector: '[appViewportEnter]',
 })
 export class ViewportEnterDirective implements OnInit, OnDestroy {
   private readonly elementRef = inject<ElementRef<HTMLElement>>(ElementRef);
