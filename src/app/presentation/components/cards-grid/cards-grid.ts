@@ -2,15 +2,15 @@ import { Component, inject, output } from '@angular/core';
 
 import { ViewportEnterDirective } from '@presentation/directives';
 import { HomePageStore } from '@presentation/stores';
-import { GridCard } from '../grid-card/grid-card';
+import { GridCard } from './components';
 
 @Component({
-  selector: 'app-game-cards-grid',
-  templateUrl: './game-cards-grid.html',
-  styleUrl: './game-cards-grid.scss',
+  selector: 'app-cards-grid',
+  templateUrl: './cards-grid.html',
+  styleUrl: './cards-grid.scss',
   imports: [ViewportEnterDirective, GridCard],
 })
-export class GameCardsGrid {
+export class CardsGrid {
   protected readonly store = inject(HomePageStore);
 
   readonly loadMore = output<void>();
