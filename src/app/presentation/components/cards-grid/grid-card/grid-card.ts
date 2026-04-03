@@ -7,13 +7,13 @@ import { GameCardModel } from '@presentation/schemas/interfaces';
 type CardVariant = 'cover' | 'text' | 'placeholder';
 
 @Component({
-  selector: 'app-card',
-  templateUrl: './card.html',
-  styleUrl: './card.scss',
+  selector: 'app-grid-card',
+  templateUrl: './grid-card.html',
+  styleUrl: './grid-card.scss',
   imports: [NgOptimizedImage, Rating],
   providers: [{ provide: IMAGE_CONFIG, useValue: { placeholderResolution: 40 } }],
 })
-export class Card {
+export class GridCard {
   readonly variant = input<CardVariant>('placeholder');
 
   readonly isLoading = input<boolean>(false);

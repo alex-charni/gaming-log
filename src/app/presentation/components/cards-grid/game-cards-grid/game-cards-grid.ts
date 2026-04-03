@@ -2,13 +2,13 @@ import { Component, inject, output } from '@angular/core';
 
 import { ViewportEnterDirective } from '@presentation/directives';
 import { HomePageStore } from '@presentation/stores';
-import { Card } from '../card/card';
+import { GridCard } from '../grid-card/grid-card';
 
 @Component({
   selector: 'app-game-cards-grid',
   templateUrl: './game-cards-grid.html',
   styleUrl: './game-cards-grid.scss',
-  imports: [ViewportEnterDirective, Card],
+  imports: [ViewportEnterDirective, GridCard],
 })
 export class GameCardsGrid {
   protected readonly store = inject(HomePageStore);
