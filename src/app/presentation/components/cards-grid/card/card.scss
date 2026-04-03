@@ -1,0 +1,217 @@
+@use 'scss' as *;
+
+@property --border-angle {
+  syntax: '<angle>';
+  initial-value: 0deg;
+  inherits: false;
+}
+
+@keyframes rainbow-border {
+  from {
+    --border-angle: 0deg;
+  }
+  to {
+    --border-angle: 360deg;
+  }
+}
+
+.card {
+  @extend .theme-transition;
+  position: relative;
+  border-radius: $card-border-radius;
+  box-shadow: var(--card-shadow);
+  padding: 1rem;
+  box-sizing: border-box;
+
+  &__text {
+    font-size: 7rem;
+    font-weight: 600;
+    color: $white;
+    line-height: 0.85;
+  }
+
+  &__image {
+    object-fit: cover;
+  }
+
+  &__info {
+    background-color: rgba(0, 0, 0, 0.8);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1rem;
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    transition: opacity 0.25s ease-in-out;
+  }
+
+  &__title,
+  &__platform {
+    color: $white-pure;
+    font-size: $font-lg;
+    text-align: center;
+  }
+
+  &--placeholder {
+    aspect-ratio: $card-aspect-ratio;
+    background-color: $white-pure;
+    @extend .skeleton-pulse;
+  }
+
+  &--loading {
+    @extend .skeleton-pulse;
+  }
+
+  &--text {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    aspect-ratio: $card-slim-aspect-ratio;
+    background-color: var(--primary);
+
+    @media screen and (min-width: 464px) {
+      flex-direction: column;
+      aspect-ratio: $card-aspect-ratio;
+
+      .card__text {
+        word-break: break-word;
+        max-width: 160px;
+        text-align: center;
+      }
+    }
+  }
+
+  &--cover {
+    overflow: hidden;
+    aspect-ratio: $card-aspect-ratio;
+    background-color: var(--bg-surface);
+
+    &:hover .card__info {
+      opacity: 1;
+    }
+  }
+
+  &--rainbow {
+    --border-angle: 0deg;
+    animation: rainbow-border 2s infinite linear;
+    border: 6px solid transparent;
+    background:
+      linear-gradient(var(--bg-surface), var(--bg-surface)) padding-box,
+      conic-gradient(from var(--border-angle), var(--rainbow-colors)) border-box;
+  }
+}
+
+// @use 'scss' as *;
+
+// .card {
+//   @extend .theme-transition;
+
+//   position: relative;
+
+//   border-radius: $card-border-radius;
+//   box-shadow: var(--card-shadow);
+//   padding: 1rem;
+//   box-sizing: border-box;
+
+//   &--placeholder {
+//     aspect-ratio: $card-aspect-ratio;
+//     background-color: $white-pure;
+//   }
+
+//   &--placeholder,
+//   &--loading {
+//     @extend .skeleton-pulse;
+//   }
+
+//   &--text {
+//     display: flex;
+//     flex-direction: row;
+//     justify-content: center;
+
+//     align-items: center;
+
+//     aspect-ratio: $card-slim-aspect-ratio;
+//     background-color: var(--primary);
+
+//     .card__text {
+//       font-size: 7rem;
+//       font-weight: 600;
+//       color: $white;
+//       line-height: 0.85;
+//     }
+
+//     @media screen and (min-width: 464px) {
+//       flex-direction: column;
+//       aspect-ratio: $card-aspect-ratio;
+
+//       .card__text {
+//         word-break: break-word;
+//         max-width: 160px;
+//         text-align: center;
+//       }
+//     }
+//   }
+
+//   &--cover {
+//     overflow: hidden;
+//     aspect-ratio: $card-aspect-ratio;
+//     background-color: var(--bg-surface);
+
+//     .card__image {
+//       object-fit: cover;
+//     }
+
+//     .card__info {
+//       background-color: rgba(0, 0, 0, 0.8);
+//       display: flex;
+//       flex-direction: column;
+//       align-items: center;
+//       justify-content: space-between;
+//       padding: 1rem;
+//       position: absolute;
+//       inset: 0;
+//       opacity: 0;
+//       transition: opacity 0.25s ease-in-out;
+
+//       .card__title,
+//       .card__platform {
+//         color: $white-pure;
+//         font-size: $font-lg;
+//         text-align: center;
+//       }
+//     }
+
+//     &:hover .card__info {
+//       opacity: 1;
+//     }
+//   }
+
+//   &--rainbow {
+//     --border-angle: 0deg;
+//     animation: rainbow-border 2s infinite linear;
+//     border: 6px solid transparent;
+//     background:
+//       linear-gradient(var(--bg-surface), var(--bg-surface)) padding-box,
+//       conic-gradient(from var(--border-angle), var(--rainbow-colors)) border-box;
+//   }
+// }
+
+// @property --border-angle {
+//   syntax: '<angle>';
+//   initial-value: 0deg;
+//   inherits: false;
+// }
+
+// .card {
+//   @keyframes rainbow-border {
+//     from {
+//       --border-angle: 0deg;
+//     }
+//     to {
+//       --border-angle: 360deg;
+//     }
+//   }
+// }

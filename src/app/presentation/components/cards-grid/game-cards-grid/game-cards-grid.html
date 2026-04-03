@@ -5,10 +5,11 @@
   @for (card of store.cardsCollection(); track card.id) {
     <li class="grid__item">
       @if (card.type === 'game') {
-        <app-game-card [game]="card" [priority]="$index < 10" />
+        <app-card variant="cover" [item]="card" [priority]="$index < 10" />
       } @else if (card.type === 'year') {
-        <app-year-card
-          [year]="card.year"
+        <app-card
+          variant="text"
+          [text]="card.year"
           [isLoading]="card.year === `${store.nextYearToLoad()}` && cardsLoading"
         />
       }
@@ -17,12 +18,12 @@
 
   @if (!moreCardsAvailable) {
     <li class="grid__item">
-      <app-text-card [text]="'·'" />
+      <app-card variant="text" [text]="'·'" />
     </li>
   } @else if (cardsLoading) {
     @for (item of placeholders; track $index) {
       <li class="grid__item">
-        <app-game-card-placeholder />
+        <app-card variant="placeholder" />
       </li>
     }
   } @else {
