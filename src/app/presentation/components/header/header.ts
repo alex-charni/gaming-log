@@ -12,13 +12,13 @@ import { NavigationEnd, Router, RouterLink } from '@angular/router';
 import { TranslatePipe } from '@ngx-translate/core';
 import { filter, map } from 'rxjs';
 
-import { BurgerMenuComponent } from '../menu/burger-menu/burger-menu.component';
+import { BurgerMenu } from '../menu/burger-menu/burger-menu';
 
 @Component({
   selector: 'app-header',
   templateUrl: './header.html',
   styleUrl: './header.scss',
-  imports: [TranslatePipe, BurgerMenuComponent, RouterLink],
+  imports: [TranslatePipe, BurgerMenu, RouterLink],
 })
 export class Header implements AfterViewInit {
   readonly offset = input(10);

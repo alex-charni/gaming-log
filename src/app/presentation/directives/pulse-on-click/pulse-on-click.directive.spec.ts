@@ -2,7 +2,7 @@ import { Component, signal } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 
-import { PulseOnClickDirective } from './pulse-on-click';
+import { PulseOnClickDirective } from './pulse-on-click.directive';
 
 @Component({
   imports: [PulseOnClickDirective],

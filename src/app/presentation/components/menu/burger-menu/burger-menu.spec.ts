@@ -6,7 +6,7 @@ import { provideTranslateService } from '@ngx-translate/core';
 import { LanguageService } from '@presentation/services';
 import { APP_SETTINGS_PROVIDER_MOCK, UI_STORE_MOCK, UI_STORE_PROVIDER_MOCK } from '@testing/mocks';
 import { BurgerButton } from '../burger-button/burger-button';
-import { BurgerMenuComponent } from './burger-menu.component';
+import { BurgerMenu } from './burger-menu';
 
 const languageServiceMock = {
   set: vi.fn(),
@@ -17,16 +17,16 @@ const languageServiceMock = {
 })
 class PulseOnClickStub {}
 
-describe('BurgerMenuComponent', () => {
-  let fixture: ComponentFixture<BurgerMenuComponent>;
-  let component: BurgerMenuComponent;
+describe('BurgerMenu', () => {
+  let fixture: ComponentFixture<BurgerMenu>;
+  let component: BurgerMenu;
   let uiStoreMock: typeof UI_STORE_MOCK;
 
   beforeEach(async () => {
     uiStoreMock = UI_STORE_MOCK;
 
     await TestBed.configureTestingModule({
-      imports: [BurgerMenuComponent, BurgerButton, PulseOnClickStub],
+      imports: [BurgerMenu, BurgerButton, PulseOnClickStub],
       providers: [
         provideTranslateService(),
         APP_SETTINGS_PROVIDER_MOCK(),
@@ -35,7 +35,7 @@ describe('BurgerMenuComponent', () => {
       ],
     }).compileComponents();
 
-    fixture = TestBed.createComponent(BurgerMenuComponent);
+    fixture = TestBed.createComponent(BurgerMenu);
     component = fixture.componentInstance;
 
     fixture.detectChanges();
