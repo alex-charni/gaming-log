@@ -1,10 +1,10 @@
 @let fieldId = id();
-@let fieldLabel = label();
+@let fieldLabel = label() | translate;
 @let fieldType = type();
 
 <app-form-field-layout
   [field]="field()"
-  [label]="fieldLabel | translate"
+  [label]="fieldLabel"
   [id]="fieldId"
   [displayAsterisk]="displayAsterisk()"
   [displayErrors]="displayErrors()"

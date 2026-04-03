@@ -7,7 +7,7 @@ import { ToastStore } from '@presentation/stores';
 @Component({
   selector: 'app-toast',
   templateUrl: './toast.html',
-  styleUrls: ['./toast.scss'],
+  styleUrl: './toast.scss',
   imports: [TranslatePipe],
 })
 export class ToastComponent {

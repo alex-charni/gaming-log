@@ -48,11 +48,11 @@ describe('ErrorPage', () => {
 
       fixture.detectChanges();
 
-      expect(component.code()).toBe('');
-      expect(component.title()).toBe('error.oops_with_ellipsis');
-      expect(component.message()).toBe('error.unexpected_event');
-      expect(component.buttonText()).toBe('common.go_back');
-      expect(component.showButton()).toBe(true);
+      expect(component['code']()).toBe('');
+      expect(component['title']()).toBe('error.oops_with_ellipsis');
+      expect(component['message']()).toBe('error.unexpected_event');
+      expect(component['buttonText']()).toBe('common.go_back');
+      expect(component['showButton']()).toBe(true);
     });
 
     it('should override values from route data', async () => {
@@ -68,11 +68,11 @@ describe('ErrorPage', () => {
       component = fixture.componentInstance;
       fixture.detectChanges();
 
-      expect(component.code()).toBe(404);
-      expect(component.title()).toBe('Not Found');
-      expect(component.message()).toBe('Page not found');
-      expect(component.buttonText()).toBe('Retry');
-      expect(component.showButton()).toBe(true);
+      expect(component['code']()).toBe(404);
+      expect(component['title']()).toBe('Not Found');
+      expect(component['message']()).toBe('Page not found');
+      expect(component['buttonText']()).toBe('Retry');
+      expect(component['showButton']()).toBe(true);
     });
   });
 

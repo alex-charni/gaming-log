@@ -10,6 +10,8 @@ import {
 
 @Component({
   selector: 'app-root',
+  templateUrl: './app.html',
+  styleUrl: './app.scss',
   imports: [
     FullScreenSpinner,
     RouterOutlet,
@@ -17,7 +19,5 @@ import {
     FullScreenBackdropComponent,
     ToastComponent,
   ],
-  templateUrl: './app.html',
-  styleUrl: './app.scss',
 })
 export class App {}

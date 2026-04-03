@@ -5,7 +5,7 @@ import { By } from '@angular/platform-browser';
 import { ViewportEnterDirective } from '@presentation/directives';
 import { Card } from '@presentation/schemas/types';
 import { HomePageStore } from '@presentation/stores';
-import { GameCardsGrid } from './game-cards-grid';
+import { CardsGrid } from './cards-grid';
 
 const CardsCollectionMock: Card[] = [
   {
@@ -53,21 +53,21 @@ function createHomePageStoreMock() {
   };
 }
 
-describe('GameCardsGrid', () => {
-  let component: GameCardsGrid;
-  let componentRef: ComponentRef<GameCardsGrid>;
-  let fixture: ComponentFixture<GameCardsGrid>;
+describe('CardsGrid', () => {
+  let component: CardsGrid;
+  let componentRef: ComponentRef<CardsGrid>;
+  let fixture: ComponentFixture<CardsGrid>;
   let storeMock: ReturnType<typeof createHomePageStoreMock>;
 
   beforeEach(async () => {
     storeMock = createHomePageStoreMock();
 
     await TestBed.configureTestingModule({
-      imports: [GameCardsGrid],
+      imports: [CardsGrid],
       providers: [{ provide: HomePageStore, useValue: storeMock }],
     }).compileComponents();
 
-    fixture = TestBed.createComponent(GameCardsGrid);
+    fixture = TestBed.createComponent(CardsGrid);
     component = fixture.componentInstance;
     componentRef = fixture.componentRef;
 

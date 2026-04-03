@@ -8,7 +8,8 @@ import { HeroSliderNavButton, HeroSliderNavDots } from './components';
 
 @Component({
   selector: 'app-hero-slider',
-  standalone: true,
+  templateUrl: './hero-slider.html',
+  styleUrl: './hero-slider.scss',
   imports: [
     NgOptimizedImage,
     SwipeDirective,
@@ -16,8 +17,6 @@ import { HeroSliderNavButton, HeroSliderNavDots } from './components';
     HeroSliderNavDots,
     TranslatePipe,
   ],
-  templateUrl: './hero-slider.html',
-  styleUrls: ['./hero-slider.scss'],
 })
 export class HeroSlider {
   slides = input.required<HeroSlideModel[]>();

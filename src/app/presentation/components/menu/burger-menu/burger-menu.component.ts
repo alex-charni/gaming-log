@@ -20,7 +20,7 @@ import { ThemeSelectorMenuItem } from '../theme-selector-menu-item/theme-selecto
 @Component({
   selector: 'app-burger-menu',
   templateUrl: './burger-menu.component.html',
-  styleUrls: ['./burger-menu.component.scss'],
+  styleUrl: './burger-menu.component.scss',
   imports: [
     BurgerButton,
     LanguageSelectorMenuItem,

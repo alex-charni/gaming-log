@@ -1,0 +1,37 @@
+@switch (variant()) {
+  @case ('placeholder') {
+    <div class="card card--placeholder"></div>
+  }
+
+  @case ('cover') {
+    @if (item(); as cover) {
+      <div
+        class="card card--cover"
+        [class.card--rainbow]="cover.rating === 5"
+        [attr.aria-label]="'Cover of ' + cover.title"
+      >
+        <img
+          class="card__image"
+          [ngSrc]="cover.coverUrl"
+          fill
+          [priority]="priority()"
+          [placeholder]="cover.coverPlaceholderUrl"
+          alt="''"
+          (error)="handleImageError($event)"
+        />
+
+        <div class="card__info">
+          <span class="card__platform">{{ cover.platform }}</span>
+          <span class="card__title">{{ cover.title }}</span>
+          <app-rating [rating]="cover.rating" [size]="'large'" />
+        </div>
+      </div>
+    }
+  }
+
+  @default {
+    <div class="card card--text" [class.card--loading]="isLoading()">
+      <span class="card__text">{{ text() }}</span>
+    </div>
+  }
+}

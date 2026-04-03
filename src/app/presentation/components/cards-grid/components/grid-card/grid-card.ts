@@ -4,15 +4,22 @@ import { Component, input } from '@angular/core';
 import { Rating } from '@presentation/components/rating/rating';
 import { GameCardModel } from '@presentation/schemas/interfaces';
 
+type CardVariant = 'cover' | 'text' | 'placeholder';
+
 @Component({
-  selector: 'app-game-card',
-  templateUrl: './game-card.html',
-  styleUrl: './game-card.scss',
+  selector: 'app-grid-card',
+  templateUrl: './grid-card.html',
+  styleUrl: './grid-card.scss',
   imports: [NgOptimizedImage, Rating],
   providers: [{ provide: IMAGE_CONFIG, useValue: { placeholderResolution: 40 } }],
 })
-export class GameCard {
-  readonly game = input<GameCardModel>();
+export class GridCard {
+  readonly variant = input<CardVariant>('placeholder');
+
+  readonly isLoading = input<boolean>(false);
+  readonly text = input<number | string>('');
+
+  readonly item = input<GameCardModel>();
   readonly priority = input<boolean>(false);
 
   protected handleImageError(event: ErrorEvent): void {
