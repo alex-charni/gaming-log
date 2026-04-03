@@ -1,4 +1,12 @@
-import { AfterViewInit, Component, computed, HostListener, inject, input } from '@angular/core';
+import {
+  AfterViewInit,
+  Component,
+  computed,
+  HostListener,
+  inject,
+  input,
+  signal,
+} from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { NavigationEnd, Router, RouterLink } from '@angular/router';
 import { TranslatePipe } from '@ngx-translate/core';
@@ -18,7 +26,7 @@ export class Header implements AfterViewInit {
 
   private readonly router = inject(Router);
 
-  isVisible = true;
+  protected readonly isVisible = signal(true);
 
   private lastScrollTop = 0;
   private hasScrolled = false;
@@ -40,7 +48,7 @@ export class Header implements AfterViewInit {
   ngAfterViewInit(): void {
     const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
 
-    this.isVisible = true;
+    this.isVisible.set(true);
     this.lastScrollTop = scrollTop;
   }
 
@@ -55,13 +63,13 @@ export class Header implements AfterViewInit {
     }
 
     if (currentScroll > this.lastScrollTop + this.offset()) {
-      this.isVisible = false;
+      this.isVisible.set(false);
     } else if (currentScroll < this.lastScrollTop - this.offset()) {
-      this.isVisible = true;
+      this.isVisible.set(true);
     }
 
     if (currentScroll <= this.stickyAfter()) {
-      this.isVisible = true;
+      this.isVisible.set(true);
     }
 
     this.lastScrollTop = Math.max(currentScroll, 0);
