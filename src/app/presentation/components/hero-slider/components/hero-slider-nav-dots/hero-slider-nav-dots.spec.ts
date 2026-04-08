@@ -45,8 +45,7 @@ describe('HeroSliderNavDots', () => {
   });
 
   it('should call handleToGo() on button click', () => {
-    // @ts-ignore
-    const spy = vi.spyOn(component, 'handleGoTo');
+    const spy = vi.spyOn(component as any, 'handleGoTo');
 
     const buttonNativeElement = fixture.debugElement.query(By.css('.dots__button'))
       ?.nativeElement as HTMLButtonElement;
@@ -56,7 +55,6 @@ describe('HeroSliderNavDots', () => {
   });
 
   it('should emit after calling handleGoTo()', async () => {
-    // @ts-ignore
     const goToSpy = vi.spyOn(component.goTo, 'emit');
 
     component['handleGoTo'](1);

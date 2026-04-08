@@ -1,28 +1,32 @@
 import { Directive, ElementRef, inject, input, OnDestroy, OnInit, output } from '@angular/core';
 
 @Directive({
-  selector: '[viewportEnter]',
+  selector: '[appViewportEnter]',
 })
 export class ViewportEnterDirective implements OnInit, OnDestroy {
-  private readonly elementRef = inject(ElementRef);
+  private readonly elementRef = inject<ElementRef<HTMLElement>>(ElementRef);
 
-  readonly viewportEnter = input(false);
-  readonly viewPortEntered = output<void>();
+  readonly rootMargin = input('50px');
+  readonly threshold = input(0.1);
+
+  readonly viewportEntered = output<void>();
 
   private observer?: IntersectionObserver;
 
   ngOnInit(): void {
-    if (!this.viewportEnter()) return;
+    this.initIntersectionObserver();
+  }
 
+  private initIntersectionObserver(): void {
     this.observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) this.viewPortEntered.emit();
-        });
+      ([entry]) => {
+        if (!entry.isIntersecting) return;
+
+        this.viewportEntered.emit();
       },
       {
-        threshold: 0.1,
-        rootMargin: '50px',
+        threshold: this.threshold(),
+        rootMargin: this.rootMargin(),
       },
     );
 

@@ -1,1 +1,3 @@
-export * from './game.entity';
+export * from './auth';
+export * from './games';
+

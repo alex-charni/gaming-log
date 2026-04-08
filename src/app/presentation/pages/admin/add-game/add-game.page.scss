@@ -1,0 +1,36 @@
+@use 'scss' as *;
+
+.add-game {
+  width: 100%;
+  padding-block: 0.75rem;
+  box-sizing: border-box;
+
+  .form {
+    display: grid;
+
+    grid-template-columns: 1fr;
+
+    @include desktop-view--md {
+      grid-template-columns: repeat(2, 1fr);
+      column-gap: 2rem;
+    }
+
+    &__group {
+      display: flex;
+      flex-direction: column;
+    }
+
+    &__submit {
+      display: flex;
+      justify-content: center;
+      grid-column: span 1;
+      width: 100%;
+
+      @include desktop-view--md {
+        grid-column: span 2;
+        margin-inline: auto;
+        max-width: 20rem;
+      }
+    }
+  }
+}

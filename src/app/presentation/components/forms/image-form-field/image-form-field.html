@@ -1,0 +1,37 @@
+<app-form-field-layout
+  [field]="field()"
+  [label]="label()"
+  [id]="id()"
+  [displayAsterisk]="displayAsterisk()"
+  [displayErrors]="false"
+>
+  @let preview = previewUrl();
+  @let file = field().value();
+
+  <div class="form-field__file-wrapper">
+    <input
+      [id]="id()"
+      type="file"
+      accept="image/webp"
+      class="form-field__input form-field__input--file"
+      (change)="onFileSelected($event)"
+    />
+
+    @if (preview) {
+      <div class="form-field__preview">
+        <img [src]="preview" [alt]="(label() | translate) + ' preview'" />
+      </div>
+
+      <div class="form-field__overlay">{{ changeText() | translate }}</div>
+    } @else {
+      <div class="form-field__placeholder">
+        <i class="icon fa-solid fa-image"></i>
+        <span>{{ selectText() | translate }}</span>
+      </div>
+    }
+  </div>
+
+  <div class="form-field__filename" [class.form-field__filename--visible]="file">
+    {{ file?.name }}
+  </div>
+</app-form-field-layout>

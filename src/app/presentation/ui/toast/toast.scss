@@ -1,0 +1,96 @@
+@use 'scss' as *;
+
+.toast {
+  background: var(--bg-surface);
+  color: var(--text-main);
+  position: fixed;
+  top: 2rem;
+  right: 2rem;
+  padding: 1rem 1rem 1rem 0.5rem;
+  border-radius: 0.5rem;
+  display: flex;
+  gap: 1rem;
+  min-width: 300px;
+  box-shadow: var(--card-shadow);
+  z-index: 9999;
+  animation: slide-in 0.3s ease-out forwards;
+
+  &--closing {
+    animation: slide-out 0.3s ease-in forwards;
+  }
+
+  &--success {
+    border-left: 1rem solid #10b981;
+
+    .toast__icon {
+      color: #10b981;
+    }
+  }
+
+  &--error {
+    border-left: 1rem solid red;
+
+    .toast__icon {
+      color: red;
+    }
+  }
+
+  &--warning {
+    border-left: 1rem solid $golden;
+
+    .toast__icon {
+      color: $golden;
+    }
+  }
+
+  &--info {
+    border-left: 1rem solid $fuchsia;
+
+    .toast__icon {
+      color: $fuchsia;
+    }
+  }
+
+  &__body {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    flex: 1;
+  }
+
+  &__message {
+    margin: 0;
+    font-size: 0.9rem;
+  }
+
+  &__close {
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+    color: inherit;
+    padding: 0;
+  }
+}
+
+@keyframes slide-in {
+  from {
+    transform: translateY(-100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes slide-out {
+  from {
+    transform: translateY(0);
+    opacity: 1;
+  }
+  to {
+    transform: translateY(-100%);
+    opacity: 0;
+  }
+}

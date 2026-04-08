@@ -1,1 +1,2 @@
-export * from './rating.type';
+export * from './auth';
+export * from './games';

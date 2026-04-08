@@ -2,15 +2,16 @@ import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 
 import {
-  FullScreenBackdropComponent,
+  FullScreenBackdrop,
   FullScreenSpinner,
   ScrollTopButton,
-} from '@presentation/components';
+  ToastComponent,
+} from '@presentation/ui';
 
 @Component({
   selector: 'app-root',
-  imports: [FullScreenSpinner, RouterOutlet, ScrollTopButton, FullScreenBackdropComponent],
   templateUrl: './app.html',
   styleUrl: './app.scss',
+  imports: [FullScreenSpinner, RouterOutlet, ScrollTopButton, FullScreenBackdrop, ToastComponent],
 })
 export class App {}

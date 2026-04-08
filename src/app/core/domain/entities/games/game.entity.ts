@@ -1,0 +1,12 @@
+import { GameStatus, Rating } from '@core/domain/schemas/types';
+
+export class GameEntity {
+  constructor(
+    public readonly id: string,
+    public readonly title: string,
+    public readonly platform: string,
+    public readonly rating: Rating,
+    public readonly date: string,
+    public readonly status: GameStatus,
+  ) {}
+}

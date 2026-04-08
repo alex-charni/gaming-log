@@ -31,8 +31,7 @@ describe('HeroSliderNavButton', () => {
   });
 
   it('should trigger handleClick() when button is clicked', () => {
-    // @ts-ignore
-    const spy = vi.spyOn(component, 'handleClick');
+    const spy = vi.spyOn(component as any, 'handleClick');
 
     const buttonNativeElement = fixture.debugElement.query(By.css('.nav'))
       .nativeElement as HTMLButtonElement;

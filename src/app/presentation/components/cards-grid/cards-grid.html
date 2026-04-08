@@ -1,0 +1,31 @@
+@let cardsAreLoading = cardsLoading();
+
+<ul #grid class="grid">
+  @for (card of cards(); track card.id) {
+    <li class="grid__item">
+      @if (card.type === 'game') {
+        <app-grid-card variant="cover" [item]="card" [priority]="$index < 10" />
+      } @else if (card.type === 'year') {
+        <app-grid-card
+          variant="text"
+          [text]="card.year"
+          [isLoading]="card.year === `${nextYearToLoad()}` && cardsAreLoading"
+        />
+      }
+    </li>
+  }
+
+  @if (!moreCardsAvailable()) {
+    <li class="grid__item">
+      <app-grid-card variant="text" [text]="'·'" />
+    </li>
+  } @else if (cardsAreLoading) {
+    @for (item of placeholders; track $index) {
+      <li class="grid__item">
+        <app-grid-card variant="placeholder" />
+      </li>
+    }
+  } @else {
+    <li class="grid__sentinel" appViewportEnter (viewportEntered)="onEnterViewport()"></li>
+  }
+</ul>

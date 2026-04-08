@@ -3,14 +3,41 @@
     "title": "Gaming Log"
   },
   "common": {
+    "about": "Acerca de...",
+    "cover": "Carátula",
+    "dropped": "Abandonado",
+    "finished": "Completado",
+    "finished_date": "Fecha de finalización",
+    "games_log": "Log de juegos",
     "go_back": "Volver",
+    "id": "ID",
+    "image": "Imagen",
     "now_playing": "Jugando ahora",
-    "now_playing_with_ellipsis": "Jugando ahora..."
+    "now_playing_with_ellipsis": "Jugando ahora...",
+    "pending": "Pendiente",
+    "platform": "Plataforma",
+    "playing": "Jugando ahora",
+    "rating": "Puntuación",
+    "status": "Estado",
+    "success": "Hecho",
+    "success_exclamation": "Hecho!",
+    "title": "Título"
   },
   "error": {
     "oops_with_ellipsis": "Ups...",
+    "oops_exclamation": "Ups!",
     "page_not_found": "No podemos encontrar la página solicitada.",
     "unexpected_event": "Algo inesperado ha ocurrido en nuestros sistemas."
+  },
+  "forms": {
+    "change_file": "Cambiar archivo",
+    "email": "Email",
+    "email_required": "Campo obligatorio",
+    "invalid_format": "Formato incorrecto",
+    "password": "Password",
+    "password_required": "Campo obligatorio",
+    "required": "Obligatorio",
+    "select_file": "Seleccionar archivo"
   },
   "languages": {
     "en": "English",
@@ -18,8 +45,8 @@
     "jp": "日本語 "
   },
   "menu": {
-    "about": "Acerca de...",
     "filters": "Filtros",
+    "home": "Inicio",
     "language": "Idioma",
     "theme": "Tema",
     "toggle_menu": "Alternar menú",
@@ -31,5 +58,51 @@
   "themes": {
     "dark": "Oscuro",
     "light": "Claro"
+  },
+  "pages": {
+    "about": {
+      "main_section": {
+        "intro": "es un pequeño proyecto personal desarrollado con dos objetivos en mente:",
+        "visual_format": "Trasladar mi log de juegos completados de un bloc de notas a un formato visual.",
+        "practice_angular": "Poner en práctica las nuevas herramientas de Angular que van apareciendo en cada versión."
+      },
+      "game_log_section": {
+        "intro": "El log de juegos tiene varias funciones:",
+        "now_playing": "Mostrar los juegos a los que estoy jugando.",
+        "finished_games": "Mostrar los juegos ya terminados.",
+        "upcoming_games": "Mostrar los juegos que voy a jugar en breve.",
+        "disclaimer": "Cada juego terminado debería tener asociada una puntuación, la cuál es totalmente personal, subjetiva y no debería tomarse como referencia. "
+      },
+      "ratings_section": {
+        "title": "Puntuaciones",
+        "five": "Excelente: tiene aspectos especialmente destacables y está muy bien llevado a cabo en su conjunto.",
+        "four": "Muy bueno: acierta en su principal propuesta jugable y la lleva un paso más allá de lo esperado.",
+        "three": "Buen juego: es entretenido, disfrutable y no tiene errores importantes, pero tampoco nada que lo haga destacar.",
+        "two": "Regular: apenas propone cosas interesantes o lo hace de manera errática o poco acertada.",
+        "one": "Muy malo: sus aspectos principales están mal llevados a cabo o tiene errores que echan por tierra la experiencia.",
+        "undefined": "Pendiente: su puntuación se perdió por algún motivo"
+      }
+    },
+    "admin": {
+      "add_game": {
+        "add_game": "Añadir juego",
+        "add_featured_game": "Añadir juego destacado",
+        "change_cover": "Cambiar portada",
+        "change_image": "Cambiar imagen",
+        "game_added": "¡Juego añadido al catálogo!",
+        "game_not_added": "No se puede añadir el juego en estos momentos.",
+        "save": "Guardar juego",
+        "select_cover": "Seleccionar portada",
+        "select_image": "Seleccionar imagen"
+      }
+    },
+    "auth": {
+      "login": "Iniciar sesión",
+      "login_failed": "Inicio de sesión incorrecto",
+      "login_success": "¡Estás dentro!",
+      "logout": "Log out",
+      "logout_failed": "Cierre de sesión incorrecto",
+      "logout_success": "¡Estás fuera!"
+    }
   }
 }

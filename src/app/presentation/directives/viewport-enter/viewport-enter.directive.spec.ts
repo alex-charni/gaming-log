@@ -1,86 +1,99 @@
-// TODO: revisit for a better understanding of some concepts
-import { Component } from '@angular/core';
-import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { By } from '@angular/platform-browser';
+import { ElementRef } from '@angular/core';
+import { TestBed } from '@angular/core/testing';
 
 import { ViewportEnterDirective } from './viewport-enter.directive';
 
-let intersectionCallback: IntersectionObserverCallback;
+describe('ViewportEnterDirective', () => {
+  let directive: ViewportEnterDirective;
+  let elementRef: ElementRef;
+  let mockObserver: any;
+  let observerCallback: any;
 
-class IntersectionObserverMock {
-  observe = vi.fn();
-  disconnect = vi.fn();
+  beforeEach(() => {
+    mockObserver = {
+      observe: vi.fn(),
+      disconnect: vi.fn(),
+    };
 
-  constructor(callback: IntersectionObserverCallback) {
-    intersectionCallback = callback;
-  }
-}
+    // Fix: Using a class to ensure 'new' works correctly
+    const MockObserver = vi.fn().mockImplementation(function (callback) {
+      observerCallback = callback;
+      return mockObserver;
+    });
 
-@Component({
-  standalone: true,
-  imports: [ViewportEnterDirective],
-  template: ` <div [viewportEnter]="true" (viewPortEntered)="onEnter()"></div> `,
-})
-class TestHostComponent {
-  entered = false;
+    vi.stubGlobal('IntersectionObserver', MockObserver);
 
-  onEnter() {
-    this.entered = true;
-  }
-}
+    elementRef = {
+      nativeElement: document.createElement('div'),
+    };
 
-describe('ViewportEnter directive', () => {
-  let fixture: ComponentFixture<TestHostComponent>;
+    TestBed.configureTestingModule({
+      providers: [ViewportEnterDirective, { provide: ElementRef, useValue: elementRef }],
+    });
 
-  beforeEach(async () => {
-    vi.stubGlobal('IntersectionObserver', IntersectionObserverMock as any);
-
-    await TestBed.configureTestingModule({
-      imports: [TestHostComponent],
-    }).compileComponents();
-
-    fixture = TestBed.createComponent(TestHostComponent);
-    fixture.detectChanges();
+    directive = TestBed.inject(ViewportEnterDirective);
   });
 
-  it('should create the IntersectionObserver and observe the host element', () => {
-    const directiveEl = fixture.debugElement.query(By.directive(ViewportEnterDirective));
-    expect(directiveEl).not.toBeNull();
-
-    const instance = directiveEl!.injector.get(ViewportEnterDirective) as any;
-
-    expect(instance.observer).toBeDefined();
-    expect(instance.observer.observe).toHaveBeenCalledWith(directiveEl!.nativeElement);
+  afterEach(() => {
+    vi.unstubAllGlobals();
   });
 
-  it('should emit when the element enters the viewport', () => {
-    const component = fixture.componentInstance;
+  it('should initialize IntersectionObserver with default inputs', () => {
+    directive.ngOnInit();
 
-    intersectionCallback(
-      [{ isIntersecting: true } as IntersectionObserverEntry],
-      {} as IntersectionObserver,
+    expect(IntersectionObserver).toHaveBeenCalledWith(
+      expect.any(Function),
+      expect.objectContaining({
+        threshold: 0.1,
+        rootMargin: '50px',
+      }),
     );
-
-    expect(component.entered).toBe(true);
+    expect(mockObserver.observe).toHaveBeenCalledWith(elementRef.nativeElement);
   });
 
-  it('should not emit when the element is not intersecting', () => {
-    const component = fixture.componentInstance;
+  it('should emit viewportEntered when entry is intersecting', () => {
+    const emitSpy = vi.spyOn(directive.viewportEntered, 'emit');
+    directive.ngOnInit();
 
-    intersectionCallback(
-      [{ isIntersecting: false } as IntersectionObserverEntry],
-      {} as IntersectionObserver,
+    const mockEntry = { isIntersecting: true } as IntersectionObserverEntry;
+    observerCallback([mockEntry], mockObserver);
+
+    expect(emitSpy).toHaveBeenCalled();
+  });
+
+  it('should not emit viewportEntered when entry is not intersecting', () => {
+    const emitSpy = vi.spyOn(directive.viewportEntered, 'emit');
+    directive.ngOnInit();
+
+    const mockEntry = { isIntersecting: false } as IntersectionObserverEntry;
+    observerCallback([mockEntry], mockObserver);
+
+    expect(emitSpy).not.toHaveBeenCalled();
+  });
+
+  it('should use custom input values for threshold and rootMargin', () => {
+    vi.spyOn(directive, 'threshold').mockReturnValue(0.5);
+    vi.spyOn(directive, 'rootMargin').mockReturnValue('100px');
+
+    directive.ngOnInit();
+
+    expect(IntersectionObserver).toHaveBeenCalledWith(
+      expect.any(Function),
+      expect.objectContaining({
+        threshold: 0.5,
+        rootMargin: '100px',
+      }),
     );
-
-    expect(component.entered).toBe(false);
   });
 
   it('should disconnect observer on destroy', () => {
-    const directiveEl = fixture.debugElement.query(By.directive(ViewportEnterDirective));
-    const instance = directiveEl!.injector.get(ViewportEnterDirective) as any;
+    directive.ngOnInit();
+    directive.ngOnDestroy();
 
-    fixture.destroy();
+    expect(mockObserver.disconnect).toHaveBeenCalled();
+  });
 
-    expect(instance.observer.disconnect).toHaveBeenCalled();
+  it('should not fail on destroy if observer was not initialized', () => {
+    expect(() => directive.ngOnDestroy()).not.toThrow();
   });
 });

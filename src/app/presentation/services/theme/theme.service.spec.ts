@@ -1,101 +1,104 @@
 import { TestBed } from '@angular/core/testing';
 
-import { APP_SETTINGS_PROVIDER_MOCK, UI_STORE_MOCK, UI_STORE_PROVIDER_MOCK } from '@testing/mocks';
+import { APP_SETTINGS } from '@infrastructure/config';
+import { Theme } from '@presentation/schemas/types';
+import { UiStore } from '@presentation/stores';
+import { createUiStoreMock } from '@testing/mocks';
 import { ThemeService } from './theme.service';
 
 describe('ThemeService', () => {
   let service: ThemeService;
-  let uiStoreMock: typeof UI_STORE_MOCK;
+  let uiStore: any;
+  const mockSettings = {
+    supportedThemes: ['light', 'dark'] as Theme[],
+  };
+
+  const localStorageMock = (() => {
+    let store: Record<string, string> = {};
+    return {
+      getItem: vi.fn((key: string) => store[key] || null),
+      setItem: vi.fn((key: string, value: string) => {
+        store[key] = value.toString();
+      }),
+      removeItem: vi.fn((key: string) => {
+        delete store[key];
+      }),
+      clear: vi.fn(() => {
+        store = {};
+      }),
+      length: 0,
+      key: vi.fn((index: number) => Object.keys(store)[index] || null),
+    };
+  })();
+
+  Object.defineProperty(window, 'localStorage', { value: localStorageMock });
 
   beforeEach(() => {
-    uiStoreMock = UI_STORE_MOCK;
+    const uiStoreMock = createUiStoreMock();
 
     TestBed.configureTestingModule({
-      providers: [APP_SETTINGS_PROVIDER_MOCK(), UI_STORE_PROVIDER_MOCK(uiStoreMock)],
+      providers: [
+        ThemeService,
+        { provide: APP_SETTINGS, useValue: mockSettings },
+        { provide: UiStore, useValue: uiStoreMock },
+      ],
     });
 
     service = TestBed.inject(ThemeService);
+    uiStore = TestBed.inject(UiStore);
+
+    vi.spyOn(document.documentElement, 'setAttribute');
   });
 
-  describe('Init', () => {
-    it('should initialize themes in UiStore', () => {
-      const setAvailableThemes = vi.spyOn(uiStoreMock, 'setAvailableThemes');
+  afterEach(() => {
+    vi.restoreAllMocks();
+    localStorage.clear();
+  });
 
-      const expectedThemes = ['dark', 'light'];
+  describe('init', () => {
+    it('should set available themes from settings', () => {
+      service.init();
+      expect(uiStore.setAvailableThemes).toHaveBeenCalledWith(mockSettings.supportedThemes);
+    });
+
+    it('should set theme if a valid theme exists in localStorage', () => {
+      localStorageMock.getItem.mockReturnValue('dark');
 
       service.init();
 
-      expect(setAvailableThemes).toHaveBeenCalledWith(expectedThemes);
+      expect(document.documentElement.setAttribute).toHaveBeenCalledWith('data-theme', 'dark');
+      expect(localStorage.setItem).toHaveBeenCalledWith('theme', 'dark');
+      expect(uiStore.setSelectedTheme).toHaveBeenCalledWith('dark');
     });
-  });
 
-  describe('Set', () => {
-    it('should update the theme in UiStore', () => {
-      const setSelectedThemeSpy = vi.spyOn(uiStoreMock, 'setSelectedTheme');
-      const newTheme = 'dark';
-
-      service.set(newTheme);
-
-      expect(setSelectedThemeSpy).toHaveBeenCalledWith(newTheme);
-    });
-  });
-
-  describe('LocalStorage', () => {
-    it('should initialize with theme from localStorage if it is valid', () => {
-      const storageSpy = vi.spyOn(Storage.prototype, 'getItem').mockReturnValue('dark');
-      const setSpy = vi.spyOn(service, 'set');
-      // @ts-ignore
-      vi.spyOn(service, 'isTheme').mockReturnValue(true);
+    it('should not set theme if localStorage item is invalid', () => {
+      localStorageMock.getItem.mockReturnValue('invalid-theme');
 
       service.init();
 
-      expect(storageSpy).toHaveBeenCalledWith('theme');
-      expect(setSpy).toHaveBeenCalledWith('dark');
+      expect(document.documentElement.setAttribute).not.toHaveBeenCalled();
+      expect(uiStore.setSelectedTheme).not.toHaveBeenCalled();
     });
 
-    it('should NOT call set() if localStorage is empty', () => {
-      vi.spyOn(Storage.prototype, 'getItem').mockReturnValue(null);
-
-      const setSpy = vi.spyOn(service, 'set');
+    it('should not set theme if localStorage is empty', () => {
+      localStorageMock.getItem.mockReturnValue(null);
 
       service.init();
 
-      expect(setSpy).not.toHaveBeenCalled();
-    });
-
-    it('should NOT call set() if theme in localStorage is invalid', () => {
-      vi.spyOn(Storage.prototype, 'getItem').mockReturnValue('rainbow');
-      // @ts-ignore
-      vi.spyOn(service, 'isTheme').mockReturnValue(false);
-
-      const setSpy = vi.spyOn(service, 'set');
-
-      service.init();
-
-      expect(setSpy).not.toHaveBeenCalled();
+      expect(document.documentElement.setAttribute).not.toHaveBeenCalled();
+      expect(uiStore.setSelectedTheme).not.toHaveBeenCalled();
     });
   });
 
-  describe('isTheme (Type Guard)', () => {
-    it('should return true for a supported theme', () => {
-      // @ts-ignore
-      const result = service.isTheme('dark');
+  describe('set', () => {
+    it('should update document attribute, localStorage and store', () => {
+      const theme: Theme = 'light';
 
-      expect(result).toBe(true);
-    });
+      service.set(theme);
 
-    it('should return false for an unsupported theme', () => {
-      // @ts-ignore
-      const result = service.isTheme('rainbow');
-
-      expect(result).toBe(false);
-    });
-
-    it('should return false for an empty string', () => {
-      // @ts-ignore
-      const result = service.isTheme('');
-
-      expect(result).toBe(false);
+      expect(document.documentElement.setAttribute).toHaveBeenCalledWith('data-theme', theme);
+      expect(localStorage.setItem).toHaveBeenCalledWith('theme', theme);
+      expect(uiStore.setSelectedTheme).toHaveBeenCalledWith(theme);
     });
   });
 });

@@ -1,0 +1,19 @@
+@use 'variables' as *;
+
+@mixin desktop-view--sm {
+  $container-max-width: $screen-sm;
+  $card-breakpoint: calc($container-max-width + 8rem);
+
+  @media screen and (min-width: #{$card-breakpoint}) {
+    @content;
+  }
+}
+
+@mixin desktop-view--md {
+  $container-max-width: $screen-md;
+  $card-breakpoint: calc($container-max-width + 8rem);
+
+  @media screen and (min-width: #{$card-breakpoint}) {
+    @content;
+  }
+}

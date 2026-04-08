@@ -1,0 +1,42 @@
+<app-page-layout [contentMaxSize]="'sm'" [centerVertically]="true" [showHeader]="false">
+  <section class="auth">
+    <app-content-card-layout
+      [width]="'sm'"
+      [icon]="icon()"
+      [title]="title() | translate"
+      [titleLevel]="'h1'"
+    >
+      @if (isLoggedIn()) {
+        <app-button
+          [type]="'button'"
+          [text]="'pages.auth.logout' | translate"
+          [width]="'50%'"
+          (action)="onLogout()"
+        />
+      } @else {
+        <form class="form" (submit)="onSubmit($event)">
+          <app-form-field
+            type="email"
+            id="email"
+            [label]="'forms.email' | translate"
+            [field]="loginForm.email()"
+          />
+
+          <app-form-field
+            type="password"
+            id="password"
+            [label]="'forms.password' | translate"
+            [field]="loginForm.password()"
+          />
+
+          <app-button
+            type="submit"
+            [text]="'pages.auth.login' | translate"
+            [width]="'50%'"
+            [disabled]="loginForm().invalid()"
+          />
+        </form>
+      }
+    </app-content-card-layout>
+  </section>
+</app-page-layout>

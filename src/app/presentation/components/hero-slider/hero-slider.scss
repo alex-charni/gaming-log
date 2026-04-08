@@ -4,6 +4,7 @@
   position: relative;
   overflow: hidden;
   border-radius: 1.5rem;
+  box-shadow: var(--card-shadow);
 
   &__slide {
     min-width: 100%;

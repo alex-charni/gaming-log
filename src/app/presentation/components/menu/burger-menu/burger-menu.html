@@ -1,0 +1,38 @@
+@let isMenuOpen = isOpen();
+@let adminList = adminItems();
+
+<div #anchor class="menu-anchor">
+  <app-burger-button [open]="isMenuOpen" (toggle)="toggleMenu($event)" />
+
+  <div #menu class="menu" [class.menu--open]="isMenuOpen">
+    <div class="menu__header"></div>
+
+    <app-burger-menu-list
+      [items]="menuItems"
+      [isMenuOpen]="isMenuOpen"
+      (action)="navigate($event)"
+    />
+
+    <div class="menu__separator">
+      <app-horizontal-separator [color]="'white'" />
+    </div>
+
+    <ul class="menu__list">
+      <app-theme-selector-menu-item [isParentMenuOpen]="isMenuOpen" />
+
+      <app-language-selector-menu-item [isParentMenuOpen]="isMenuOpen" />
+    </ul>
+
+    @if (adminList.length) {
+      <div class="menu__separator">
+        <app-horizontal-separator [color]="'white'" />
+      </div>
+
+      <app-burger-menu-list
+        [items]="adminList"
+        [isMenuOpen]="isMenuOpen"
+        (action)="navigate($event)"
+      />
+    }
+  </div>
+</div>

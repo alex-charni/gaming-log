@@ -1,25 +1,22 @@
-<main class="error-page">
-  <section class="error-page__container">
-    @if (code()) {
-      <span class="code">{{ code() }}</span>
-    } @else {
-      <i class="icon fa-solid fa-exclamation"></i>
-    }
+<app-page-layout [contentMaxSize]="'sm'" [centerVertically]="true" [showHeader]="false">
+  <section class="error">
+    <app-content-card-layout
+      [width]="'sm'"
+      [icon]="icon()"
+      [emphasizedText]="emphasizedText()"
+      [title]="title()"
+      [titleLevel]="'h1'"
+    >
+      <p class="message">{{ message() }}</p>
 
-    <h1 class="title">{{ title() }}</h1>
-    <p class="message">{{ message() }}</p>
-
-    @if (showButton()) {
-      <button
-        type="button"
-        class="button"
-        appPulseOnclick
-        [variant]="'black'"
-        [size]="8"
-        (click)="handleButtonAction()"
-      >
-        {{ buttonText() }}
-      </button>
-    }
+      @if (showButton()) {
+        <app-button
+          [type]="'button'"
+          [text]="buttonText()"
+          [width]="'50%'"
+          (action)="handleButtonAction()"
+        />
+      }
+    </app-content-card-layout>
   </section>
-</main>
+</app-page-layout>

@@ -1,0 +1,21 @@
+@let txt = text();
+
+<div class="separator">
+  <span class="separator__line" [class]="separatorClasses()"></span>
+
+  @if (txt) {
+    @switch (titleLevel()) {
+      @case ('h1') {
+        <h1 class="separator__text" [class]="textClasses()">{{ txt }}</h1>
+      }
+      @case ('h3') {
+        <h3 class="separator__text" [class]="textClasses()">{{ txt }}</h3>
+      }
+      @default {
+        <h2 class="separator__text" [class]="textClasses()">{{ txt }}</h2>
+      }
+    }
+  }
+
+  <span class="separator__line" [class]="separatorClasses()"></span>
+</div>

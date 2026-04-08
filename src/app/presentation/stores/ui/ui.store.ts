@@ -1,5 +1,15 @@
-import { computed } from '@angular/core';
-import { patchState, signalStore, withComputed, withMethods, withState } from '@ngrx/signals';
+import { computed, inject } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { NavigationEnd, Router } from '@angular/router';
+import {
+  patchState,
+  signalStore,
+  withComputed,
+  withHooks,
+  withMethods,
+  withState,
+} from '@ngrx/signals';
+import { filter } from 'rxjs';
 
 import { Language, Theme } from '@presentation/schemas/types';
 import { uiInitialState } from './ui-initial-state';
@@ -19,4 +29,18 @@ export const UiStore = signalStore(
   withComputed(({ fullScreenSpinner }) => ({
     isUiBlocked: computed(() => fullScreenSpinner()),
   })),
+  withHooks({
+    onInit(store) {
+      const router = inject(Router);
+
+      router.events
+        .pipe(
+          filter((e) => e instanceof NavigationEnd),
+          takeUntilDestroyed(),
+        )
+        .subscribe(() => {
+          store.setFullScreenBackdrop(false);
+        });
+    },
+  }),
 );

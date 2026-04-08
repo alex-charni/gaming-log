@@ -2,7 +2,8 @@
   "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
   "version": 1,
   "cli": {
-    "packageManager": "npm"
+    "packageManager": "npm",
+    "analytics": false
   },
   "newProjectRoot": "projects",
   "projects": {
@@ -102,6 +103,7 @@
           "builder": "@angular/build:unit-test",
           "options": {
             "runnerConfig": "vitest.config.ts",
+            "providersFile": "src/testing/mocks/providers/test-providers.ts",
             "coverage": true,
             "watch": false
           }

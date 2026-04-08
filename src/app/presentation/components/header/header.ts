@@ -1,29 +1,54 @@
-import { AfterViewInit, Component, HostListener, input, signal } from '@angular/core';
+import {
+  AfterViewInit,
+  Component,
+  computed,
+  HostListener,
+  inject,
+  input,
+  signal,
+} from '@angular/core';
+import { toSignal } from '@angular/core/rxjs-interop';
+import { NavigationEnd, Router, RouterLink } from '@angular/router';
 import { TranslatePipe } from '@ngx-translate/core';
+import { filter, map } from 'rxjs';
 
-import { BurgerMenuComponent } from '../menu/burger-menu/burger-menu.component';
+import { BurgerMenu } from '../menu/burger-menu/burger-menu';
 
 @Component({
   selector: 'app-header',
-  imports: [TranslatePipe, BurgerMenuComponent],
   templateUrl: './header.html',
   styleUrl: './header.scss',
+  imports: [TranslatePipe, BurgerMenu, RouterLink],
 })
 export class Header implements AfterViewInit {
-  offset = input(10);
-  stickyAfter = input(0);
+  readonly offset = input(10);
+  readonly stickyAfter = input(0);
 
-  isVisible = true;
-  isSticky = false;
+  private readonly router = inject(Router);
+
+  protected readonly isVisible = signal(true);
 
   private lastScrollTop = 0;
   private hasScrolled = false;
 
+  private readonly navEnd = toSignal(
+    this.router.events.pipe(
+      filter((event) => event instanceof NavigationEnd),
+      map((event) => (event as NavigationEnd).urlAfterRedirects),
+    ),
+    { initialValue: this.router.url },
+  );
+
+  protected readonly isHome = computed(() => {
+    const url = this.navEnd();
+
+    return url === '/' || url === '/home' || url === undefined;
+  });
+
   ngAfterViewInit(): void {
     const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
 
-    this.isVisible = true;
-    this.isSticky = scrollTop > this.stickyAfter();
+    this.isVisible.set(true);
     this.lastScrollTop = scrollTop;
   }
 
@@ -38,15 +63,13 @@ export class Header implements AfterViewInit {
     }
 
     if (currentScroll > this.lastScrollTop + this.offset()) {
-      this.isVisible = false;
+      this.isVisible.set(false);
     } else if (currentScroll < this.lastScrollTop - this.offset()) {
-      this.isVisible = true;
-      this.isSticky = currentScroll > this.stickyAfter();
+      this.isVisible.set(true);
     }
 
     if (currentScroll <= this.stickyAfter()) {
-      this.isSticky = false;
-      this.isVisible = true;
+      this.isVisible.set(true);
     }
 
     this.lastScrollTop = Math.max(currentScroll, 0);

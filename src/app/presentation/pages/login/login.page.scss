@@ -1,0 +1,11 @@
+@use 'scss' as *;
+
+.auth {
+  width: 100%;
+
+  .form {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+}

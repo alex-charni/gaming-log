@@ -2,7 +2,4 @@
 
 .app-container {
   @extend .theme-transition;
-
-  background-color: var(--bg-app);
-  min-height: 100%;
 }

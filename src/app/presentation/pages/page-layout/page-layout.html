@@ -1,0 +1,9 @@
+<main class="page" [class]="pageClasses()">
+  <div class="page__container" [class]="containerClasses()">
+    @if (showHeader()) {
+      <app-header class="page__header" />
+    }
+
+    <ng-content />
+  </div>
+</main>

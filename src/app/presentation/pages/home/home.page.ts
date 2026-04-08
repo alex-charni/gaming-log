@@ -1,16 +1,17 @@
 import { Component, effect, inject, signal } from '@angular/core';
 import { TranslatePipe } from '@ngx-translate/core';
 
-import { GameCardsGrid, Header, HeroSlider, HorizontalSeparator } from '@presentation/components';
+import { CardsGrid, HeroSlider } from '@presentation/components';
+import { PageLayout } from '@presentation/pages/page-layout/page-layout';
 import { SpinnerService } from '@presentation/services';
 import { HomePageStore } from '@presentation/stores';
+import { HorizontalSeparator } from '@presentation/ui';
 
 @Component({
   selector: 'app-home-page',
-  imports: [GameCardsGrid, Header, HeroSlider, HorizontalSeparator, TranslatePipe],
-  providers: [HomePageStore],
   templateUrl: './home.page.html',
   styleUrl: './home.page.scss',
+  imports: [CardsGrid, HeroSlider, HorizontalSeparator, TranslatePipe, PageLayout],
 })
 export class HomePage {
   protected readonly store = inject(HomePageStore);
@@ -27,8 +28,8 @@ export class HomePage {
   }
 
   ngOnInit(): void {
-    this.fetchFeaturedGames();
-    this.fetchGamesByYear(this.store.nextYearToLoad());
+    if (!this.store.slidesCollection().length) this.fetchFeaturedGames();
+    if (!this.store.cardsCollection().length) this.fetchGamesByYear(this.store.nextYearToLoad());
   }
 
   protected handleFetchMoreGames(): void {

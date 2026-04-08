@@ -13,14 +13,14 @@
       <div
         class="hero-slider__slide"
         [class.hero-slider__slide--active]="$index === currentIndex()"
+        [attr.aria-label]="'Cover of ' + slide.bottomLeftText"
       >
         <img
           #heroImage
           [ngSrc]="slide.imageUrl"
           fill
-          [priority]="$index === 0"
+          priority
           [placeholder]="slide.imagePlaceholderUrl"
-          alt="Cover image of {{ slide.bottomLeftText }}"
           class="hero-slider__image"
           draggable="false"
         />

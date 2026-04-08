@@ -1,0 +1,38 @@
+@use 'scss' as *;
+
+.separator {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+
+  &__line {
+    flex: 1;
+    height: 1px;
+
+    &--fuchsia {
+      background-color: var(--primary);
+    }
+    &--white {
+      background-color: $white;
+    }
+  }
+
+  &__text {
+    margin-block: 0;
+    padding-inline: 1rem;
+
+    font-size: $font-xl;
+    font-weight: normal;
+    letter-spacing: 0.05em;
+    white-space: nowrap;
+    text-transform: uppercase;
+
+    &--fuchsia {
+      color: var(--primary);
+    }
+    &--white {
+      color: $white;
+    }
+  }
+}
