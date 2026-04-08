@@ -1,7 +1,7 @@
-import { Component, inject, output } from '@angular/core';
+import { Component, input, output } from '@angular/core';
 
 import { ViewportEnterDirective } from '@presentation/directives';
-import { HomePageStore } from '@presentation/stores';
+import { Card } from '@presentation/schemas/types';
 import { GridCard } from './components';
 
 @Component({
@@ -11,14 +11,17 @@ import { GridCard } from './components';
   imports: [ViewportEnterDirective, GridCard],
 })
 export class CardsGrid {
-  protected readonly store = inject(HomePageStore);
+  readonly cards = input.required<Card[]>();
+  readonly cardsLoading = input.required<boolean>();
+  readonly moreCardsAvailable = input.required<boolean>();
+  readonly nextYearToLoad = input.required<number>();
 
   readonly loadMore = output<void>();
 
   protected readonly placeholders = Array.from({ length: 9 });
 
   protected onEnterViewport(): void {
-    if (!this.store.cardsAreLoading() && this.store.haventReachedLastYear()) this.loadMore.emit();
+    if (!this.cardsLoading() && this.moreCardsAvailable()) this.loadMore.emit();
   }
 
   // @ViewChild('grid') grid!: ElementRef<HTMLDivElement>;

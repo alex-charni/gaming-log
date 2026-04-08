@@ -11,6 +11,12 @@
   </div>
 
   <section class="page__cards-grid">
-    <app-cards-grid (loadMore)="handleFetchMoreGames()" />
+    <app-cards-grid
+      [cards]="store.cardsCollection()"
+      [cardsLoading]="store.cardsAreLoading()"
+      [moreCardsAvailable]="store.haventReachedLastYear()"
+      [nextYearToLoad]="store.nextYearToLoad()"
+      (loadMore)="handleFetchMoreGames()"
+    />
   </section>
 </app-page-layout>
