@@ -1,7 +1,7 @@
 import { TestBed } from '@angular/core/testing';
+
 import { APP_SETTINGS } from '@infrastructure/config';
-import { describe, expect, it } from 'vitest';
-import { APP_PARAMS_MOCK, APP_SETTINGS_PROVIDER_MOCK } from './app-settings.mock'; // Ajusta la ruta
+import { APP_PARAMS_MOCK, APP_SETTINGS_PROVIDER_MOCK } from './app-settings.mock';
 
 describe('APP_SETTINGS_PROVIDER_MOCK', () => {
   it('should inject default values of APP_PARAMS_MOCK', () => {

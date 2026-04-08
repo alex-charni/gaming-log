@@ -1,41 +1,54 @@
 import { of } from 'rxjs';
+import { Mocked } from 'vitest';
 
 import { GameEntity } from '@core/domain/entities';
 import { GamesRepository } from '@core/domain/repositories';
+import { createGamesRepositoryMock, MOCK_GAME_ENTITY } from '@testing/mocks';
 import { GetGamesByYearUseCase } from './get-games-by-year.usecase';
 
-const games: GameEntity[] = [
-  { id: '1', title: 'Game 1', platform: 'PS4', date: '2024-12-31', rating: 5 },
-  { id: '2', title: 'Game 1', platform: 'PS3', date: '2025-12-31', rating: 5 },
-];
-
 describe('GetGamesByYearUseCase', () => {
-  let gamesRepositoryMock: GamesRepository;
-  let getGamesByYearUseCase: GetGamesByYearUseCase;
+  let repository: Mocked<GamesRepository>;
+  let useCase: GetGamesByYearUseCase;
 
   beforeEach(() => {
-    gamesRepositoryMock = {
-      addGame: vi.fn((game: GameEntity) => of(game)),
-      getGamesByYear: vi.fn((year: number) => of(games)),
-      getFeaturedGames: vi.fn((quantity: number) => of(games)),
-    };
-
-    getGamesByYearUseCase = new GetGamesByYearUseCase(gamesRepositoryMock);
+    repository = createGamesRepositoryMock();
+    useCase = new GetGamesByYearUseCase(repository);
   });
 
-  it('should call repository.getGamesByYear with the given year and return the games', () => {
-    const year = 2024;
+  afterEach(() => {
+    vi.clearAllMocks();
+  });
 
-    vi.spyOn(gamesRepositoryMock, 'getGamesByYear').mockReturnValue(of(games));
+  describe('Execution', () => {
+    it('should call repository with provided year', () => {
+      const mock$ = of([]);
+      repository.getGamesByYear.mockReturnValue(mock$);
 
-    let result: GameEntity[] | undefined;
+      useCase.execute(2024);
 
-    getGamesByYearUseCase.execute(year).subscribe((data) => {
-      result = data;
+      expect(repository.getGamesByYear).toHaveBeenCalledWith(2024);
     });
+  });
 
-    expect(gamesRepositoryMock.getGamesByYear).toHaveBeenCalledOnce();
-    expect(gamesRepositoryMock.getGamesByYear).toHaveBeenCalledWith(year);
-    expect(result).toEqual(games);
+  describe('Observable pass-through', () => {
+    it('should return the same observable instance from repository', () => {
+      const mockGames: GameEntity[] = [MOCK_GAME_ENTITY];
+
+      const mock$ = of(mockGames);
+      repository.getGamesByYear.mockReturnValue(mock$);
+
+      const result$ = useCase.execute(2024);
+
+      expect(result$).toBe(mock$);
+    });
+  });
+
+  describe('Error propagation', () => {
+    it('should propagate errors from repository', async () => {
+      const error = new Error('Fetching failed failed');
+      repository.getGamesByYear.mockRejectedValue(error);
+
+      await expect(useCase.execute(2025)).rejects.toThrow(error);
+    });
   });
 });

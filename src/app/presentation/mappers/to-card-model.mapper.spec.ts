@@ -1,20 +1,20 @@
-import { GameEntity } from '@core/domain/entities';
+import { environment } from '@environments/environment';
+import { MOCK_GAME_ENTITY } from '@testing/mocks';
 import { toGameCardModel } from './to-card-model.mapper';
 
 describe('toGameCardModel', () => {
-  it('should return a valid IGameCard', () => {
-    const gameEntity: GameEntity = {
-      id: 'bad59427-9281-48dd-93c1-5ff72ab5e82c',
-      rating: 3,
-      title: 'Immortals Fenyx Rising',
-      platform: 'PC',
-      date: '2025-11-27',
-    };
+  it('should map MOCK_GAME_ENTITY to GameCardModel correctly', () => {
+    const result = toGameCardModel(MOCK_GAME_ENTITY);
 
-    const mappedGamesData = toGameCardModel(gameEntity);
-
-    expect(mappedGamesData.type).toEqual('game');
-    expect(mappedGamesData).toHaveProperty('coverUrl');
-    expect(mappedGamesData).toHaveProperty('coverPlaceholderUrl');
+    expect(result).toEqual({
+      type: 'game',
+      id: MOCK_GAME_ENTITY.id,
+      title: 'Halo',
+      platform: 'Xbox',
+      rating: 4,
+      coverUrl: `${environment.publicImagesUrl}/covers/${MOCK_GAME_ENTITY.id}.webp`,
+      coverPlaceholderUrl: `${environment.publicImagesUrl}/covers-placeholders/${MOCK_GAME_ENTITY.id}.placeholder.webp`,
+      date: '2024',
+    });
   });
 });

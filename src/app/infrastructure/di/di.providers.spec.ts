@@ -1,9 +1,18 @@
 import { TestBed } from '@angular/core/testing';
 
-import { GetFeaturedGamesUseCase, GetGamesByYearUseCase } from '@core/application/use-cases';
-import { GamesRepository } from '@core/domain/repositories';
+import {
+  AddFeaturedGameUseCase,
+  AddGameUseCase,
+  GetFeaturedGamesUseCase,
+  GetGamesByYearUseCase,
+  GetSessionUseCase,
+  LoginUseCase,
+  LogoutUseCase,
+  OnAuthStateChangeUseCase,
+} from '@core/application/use-cases';
+import { AuthRepository, GamesRepository } from '@core/domain/repositories';
 import { APP_PARAMS } from '@infrastructure/config/app.params';
-import { GamesRepositoryAdapter } from '@infrastructure/http/api';
+import { AuthRepositoryAdapter, GamesRepositoryAdapter } from '@infrastructure/http/api';
 import { APP_SETTINGS } from '../config/app.tokens';
 import { APP_PROVIDERS } from './di.providers';
 
@@ -24,46 +33,68 @@ describe('APP_PROVIDERS Configuration', () => {
   });
 
   describe('Instantiation', () => {
+    it('should provide AuthRepository as an instance of AuthRepositoryAdapter', () => {
+      const repository = TestBed.inject(AuthRepository);
+      expect(repository).toBeInstanceOf(AuthRepositoryAdapter);
+    });
+
+    it('should correctly instantiate GetSessionUseCase', () => {
+      const useCase = TestBed.inject(GetSessionUseCase);
+      expect(useCase).toBeInstanceOf(GetSessionUseCase);
+    });
+
+    it('should correctly instantiate LoginUseCase', () => {
+      const useCase = TestBed.inject(LoginUseCase);
+      expect(useCase).toBeInstanceOf(LoginUseCase);
+    });
+
+    it('should correctly instantiate LogoutUseCase', () => {
+      const useCase = TestBed.inject(LogoutUseCase);
+      expect(useCase).toBeInstanceOf(LogoutUseCase);
+    });
+
+    it('should correctly instantiate OnAuthStateChangeUseCase', () => {
+      const useCase = TestBed.inject(OnAuthStateChangeUseCase);
+      expect(useCase).toBeInstanceOf(OnAuthStateChangeUseCase);
+    });
+
     it('should provide GamesRepository as an instance of GamesRepositoryAdapter', () => {
       const repository = TestBed.inject(GamesRepository);
-
       expect(repository).toBeInstanceOf(GamesRepositoryAdapter);
     });
 
-    it('should correctly instantiate GetGamesByYearUseCase and use the repository', () => {
-      const useCase = TestBed.inject(GetGamesByYearUseCase);
-      const repository = TestBed.inject(GamesRepository);
-
-      const spy = vi.spyOn(repository, 'getGamesByYear');
-
-      useCase.execute(2024);
-
-      expect(spy).toHaveBeenCalledWith(2024);
+    it('should correctly instantiate AddFeaturedGameUseCase', () => {
+      const useCase = TestBed.inject(AddFeaturedGameUseCase);
+      expect(useCase).toBeInstanceOf(AddFeaturedGameUseCase);
     });
 
-    it('should correctly instantiate GetFeaturedGamesUseCase via factory', () => {
+    it('should correctly instantiate AddGameUseCase', () => {
+      const useCase = TestBed.inject(AddGameUseCase);
+      expect(useCase).toBeInstanceOf(AddGameUseCase);
+    });
+
+    it('should correctly instantiate GetGamesByYearUseCase', () => {
+      const useCase = TestBed.inject(GetGamesByYearUseCase);
+      expect(useCase).toBeInstanceOf(GetGamesByYearUseCase);
+    });
+
+    it('should correctly instantiate GetFeaturedGamesUseCase', () => {
       const useCase = TestBed.inject(GetFeaturedGamesUseCase);
-      const repository = TestBed.inject(GamesRepository);
-
-      const spy = vi.spyOn(repository, 'getFeaturedGames');
-
-      useCase.execute(5);
-
-      expect(spy).toHaveBeenCalledWith(5);
+      expect(useCase).toBeInstanceOf(GetFeaturedGamesUseCase);
     });
   });
 
   describe('Singleton', () => {
     it('should provide unique instances for use cases (Singleton check)', () => {
-      const instance1 = TestBed.inject(GetGamesByYearUseCase);
-      const instance2 = TestBed.inject(GetGamesByYearUseCase);
+      const instance1 = TestBed.inject(GetSessionUseCase);
+      const instance2 = TestBed.inject(GetSessionUseCase);
 
       expect(instance1).toBe(instance2);
     });
 
     it('should provide unique instances for use cases (Singleton check)', () => {
-      const instance1 = TestBed.inject(GetFeaturedGamesUseCase);
-      const instance2 = TestBed.inject(GetFeaturedGamesUseCase);
+      const instance1 = TestBed.inject(AddFeaturedGameUseCase);
+      const instance2 = TestBed.inject(AddFeaturedGameUseCase);
 
       expect(instance1).toBe(instance2);
     });

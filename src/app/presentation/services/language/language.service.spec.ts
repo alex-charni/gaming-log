@@ -1,111 +1,116 @@
 import { TestBed } from '@angular/core/testing';
-import { provideTranslateService, TranslateService } from '@ngx-translate/core';
 
-import { APP_SETTINGS_PROVIDER_MOCK, UI_STORE_MOCK, UI_STORE_PROVIDER_MOCK } from '@testing/mocks';
+import { APP_SETTINGS } from '@infrastructure/config';
+import { TranslateService } from '@ngx-translate/core';
+import { Language } from '@presentation/schemas/types';
+import { UiStore } from '@presentation/stores';
+import { createUiStoreMock } from '@testing/mocks';
 import { LanguageService } from './language.service';
 
 describe('LanguageService', () => {
   let service: LanguageService;
+  let uiStore: any;
   let translateService: any;
-  let uiStoreMock: typeof UI_STORE_MOCK;
+
+  const mockSettings = {
+    supportedLanguages: ['en', 'es'] as Language[],
+  };
+
+  const localStorageMock = (() => {
+    let store: Record<string, string> = {};
+    return {
+      getItem: vi.fn((key: string) => store[key] || null),
+      setItem: vi.fn((key: string, value: string) => {
+        store[key] = value.toString();
+      }),
+      removeItem: vi.fn((key: string) => {
+        delete store[key];
+      }),
+      clear: vi.fn(() => {
+        store = {};
+      }),
+    };
+  })();
+
+  Object.defineProperty(window, 'localStorage', { value: localStorageMock });
 
   beforeEach(() => {
-    uiStoreMock = UI_STORE_MOCK;
+    const uiStoreMock = createUiStoreMock();
+
+    const translateServiceMock = {
+      addLangs: vi.fn(),
+      setFallbackLang: vi.fn(),
+      use: vi.fn(),
+    };
 
     TestBed.configureTestingModule({
       providers: [
         LanguageService,
-        provideTranslateService(),
-        UI_STORE_PROVIDER_MOCK(uiStoreMock),
-        APP_SETTINGS_PROVIDER_MOCK(),
+        { provide: APP_SETTINGS, useValue: mockSettings },
+        { provide: UiStore, useValue: uiStoreMock },
+        { provide: TranslateService, useValue: translateServiceMock },
       ],
     });
 
     service = TestBed.inject(LanguageService);
+    uiStore = TestBed.inject(UiStore);
     translateService = TestBed.inject(TranslateService);
-
-    vi.spyOn(Storage.prototype, 'getItem').mockClear();
   });
 
-  describe('Init', () => {
-    it('should initialize languages in both TranslateService and UiStore', () => {
-      const addLangsSpy = vi.spyOn(translateService, 'addLangs');
-      const setFallbackLangSpy = vi.spyOn(translateService, 'setFallbackLang');
-      const setAvailableLanguagesSpy = vi.spyOn(uiStoreMock, 'setAvailableLanguages');
+  afterEach(() => {
+    vi.restoreAllMocks();
+    localStorageMock.clear();
+  });
 
-      const expectedLangs = ['en', 'es'];
+  describe('init', () => {
+    it('should configure translate service and store with settings', () => {
+      service.init();
+
+      expect(translateService.addLangs).toHaveBeenCalledWith(mockSettings.supportedLanguages);
+      expect(translateService.setFallbackLang).toHaveBeenCalledWith(
+        mockSettings.supportedLanguages[0],
+      );
+      expect(uiStore.setAvailableLanguages).toHaveBeenCalledWith(mockSettings.supportedLanguages);
+    });
+
+    it('should set language if a valid language exists in localStorage', () => {
+      localStorageMock.getItem.mockReturnValue('es');
 
       service.init();
 
-      expect(addLangsSpy).toHaveBeenCalledWith(expectedLangs);
-      expect(setFallbackLangSpy).toHaveBeenCalledWith('en');
-      expect(setAvailableLanguagesSpy).toHaveBeenCalledWith(expectedLangs);
+      expect(translateService.use).toHaveBeenCalledWith('es');
+      expect(localStorage.setItem).toHaveBeenCalledWith('language', 'es');
+      expect(uiStore.setSelectedLanguage).toHaveBeenCalledWith('es');
     });
-  });
 
-  describe('Set', () => {
-    it('should update the language in TranslateService and UiStore', () => {
-      const useSpy = vi.spyOn(translateService, 'use');
-      const setSelectedLanguageSpy = vi.spyOn(uiStoreMock, 'setSelectedLanguage');
-      const newLang = 'es';
-
-      service.set(newLang);
-
-      expect(useSpy).toHaveBeenCalledWith(newLang);
-      expect(setSelectedLanguageSpy).toHaveBeenCalledWith(newLang);
-    });
-  });
-
-  describe('LocalStorage', () => {
-    it('should initialize with language from localStorage if it is valid', () => {
-      const storageSpy = vi.spyOn(Storage.prototype, 'getItem').mockReturnValue('es');
-      const setSpy = vi.spyOn(service, 'set');
-      // @ts-ignore
-      vi.spyOn(service, 'isLanguage').mockReturnValue(true);
+    it('should not set language if localStorage item is invalid', () => {
+      localStorageMock.getItem.mockReturnValue('fr');
 
       service.init();
 
-      expect(storageSpy).toHaveBeenCalledWith('language');
-      expect(setSpy).toHaveBeenCalledWith('es');
+      expect(translateService.use).not.toHaveBeenCalled();
+      expect(uiStore.setSelectedLanguage).not.toHaveBeenCalled();
     });
 
-    it('should NOT call set() if localStorage is empty', () => {
-      vi.spyOn(Storage.prototype, 'getItem').mockReturnValue(null);
-
-      const setSpy = vi.spyOn(service, 'set');
+    it('should not set language if localStorage is empty', () => {
+      localStorageMock.getItem.mockReturnValue(null);
 
       service.init();
 
-      expect(setSpy).not.toHaveBeenCalled();
-    });
-
-    it('should NOT call set() if language in localStorage is invalid', () => {
-      vi.spyOn(Storage.prototype, 'getItem').mockReturnValue('fr');
-      // @ts-ignore
-      vi.spyOn(service, 'isLanguage').mockReturnValue(false);
-
-      const setSpy = vi.spyOn(service, 'set');
-
-      service.init();
-
-      expect(setSpy).not.toHaveBeenCalled();
+      expect(translateService.use).not.toHaveBeenCalled();
+      expect(uiStore.setSelectedLanguage).not.toHaveBeenCalled();
     });
   });
 
-  describe('isLanguage (Type Guard)', () => {
-    it('should return true for a supported language', () => {
-      const result = (service as any).isLanguage('en');
-      expect(result).toBe(true);
-    });
+  describe('set', () => {
+    it('should update translate service, localStorage and store', () => {
+      const lang: Language = 'en';
 
-    it('should return false for an unsupported language', () => {
-      const result = (service as any).isLanguage('fr');
-      expect(result).toBe(false);
-    });
+      service.set(lang);
 
-    it('should return false for an empty string', () => {
-      const result = (service as any).isLanguage('');
-      expect(result).toBe(false);
+      expect(translateService.use).toHaveBeenCalledWith(lang);
+      expect(localStorage.setItem).toHaveBeenCalledWith('language', lang);
+      expect(uiStore.setSelectedLanguage).toHaveBeenCalledWith(lang);
     });
   });
 });

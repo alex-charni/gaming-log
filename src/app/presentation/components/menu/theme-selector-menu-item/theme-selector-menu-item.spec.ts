@@ -1,15 +1,10 @@
 import { ComponentRef } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import { provideTranslateService } from '@ngx-translate/core';
 
-import { LanguageService } from '@presentation/services';
-import { APP_SETTINGS_PROVIDER_MOCK } from '@testing/mocks';
+// import { LanguageService } from '@presentation/services';
+// import { createLanguageServiceMock } from '@testing/mocks';
 import { ThemeSelectorMenuItem } from './theme-selector-menu-item';
-
-const languageServiceMock = {
-  setLanguage: vi.fn(),
-};
 
 describe('ThemeSelectorMenuItem', () => {
   let component: ThemeSelectorMenuItem;
@@ -19,11 +14,7 @@ describe('ThemeSelectorMenuItem', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [ThemeSelectorMenuItem],
-      providers: [
-        provideTranslateService(),
-        APP_SETTINGS_PROVIDER_MOCK(),
-        { provide: LanguageService, useValue: languageServiceMock },
-      ],
+      // providers: [{ provide: LanguageService, useValue: createLanguageServiceMock() }],
     }).compileComponents();
 
     fixture = TestBed.createComponent(ThemeSelectorMenuItem);
@@ -41,8 +32,7 @@ describe('ThemeSelectorMenuItem', () => {
 
       expect(li).toBeDefined();
 
-      // @ts-ignore
-      const toggleSpy = vi.spyOn(component, 'toggle');
+      const toggleSpy = vi.spyOn(component as any, 'toggle');
 
       li.click();
 
@@ -55,8 +45,7 @@ describe('ThemeSelectorMenuItem', () => {
 
       expect(li).toBeDefined();
 
-      // @ts-ignore
-      const toggleSpy = vi.spyOn(component, 'changeTheme');
+      const toggleSpy = vi.spyOn(component as any, 'changeTheme');
 
       li.click();
 

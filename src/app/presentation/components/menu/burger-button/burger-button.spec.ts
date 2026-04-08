@@ -1,7 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 
-import { provideTranslateService } from '@ngx-translate/core';
 import { BurgerButton } from './burger-button';
 
 describe('BurgerButton', () => {
@@ -11,7 +10,6 @@ describe('BurgerButton', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [BurgerButton],
-      providers: [provideTranslateService()],
     }).compileComponents();
 
     fixture = TestBed.createComponent(BurgerButton);

@@ -1,96 +1,214 @@
-// TODO: revisit for a better understanding of some concepts
+import { provideLocationMocks } from '@angular/common/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { provideTranslateService } from '@ngx-translate/core';
+import { provideRouter, Router, RouterLink } from '@angular/router';
 
-import { APP_SETTINGS_PROVIDER_MOCK } from '@testing/mocks';
+import { routes } from '../../../app.routes';
+import { BurgerMenu } from '../menu/burger-menu/burger-menu';
 import { Header } from './header';
-
-function setScrollTop(value: number) {
-  Object.defineProperty(window, 'pageYOffset', {
-    value,
-    writable: true,
-  });
-
-  Object.defineProperty(document.documentElement, 'scrollTop', {
-    value,
-    writable: true,
-  });
-}
 
 describe('Header', () => {
   let component: Header;
   let fixture: ComponentFixture<Header>;
+  let router: Router;
 
   beforeEach(async () => {
-    setScrollTop(0);
-
     await TestBed.configureTestingModule({
-      imports: [Header],
-      providers: [provideTranslateService(), APP_SETTINGS_PROVIDER_MOCK()],
+      imports: [Header, BurgerMenu, RouterLink],
+      providers: [provideRouter(routes), provideLocationMocks()],
     }).compileComponents();
 
+    router = TestBed.inject(Router);
     fixture = TestBed.createComponent(Header);
     component = fixture.componentInstance;
-    await fixture.whenStable();
+
+    vi.stubGlobal('pageYOffset', 0);
+
+    Object.defineProperty(document.documentElement, 'scrollTop', { value: 0, writable: true });
+
+    fixture.detectChanges();
   });
 
-  it('should set hasScrolled to true and lastScrollTop to 600 after scrolling for the first time', () => {
-    Object.defineProperty(window, 'pageYOffset', { value: 600, writable: true });
-
-    window.dispatchEvent(new Event('scroll'));
-
-    expect(component['hasScrolled']).toBe(true);
-    expect(component['lastScrollTop']).toEqual(window.pageYOffset);
+  afterEach(() => {
+    vi.unstubAllGlobals();
   });
 
-  it('should set hasScrolled to true and lastScrollTop to 600 after scrolling for the first time', () => {
-    Object.defineProperty(window, 'pageYOffset', { value: 0, writable: true });
-    Object.defineProperty(document.documentElement, 'scrollTop', { value: 600, writable: true });
-
-    window.dispatchEvent(new Event('scroll'));
-
-    expect(component['hasScrolled']).toBe(true);
-    expect(component['lastScrollTop']).toEqual(document.documentElement.scrollTop);
+  it('should create', () => {
+    expect(component).toBeTruthy();
   });
 
-  it('should have isVisible to false if scroll is enough ', () => {
-    setScrollTop(0);
-    window.dispatchEvent(new Event('scroll'));
+  describe('isHome computed', () => {
+    it('should be true when url is /', async () => {
+      await router.navigateByUrl('/');
+      fixture.detectChanges();
+      expect(component['isHome']()).toBe(true);
+    });
 
-    setScrollTop(8000);
-    window.dispatchEvent(new Event('scroll'));
+    it('should be true when url is /home', async () => {
+      await router.navigateByUrl('/home');
+      fixture.detectChanges();
+      expect(component['isHome']()).toBe(true);
+    });
 
-    expect(component.isVisible).toBe(false);
+    it('should be false when url is /any-other-route', async () => {
+      await router.navigateByUrl('/any-other-route');
+      fixture.detectChanges();
+      expect(component['isHome']()).toBe(false);
+    });
   });
 
-  it('should have isVisible to true if scroll is not enough ', () => {
-    setScrollTop(600);
-    window.dispatchEvent(new Event('scroll'));
+  describe('Scroll Logic', () => {
+    beforeEach(() => {
+      component['lastScrollTop'] = 0;
+      component['hasScrolled'] = false;
+      vi.stubGlobal('pageYOffset', 0);
+    });
 
-    setScrollTop(60);
-    window.dispatchEvent(new Event('scroll'));
+    it('should initialize lastScrollTop on first scroll event', () => {
+      const offset = 100;
 
-    expect(component.isVisible).toBe(true);
+      vi.stubGlobal('pageYOffset', offset);
+
+      component.onScroll();
+
+      expect(component['hasScrolled']).toBe(true);
+      expect(component['lastScrollTop']).toBe(offset);
+      expect(component['isVisible']()).toBe(true);
+    });
+
+    it('should hide header when scrolling down more than offset', () => {
+      const offset = 100;
+
+      vi.stubGlobal('pageYOffset', offset);
+
+      component.onScroll(); // hasScrolled = true
+
+      vi.stubGlobal('pageYOffset', offset + 11);
+
+      component.onScroll();
+
+      expect(component['isVisible']()).toBe(false);
+    });
+
+    it('should show header when scrolling up more than offset', () => {
+      const lastScrollTop = 200;
+
+      component['hasScrolled'] = true;
+      component['lastScrollTop'] = lastScrollTop;
+      component['isVisible'].set(false);
+
+      vi.stubGlobal('pageYOffset', lastScrollTop - 11);
+
+      component.onScroll();
+
+      expect(component['isVisible']()).toBe(true);
+    });
+
+    it('should not change visibility if scroll delta is within offset', () => {
+      const offset = 100;
+
+      vi.stubGlobal('pageYOffset', offset);
+
+      component.onScroll();
+
+      vi.stubGlobal('pageYOffset', offset + 5);
+
+      component.onScroll();
+
+      expect(component['isVisible']()).toBe(true);
+    });
+
+    it('should force visible if current scroll is below stickyAfter threshold', () => {
+      fixture.componentRef.setInput('stickyAfter', 50);
+      component['isVisible'].set(false);
+      component['hasScrolled'] = true;
+
+      vi.stubGlobal('pageYOffset', 30);
+
+      component.onScroll();
+
+      expect(component['isVisible']()).toBe(true);
+    });
+
+    it('should clamp lastScrollTop to 0 if pageYOffset is negative', () => {
+      component['hasScrolled'] = true;
+      vi.stubGlobal('pageYOffset', -50);
+      component.onScroll();
+      expect(component['lastScrollTop']).toBe(0);
+    });
+
+    it('should fallback to document.documentElement.scrollTop in ngAfterViewInit when pageYOffset is 0', () => {
+      vi.stubGlobal('pageYOffset', 0);
+
+      const scroll = 150;
+
+      Object.defineProperty(document.documentElement, 'scrollTop', {
+        value: scroll,
+        writable: true,
+      });
+
+      component.ngAfterViewInit();
+
+      expect(component['lastScrollTop']).toBe(scroll);
+    });
+
+    it('should use document.documentElement.scrollTop when pageYOffset is 0 in onScroll', () => {
+      component['hasScrolled'] = true;
+      component['lastScrollTop'] = 0;
+
+      vi.stubGlobal('pageYOffset', 0);
+
+      Object.defineProperty(document.documentElement, 'scrollTop', {
+        value: 120,
+        writable: true,
+      });
+
+      component.onScroll();
+
+      expect(component['lastScrollTop']).toBe(120);
+    });
   });
 
-  it('should have isVisible to true if scroll is not enough ', () => {
-    setScrollTop(600);
-    window.dispatchEvent(new Event('scroll'));
+  describe('UI Elements', () => {
+    it('should render h1 only on home routes', async () => {
+      await router.navigateByUrl('/home');
 
-    setScrollTop(590);
-    window.dispatchEvent(new Event('scroll'));
+      fixture.detectChanges();
 
-    expect(component.isVisible).toBe(true);
+      expect(fixture.nativeElement.querySelector('h1.app-header__title')).toBeTruthy();
+
+      await router.navigateByUrl('/dashboard');
+
+      fixture.detectChanges();
+
+      expect(fixture.nativeElement.querySelector('h1.app-header__title')).toBeNull();
+      expect(fixture.nativeElement.querySelector('div.app-header__title')).toBeTruthy();
+    });
+
+    it('should toggle visible class on wrapper based on isVisible signal', () => {
+      const wrapper = fixture.nativeElement.querySelector('#app-header-wrapper');
+
+      component['isVisible'].set(true);
+
+      fixture.detectChanges();
+
+      expect(wrapper.classList.contains('layout-wrapper--visible')).toBe(true);
+
+      component['isVisible'].set(false);
+
+      fixture.detectChanges();
+
+      expect(wrapper.classList.contains('layout-wrapper--visible')).toBe(false);
+    });
   });
 
-  it('should disable sticky header if current scroll is not enough ', () => {
-    setScrollTop(600);
-    window.dispatchEvent(new Event('scroll'));
+  it('should initialize scroll position in ngAfterViewInit', () => {
+    const offset = 300;
 
-    setScrollTop(0);
-    window.dispatchEvent(new Event('scroll'));
+    vi.stubGlobal('pageYOffset', offset);
 
-    expect(component.isSticky).toBe(false);
-    expect(component.isVisible).toBe(true);
+    component.ngAfterViewInit();
+
+    expect(component['lastScrollTop']).toBe(offset);
+    expect(component['isVisible']()).toBe(true);
   });
 });

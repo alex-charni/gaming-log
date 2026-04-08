@@ -1,6 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import { provideTranslateService } from '@ngx-translate/core';
 
 import { HeroSlideModel } from '@presentation/schemas/interfaces';
 import { HeroSliderNavButton } from './components';
@@ -34,7 +33,6 @@ describe('HeroSlider', () => {
 
     await TestBed.configureTestingModule({
       imports: [HeroSlider],
-      providers: [provideTranslateService()],
     }).compileComponents();
 
     fixture = TestBed.createComponent(HeroSlider);
@@ -161,8 +159,7 @@ describe('HeroSlider', () => {
     });
 
     it('should call next() when right navigation button is clicked', () => {
-      // @ts-ignore
-      const nextSpy = vi.spyOn(component, 'next');
+      const nextSpy = vi.spyOn(component as any, 'next');
 
       const debugElement = fixture.debugElement.queryAll(By.directive(HeroSliderNavButton));
       const buttonComponentInstance = debugElement[1].componentInstance as HeroSliderNavButton;
@@ -172,8 +169,7 @@ describe('HeroSlider', () => {
     });
 
     it('should call prev() when left navigation button is clicked', () => {
-      // @ts-ignore
-      const prevSpy = vi.spyOn(component, 'prev');
+      const prevSpy = vi.spyOn(component as any, 'prev');
 
       const debugElement = fixture.debugElement.queryAll(By.directive(HeroSliderNavButton));
       const buttonComponentInstance = debugElement[0].componentInstance as HeroSliderNavButton;
@@ -183,8 +179,7 @@ describe('HeroSlider', () => {
     });
 
     it('should call goTo() when a dot is clicked', () => {
-      // @ts-ignore
-      const goToSpy = vi.spyOn(component, 'goTo');
+      const goToSpy = vi.spyOn(component as any, 'goTo');
       const dotsNav = fixture.debugElement.query(By.css('app-hero-slider-nav-dots'));
 
       dotsNav.triggerEventHandler('goTo', 1);
@@ -193,11 +188,9 @@ describe('HeroSlider', () => {
     });
 
     it('should handle swipe events from SwipeDirective', () => {
-      // @ts-ignore
-      const prevSpy = vi.spyOn(component, 'prev');
+      const prevSpy = vi.spyOn(component as any, 'prev');
+      const nextSpy = vi.spyOn(component as any, 'next');
 
-      // @ts-ignore
-      const nextSpy = vi.spyOn(component, 'next');
       const container = fixture.debugElement.query(By.css('.hero-slider'));
 
       container.triggerEventHandler('swipeLeft', null);

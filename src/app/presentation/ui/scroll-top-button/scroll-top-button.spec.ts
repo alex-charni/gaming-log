@@ -30,8 +30,7 @@ describe('ScrollTopButton', () => {
 
       window.dispatchEvent(new Event('scroll'));
 
-      // @ts-ignore
-      expect(component.isVisible()).toBe(true);
+      expect(component['isVisible']()).toBe(true);
     });
 
     it('should show button when document.documentElement scrollTop is bigger than threshold', () => {
@@ -41,8 +40,7 @@ describe('ScrollTopButton', () => {
 
       window.dispatchEvent(new Event('scroll'));
 
-      // @ts-ignore
-      expect(component.isVisible()).toBe(true);
+      expect(component['isVisible']()).toBe(true);
     });
 
     it('should show button when document.body is bigger than threshold', () => {
@@ -52,8 +50,7 @@ describe('ScrollTopButton', () => {
 
       window.dispatchEvent(new Event('scroll'));
 
-      // @ts-ignore
-      expect(component.isVisible()).toBe(true);
+      expect(component['isVisible']()).toBe(true);
     });
 
     it('should not show button when threshold is not reached', () => {
@@ -63,8 +60,7 @@ describe('ScrollTopButton', () => {
 
       window.dispatchEvent(new Event('scroll'));
 
-      // @ts-ignore
-      expect(component.isVisible()).toBe(false);
+      expect(component['isVisible']()).toBe(false);
     });
   });
 

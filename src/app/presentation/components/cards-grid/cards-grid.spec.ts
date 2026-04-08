@@ -1,136 +1,148 @@
-import { ComponentRef, signal } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 
 import { ViewportEnterDirective } from '@presentation/directives';
 import { Card } from '@presentation/schemas/types';
-import { HomePageStore } from '@presentation/stores';
+import { MOCK_GAME_CARD, MOCK_YEAR_CARD } from '@testing/mocks';
 import { CardsGrid } from './cards-grid';
-
-const CardsCollectionMock: Card[] = [
-  {
-    type: 'game',
-    id: '0001',
-    title: '',
-    platform: '',
-    rating: 1,
-    coverUrl: 'demo.webp',
-    coverPlaceholderUrl: 'demo.webp',
-    date: '',
-  },
-  {
-    type: 'text',
-    id: '0002',
-    text: 'demo',
-  },
-  {
-    type: 'year',
-    id: '0003',
-    year: '2026',
-  },
-  {
-    type: 'game',
-    id: '0004',
-    title: '',
-    platform: '',
-    rating: 1,
-    coverUrl: 'demo.webp',
-    coverPlaceholderUrl: 'demo.webp',
-    date: '',
-  },
-];
-
-function createHomePageStoreMock() {
-  return {
-    cardsAreLoading: signal(false),
-    cardsCollection: signal<Card[]>([]),
-    slidesAreLoading: signal(false),
-    spinner: signal(false),
-    nextYearToLoad: signal(2026),
-    haventReachedLastYear: signal(true),
-    getCardsRx: vi.fn(),
-    getHeroBannerSlidesRx: vi.fn(),
-  };
-}
+import { GridCard } from './components';
 
 describe('CardsGrid', () => {
   let component: CardsGrid;
-  let componentRef: ComponentRef<CardsGrid>;
   let fixture: ComponentFixture<CardsGrid>;
-  let storeMock: ReturnType<typeof createHomePageStoreMock>;
+
+  const mockCards: Card[] = [MOCK_GAME_CARD, MOCK_YEAR_CARD];
 
   beforeEach(async () => {
-    storeMock = createHomePageStoreMock();
-
     await TestBed.configureTestingModule({
       imports: [CardsGrid],
-      providers: [{ provide: HomePageStore, useValue: storeMock }],
     }).compileComponents();
 
     fixture = TestBed.createComponent(CardsGrid);
     component = fixture.componentInstance;
-    componentRef = fixture.componentRef;
 
-    await fixture.whenStable();
-  });
-
-  it('should trigger loadMore onEnterViewport when not loading and haventReachedLastYear is true', () => {
-    const loadMoreSpy = vi.spyOn(component.loadMore, 'emit');
-
-    storeMock.cardsAreLoading.set(false);
-    storeMock.haventReachedLastYear.set(true);
+    fixture.componentRef.setInput('cards', []);
+    fixture.componentRef.setInput('cardsLoading', false);
+    fixture.componentRef.setInput('moreCardsAvailable', true);
+    fixture.componentRef.setInput('nextYearToLoad', 2025);
 
     fixture.detectChanges();
-
-    component['onEnterViewport']();
-
-    expect(loadMoreSpy).toHaveBeenCalled();
   });
 
-  it('should not trigger loadMore onEnterViewport when loading and haventReachedLastYear is true', () => {
-    const loadMoreSpy = vi.spyOn(component.loadMore, 'emit');
+  describe('Template', () => {
+    it('should render game and year cards correctly', () => {
+      fixture.componentRef.setInput('cards', mockCards);
+      fixture.detectChanges();
 
-    storeMock.cardsAreLoading.set(true);
-    storeMock.haventReachedLastYear.set(true);
+      const gridCards = fixture.debugElement.queryAll(By.directive(GridCard));
 
-    fixture.detectChanges();
+      const gameCard = gridCards[0].componentInstance as GridCard;
 
-    component['onEnterViewport']();
+      expect(gameCard.variant()).toBe('cover');
+      expect(gameCard.item()).toEqual(mockCards[0]);
+      expect(gameCard.priority()).toBe(true);
 
-    expect(loadMoreSpy).not.toHaveBeenCalled();
+      const yearCard = gridCards[1].componentInstance as GridCard;
+
+      expect(yearCard.variant()).toBe('text');
+      expect(yearCard.text()).toBe('2025');
+    });
+
+    it('should set isLoading on year card when year matches nextYearToLoad and loading is true', () => {
+      fixture.componentRef.setInput('cards', [mockCards[1]]);
+      fixture.componentRef.setInput('nextYearToLoad', 2025);
+      fixture.componentRef.setInput('cardsLoading', true);
+
+      fixture.detectChanges();
+
+      const yearCard = fixture.debugElement.query(By.directive(GridCard))
+        .componentInstance as GridCard;
+
+      expect(yearCard.isLoading()).toBe(true);
+    });
+
+    it('should render dot card when no more cards are available', () => {
+      fixture.componentRef.setInput('moreCardsAvailable', false);
+
+      fixture.detectChanges();
+
+      const dotCard = fixture.debugElement.query(By.directive(GridCard))
+        .componentInstance as GridCard;
+
+      expect(dotCard.variant()).toBe('text');
+      expect(dotCard.text()).toBe('·');
+    });
+
+    it('should render 9 placeholders when loading and more cards are available', () => {
+      fixture.componentRef.setInput('cardsLoading', true);
+      fixture.componentRef.setInput('moreCardsAvailable', true);
+
+      fixture.detectChanges();
+
+      const placeholders = fixture.debugElement
+        .queryAll(By.directive(GridCard))
+        .filter((el) => (el.componentInstance as GridCard).variant() === 'placeholder');
+
+      expect(placeholders.length).toBe(9);
+    });
+
+    it('should render sentinel when not loading and more cards are available', () => {
+      fixture.componentRef.setInput('cardsLoading', false);
+      fixture.componentRef.setInput('moreCardsAvailable', true);
+      fixture.detectChanges();
+
+      const sentinel = fixture.debugElement.query(By.directive(ViewportEnterDirective));
+
+      expect(sentinel).toBeTruthy();
+    });
   });
 
-  it('should not trigger loadMore onEnterViewport when not loading and haventReachedLastYear is false', () => {
-    const loadMoreSpy = vi.spyOn(component.loadMore, 'emit');
+  describe('Logic', () => {
+    it('should emit loadMore when onEnterViewport is called and conditions are met', () => {
+      const emitSpy = vi.spyOn(component.loadMore, 'emit');
 
-    storeMock.cardsAreLoading.set(false);
-    storeMock.haventReachedLastYear.set(false);
+      fixture.componentRef.setInput('cardsLoading', false);
+      fixture.componentRef.setInput('moreCardsAvailable', true);
 
-    fixture.detectChanges();
+      component['onEnterViewport']();
 
-    component['onEnterViewport']();
+      expect(emitSpy).toHaveBeenCalled();
+    });
 
-    expect(loadMoreSpy).not.toHaveBeenCalled();
-  });
+    it('should not emit loadMore when cards are loading', () => {
+      const emitSpy = vi.spyOn(component.loadMore, 'emit');
 
-  it('should call onEnterViewport when sentinel emits viewPortEntered', () => {
-    const spy = vi.spyOn(component as any, 'onEnterViewport');
+      fixture.componentRef.setInput('cardsLoading', true);
+      fixture.componentRef.setInput('moreCardsAvailable', true);
 
-    storeMock.cardsCollection.set(CardsCollectionMock);
-    storeMock.haventReachedLastYear.set(true);
-    storeMock.cardsAreLoading.set(false);
-    storeMock.nextYearToLoad.set(2025);
+      component['onEnterViewport']();
 
-    fixture.detectChanges();
+      expect(emitSpy).not.toHaveBeenCalled();
+    });
 
-    const sentinel = fixture.debugElement.query(By.css('.grid__sentinel'));
+    it('should not emit loadMore when no more cards are available', () => {
+      const emitSpy = vi.spyOn(component.loadMore, 'emit');
 
-    const viewportDirective = sentinel.injector.get(ViewportEnterDirective, null);
+      fixture.componentRef.setInput('cardsLoading', false);
+      fixture.componentRef.setInput('moreCardsAvailable', false);
 
-    expect(viewportDirective).not.toBeNull();
+      component['onEnterViewport']();
 
-    viewportDirective?.viewportEntered.emit();
+      expect(emitSpy).not.toHaveBeenCalled();
+    });
 
-    expect(spy).toHaveBeenCalledTimes(1);
+    it('should call onEnterViewport when sentinel emits viewportEntered', () => {
+      const enterSpy = vi.spyOn(component as any, 'onEnterViewport');
+
+      fixture.componentRef.setInput('cardsLoading', false);
+      fixture.componentRef.setInput('moreCardsAvailable', true);
+
+      fixture.detectChanges();
+
+      const sentinel = fixture.debugElement.query(By.directive(ViewportEnterDirective));
+      sentinel.triggerEventHandler('viewportEntered', null);
+
+      expect(enterSpy).toHaveBeenCalled();
+    });
   });
 });
