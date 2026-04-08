@@ -2,9 +2,6 @@
 
 ## 🛠️ [Unreleased]
 
-- About page.
-- Add game page.
-- Auth system.
 - Japanese language.
 
 ## [1.3.2] - 2026-04-08
