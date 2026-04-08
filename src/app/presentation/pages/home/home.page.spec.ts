@@ -1,31 +1,15 @@
-import { signal } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import { provideTranslateService } from '@ngx-translate/core';
 
-import { GameCardsGrid } from '@presentation/components';
+import { CardsGrid } from '@presentation/components';
 import { SpinnerService } from '@presentation/services';
 import { HomePageStore } from '@presentation/stores';
-import { APP_SETTINGS_PROVIDER_MOCK } from '@testing/mocks';
+import { createHomePageStoreMock, createSpinnerServiceMock } from '@testing/mocks';
 import { HomePage } from './home.page';
 
-const storeMock = {
-  spinner: signal(false),
-  nextYearToLoad: signal(2025),
-  slidesAreLoading: signal(false),
-  cardsAreLoading: signal(false),
-  slidesCollection: signal([]),
-  cardsCollection: signal([]),
-  haventReachedLastYear: signal(true),
+const storeMock = createHomePageStoreMock();
 
-  addYearCard: vi.fn(),
-  getHeroBannerSlidesRx: vi.fn(),
-  getCardsRx: vi.fn(),
-};
-
-const spinnerServiceMock = {
-  setVisible: vi.fn(),
-};
+const spinnerServiceMock = createSpinnerServiceMock();
 
 describe('HomePage', () => {
   let component: HomePage;
@@ -36,7 +20,6 @@ describe('HomePage', () => {
 
     await TestBed.configureTestingModule({
       imports: [HomePage],
-      providers: [provideTranslateService(), APP_SETTINGS_PROVIDER_MOCK()],
     })
       .overrideProvider(HomePageStore, { useValue: storeMock })
       .overrideProvider(SpinnerService, { useValue: spinnerServiceMock })
@@ -92,6 +75,7 @@ describe('HomePage', () => {
       fixture.detectChanges(); // Effect runs after initial detection
 
       storeMock.spinner.set(true);
+
       fixture.detectChanges(); // Trigger effect execution cycle
 
       expect(spinnerServiceMock.setVisible).toHaveBeenCalledWith(true);
@@ -105,11 +89,10 @@ describe('HomePage', () => {
 
   describe('Template', () => {
     it('should trigger handleFetchMoreGames on handleFetchMore emit ', () => {
-      // @ts-ignore
-      const spy = vi.spyOn(component, 'handleFetchMoreGames');
+      const spy = vi.spyOn(component as any, 'handleFetchMoreGames');
 
-      const componentDebugElement = fixture.debugElement.query(By.directive(GameCardsGrid));
-      const componentInstance = componentDebugElement.componentInstance as GameCardsGrid;
+      const componentDebugElement = fixture.debugElement.query(By.directive(CardsGrid));
+      const componentInstance = componentDebugElement.componentInstance as CardsGrid;
 
       componentInstance.loadMore.emit();
 

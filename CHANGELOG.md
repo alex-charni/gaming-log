@@ -7,6 +7,16 @@
 - Auth system.
 - Japanese language.
 
+## [1.3.2] - 2026-04-08
+
+### 🟠 Changed
+
+- Minor integration improvements.
+
+### 🔴 Fixed
+
+- Update broken testing suites.
+
 ## [1.3.1] - 2026-04-03
 
 ### 🟠 Changed

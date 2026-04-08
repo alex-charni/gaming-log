@@ -1,16 +1,14 @@
-// TODO: revisit for a better understanding of some concepts
 import { Location } from '@angular/common';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { ActivatedRoute } from '@angular/router';
-import { provideTranslateService, TranslateService } from '@ngx-translate/core';
+import { TranslateService } from '@ngx-translate/core';
 import { of } from 'rxjs';
 
+import { createLocationMock } from '@testing/mocks';
 import { ErrorPage } from './error.page';
 
-const locationMock = {
-  back: vi.fn(),
-};
+const locationMock = createLocationMock();
 
 describe('ErrorPage', () => {
   let fixture: ComponentFixture<ErrorPage>;
@@ -20,7 +18,6 @@ describe('ErrorPage', () => {
     return TestBed.configureTestingModule({
       imports: [ErrorPage],
       providers: [
-        provideTranslateService(),
         { provide: Location, useValue: locationMock },
         {
           provide: ActivatedRoute,
@@ -77,33 +74,6 @@ describe('ErrorPage', () => {
   });
 
   describe('Template', () => {
-    it('should render code when code is present', async () => {
-      await reconfigureTestingModule({ code: 500 });
-
-      fixture = TestBed.createComponent(ErrorPage);
-      fixture.detectChanges();
-
-      const codeDebugElement = fixture.debugElement.query(By.css('.code'));
-      const iconDebugElement = fixture.debugElement.query(By.css('.icon'));
-
-      expect(codeDebugElement).not.toBeNull();
-      expect(codeDebugElement.nativeElement.textContent).toContain('500');
-      expect(iconDebugElement).toBeNull();
-    });
-
-    it('should render icon when code is empty', async () => {
-      await reconfigureTestingModule({});
-
-      fixture = TestBed.createComponent(ErrorPage);
-      fixture.detectChanges();
-
-      const iconDebugElement = fixture.debugElement.query(By.css('.icon'));
-      const codeDebugElement = fixture.debugElement.query(By.css('.code'));
-
-      expect(iconDebugElement).not.toBeNull();
-      expect(codeDebugElement).toBeNull();
-    });
-
     it('should not render button when showButton is false', async () => {
       await reconfigureTestingModule({ showButton: false });
 

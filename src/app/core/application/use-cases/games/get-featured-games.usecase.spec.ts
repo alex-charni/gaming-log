@@ -1,41 +1,65 @@
 import { of } from 'rxjs';
+import { Mocked } from 'vitest';
 
 import { GameEntity } from '@core/domain/entities';
 import { GamesRepository } from '@core/domain/repositories';
+import { createGamesRepositoryMock, MOCK_GAME_ENTITY } from '@testing/mocks';
 import { GetFeaturedGamesUseCase } from './get-featured-games.usecase';
 
-const games: GameEntity[] = [
-  { id: '1', title: 'Game 1', platform: 'PS4', date: '2024-12-31', rating: 5, status: 'finished' },
-  { id: '2', title: 'Game 1', platform: 'PS3', date: '2025-12-31', rating: 5, status: 'finished' },
-];
-
-describe('GetGamesByYearUseCase', () => {
-  let gamesRepositoryMock: GamesRepository;
-  let getFeaturedGamesUseCase: GetFeaturedGamesUseCase;
+describe('GetFeaturedGamesUseCase', () => {
+  let repository: Mocked<GamesRepository>;
+  let useCase: GetFeaturedGamesUseCase;
 
   beforeEach(() => {
-    gamesRepositoryMock = {
-      addGame: vi.fn((game: GameEntity) => of(game)),
-      getFeaturedGames: vi.fn((quantity: number) => of(games)),
-      getGamesByYear: vi.fn((year: number) => of(games)),
-    };
-
-    getFeaturedGamesUseCase = new GetFeaturedGamesUseCase(gamesRepositoryMock);
+    repository = createGamesRepositoryMock();
+    useCase = new GetFeaturedGamesUseCase(repository);
   });
 
-  it('should call repository.getFeaturedGames with a given quantity and return the games', () => {
-    const quantity = 2;
+  afterEach(() => {
+    vi.clearAllMocks();
+  });
 
-    vi.spyOn(gamesRepositoryMock, 'getGamesByYear').mockReturnValue(of(games));
+  describe('Execution', () => {
+    it('should call repository with provided quantity', () => {
+      const mock$ = of([]);
+      repository.getFeaturedGames.mockReturnValue(mock$);
 
-    let result: GameEntity[] | undefined;
+      useCase.execute(5);
 
-    getFeaturedGamesUseCase.execute(quantity).subscribe((data) => {
-      result = data;
+      expect(repository.getFeaturedGames).toHaveBeenCalledWith(5);
     });
 
-    expect(gamesRepositoryMock.getFeaturedGames).toHaveBeenCalledOnce();
-    expect(gamesRepositoryMock.getFeaturedGames).toHaveBeenCalledWith(quantity);
-    expect(result?.length).toEqual(2);
+    it('should call repository with undefined when no quantity is provided', () => {
+      const mockGames: GameEntity[] = [MOCK_GAME_ENTITY];
+
+      const mock$ = of(mockGames);
+      repository.getFeaturedGames.mockReturnValue(mock$);
+
+      useCase.execute();
+
+      expect(repository.getFeaturedGames).toHaveBeenCalledWith(undefined);
+    });
+  });
+
+  describe('Observable pass-through', () => {
+    it('should return the same observable instance from repository', () => {
+      const mockGames: GameEntity[] = [MOCK_GAME_ENTITY];
+
+      const mock$ = of(mockGames);
+      repository.getFeaturedGames.mockReturnValue(mock$);
+
+      const result$ = useCase.execute(1);
+
+      expect(result$).toBe(mock$);
+    });
+  });
+
+  describe('Error propagation', () => {
+    it('should propagate errors from repository', async () => {
+      const error = new Error('Fetching failed failed');
+      repository.getFeaturedGames.mockRejectedValue(error);
+
+      await expect(useCase.execute(2025)).rejects.toThrow(error);
+    });
   });
 });

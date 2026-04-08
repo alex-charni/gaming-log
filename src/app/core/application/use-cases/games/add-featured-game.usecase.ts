@@ -15,7 +15,7 @@ export class AddFeaturedGameUseCase {
     rating?: string,
     id?: string,
   ): Promise<void> {
-    const identifier = id?.trim() ? id : crypto.randomUUID();
+    const identifier = id?.trim() ? id.trim() : crypto.randomUUID();
 
     await this.gamesRepository.addFeaturedGameImage(identifier, image, placeholder);
 
