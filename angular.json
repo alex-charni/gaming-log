@@ -103,6 +103,7 @@
           "builder": "@angular/build:unit-test",
           "options": {
             "runnerConfig": "vitest.config.ts",
+            "providersFile": "src/testing/mocks/providers/test-providers.ts",
             "coverage": true,
             "watch": false
           }
