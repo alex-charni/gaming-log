@@ -20,15 +20,19 @@ type FieldType = 'text' | 'number' | 'date' | 'email' | 'password' | 'select';
 export class FormFieldComponent {
   readonly field = input.required<FieldState<string, string>>();
 
-  readonly label = input.required<string>();
+  readonly label = input<string>();
   readonly id = input.required<string>();
 
   readonly type = input<FieldType>('text');
 
   readonly options = input<SelectOption[]>([]);
 
+  readonly textAlign = input<'center' | 'left' | 'right'>('center');
+  readonly placeholder = input('');
+
   readonly displayAsterisk = input(true);
   readonly displayErrors = input(true);
+  readonly reserveSpaceForErrors = input(true);
 
   protected readonly showAsterisk = computed(
     () => this.displayAsterisk() && this.field().required(),
@@ -39,4 +43,9 @@ export class FormFieldComponent {
   );
 
   protected readonly isSelect = computed(() => this.type() === 'select');
+
+  protected readonly classes = computed(() => ({
+    [`form-field__input--align-text-${this.textAlign()}`]: true,
+    [`form-field__input--${this.type()}`]: true,
+  }));
 }
