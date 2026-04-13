@@ -1,0 +1,74 @@
+@use 'scss' as *;
+
+.games-list {
+  padding: 1rem;
+  width: 100%;
+
+  &__controls {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    flex-wrap: wrap-reverse;
+    gap: 1rem;
+
+    box-sizing: border-box;
+    padding: 1rem;
+    margin-block-end: 1.5rem;
+  }
+
+  &__search {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  &__items {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: grid;
+    gap: 0.75rem;
+  }
+}
+
+.game-card {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+
+  padding: 0.75rem 1rem;
+  border: var(--card-border);
+  border-radius: 1rem;
+  background: var(--bg-surface);
+  height: 5rem;
+  box-sizing: border-box;
+  box-shadow: var(--card-shadow);
+
+  text-align: left;
+
+  &__actions {
+    display: flex;
+    justify-content: space-between;
+    gap: 0.5rem;
+  }
+
+  &__title {
+    margin: 0;
+    font-size: $font-md;
+  }
+
+  &--placeholder {
+    @extend .skeleton-pulse;
+  }
+
+  &--button {
+    padding: 0;
+    overflow: hidden;
+  }
+
+  &--not-found {
+    justify-content: center;
+  }
+}

@@ -1,8 +1,5 @@
 @let featured = isFeatured();
-@let title =
-  featured
-    ? ('pages.admin.add_game.add_featured_game' | translate)
-    : ('pages.admin.add_game.add_game' | translate);
+@let title = computedTitle() | translate;
 
 <app-page-layout [contentMaxSize]="'md'">
   <section class="add-game">

@@ -1,88 +1,114 @@
-import { Component, computed, inject, signal } from '@angular/core';
+import { Component, computed, effect, inject, signal } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { ReactiveFormsModule } from '@angular/forms';
 import { FieldTree, form, required } from '@angular/forms/signals';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { TranslatePipe } from '@ngx-translate/core';
 
-import { AddFeaturedGameUseCase, AddGameUseCase } from '@core/application/use-cases';
-import { GameStatus } from '@core/domain/schemas/types';
+import { GameManagementUseCases } from '@core/application/schemas';
+import {
+  AddFeaturedGameUseCase,
+  AddGameUseCase,
+  EditFeaturedGameUseCase,
+  EditGameUseCase,
+  GetRemoteImageUseCase,
+} from '@core/application/use-cases';
+import { GameEntity } from '@core/domain/entities';
 import { FormFieldComponent, ImageFormField } from '@presentation/components';
+import { toGameCardModel } from '@presentation/mappers';
 import { PageLayout } from '@presentation/pages/page-layout/page-layout';
 import { ImageProcessorService, SpinnerService, ToastService } from '@presentation/services';
+import { AdminGamesStore } from '@presentation/stores';
 import { Button, ContentCardLayout } from '@presentation/ui';
-
-interface AddGameData {
-  id: string;
-  title: string;
-  platform: string;
-  rating: string;
-  date: string;
-  status: GameStatus;
-  image: File | null;
-}
+import { FORM_BASE_MODEL } from './const/form-base-model';
+import { RATING_OPTIONS } from './const/rating-options';
+import { STATUS_OPTIONS } from './const/status-options';
+import { ManageGameData } from './interfaces/manage-game-data';
 
 @Component({
   selector: 'app-add-game',
   templateUrl: './add-game.page.html',
   styleUrl: './add-game.page.scss',
   imports: [
-    ReactiveFormsModule,
-    ImageFormField,
     Button,
-    FormFieldComponent,
-    TranslatePipe,
-    PageLayout,
     ContentCardLayout,
+    ImageFormField,
+    FormFieldComponent,
+    PageLayout,
+    ReactiveFormsModule,
+    TranslatePipe,
   ],
 })
 export class AddGamePage {
   private readonly addGameUseCase = inject(AddGameUseCase);
   private readonly addFeaturedGameUseCase = inject(AddFeaturedGameUseCase);
+  private readonly editGameUseCase = inject(EditGameUseCase);
+  private readonly editFeaturedGameUseCase = inject(EditFeaturedGameUseCase);
+  private readonly getRemoteImageUseCase = inject(GetRemoteImageUseCase);
+  private readonly adminGamesStore = inject(AdminGamesStore);
   private readonly route = inject(ActivatedRoute);
-
-  private readonly routeData = toSignal(this.route.data, {
-    initialValue: {} as {
-      isFeatured: boolean;
-    },
-  });
-
-  protected readonly isFeatured = computed<boolean>(() => this.routeData().isFeatured ?? false);
-  private readonly isFeaturedSnapshot = this.isFeatured();
+  private readonly router = inject(Router);
 
   private readonly imageProcessor = inject(ImageProcessorService);
   private readonly spinnerService = inject(SpinnerService);
   private readonly toastService = inject(ToastService);
 
-  protected readonly ratingOptions = [
-    { label: '0', value: 0 },
-    { label: '1', value: 1 },
-    { label: '2', value: 2 },
-    { label: '3', value: 3 },
-    { label: '4', value: 4 },
-    { label: '5', value: 5 },
-  ];
+  private readonly routeData = toSignal(this.route.data, {
+    initialValue: {} as {
+      editMode: boolean;
+      isFeatured: boolean;
+    },
+  });
 
-  protected readonly statusOptions = [
-    { label: 'common.finished', value: 'finished' },
-    { label: 'common.playing', value: 'playing' },
-    { label: 'common.dropped', value: 'dropped' },
-    { label: 'common.pending', value: 'pending' },
-  ];
+  protected readonly isEditMode = computed<boolean>(() => this.routeData().editMode ?? false);
+  protected readonly isFeatured = computed<boolean>(() => this.routeData().isFeatured ?? false);
 
-  private readonly BASE_MODEL: AddGameData = {
-    title: '',
-    platform: '',
-    rating: '0',
-    status: 'pending',
-    image: null,
-    id: '',
-    date: '',
-  };
+  private readonly game = computed(() =>
+    this.isEditMode() ? this.adminGamesStore.selectedCard() : undefined,
+  );
 
-  private readonly formModel = signal<AddGameData>(this.getInitialModel());
+  protected readonly computedTitle = computed(() => {
+    if (this.isFeatured() && this.isEditMode()) return 'common.edit_featured_game';
+    else if (this.isFeatured()) return 'common.add_featured_game';
+    else if (this.isEditMode()) return 'common.edit_game';
+    else return 'common.add_game';
+  });
 
+  protected readonly ratingOptions = RATING_OPTIONS;
+  protected readonly statusOptions = STATUS_OPTIONS;
+
+  private readonly BASE_MODEL = Object.freeze<ManageGameData>(FORM_BASE_MODEL);
+  private readonly formModel = signal<ManageGameData>(this.getInitialModel());
   protected readonly form = this.getFormModel();
+
+  constructor() {
+    this.initEffects();
+
+    if (this.isEditMode() && !this.game()) this.router.navigateByUrl('/manage-games');
+  }
+
+  private initEffects(): void {
+    effect((onCleanup) => {
+      const game = this.game();
+
+      if (!game || !this.isEditMode()) return;
+
+      let cancelled = false;
+
+      onCleanup(() => {
+        cancelled = true;
+      });
+
+      this.getImage(game).then((image) => {
+        if (cancelled || !image) return;
+
+        this.formModel.update((model) => ({
+          ...model,
+          image,
+        }));
+      });
+    });
+  }
 
   protected async submit(event: Event) {
     event.preventDefault();
@@ -121,8 +147,8 @@ export class AddGamePage {
 
   private onSuccess(): void {
     this.showSuccessToast();
-    this.scrollTop();
     this.resetForm();
+    this.router.navigateByUrl(this.isFeatured() ? '/manage-featured-games' : '/manage-games');
   }
 
   private onError(error: unknown): void {
@@ -134,17 +160,12 @@ export class AddGamePage {
     this.formModel.set(structuredClone(this.getInitialModel()));
   }
 
-  private scrollTop(): void {
-    window.scrollTo({
-      top: 0,
-      behavior: 'smooth',
-    });
-  }
-
   private showSuccessToast(): void {
     this.toastService.show({
       title: 'common.success_exclamation',
-      message: 'pages.admin.add_game.game_added',
+      message: this.isEditMode()
+        ? 'pages.admin.add_game.game_edited'
+        : 'pages.admin.add_game.game_added',
       icon: 'fa-file-circle-check',
       type: 'success',
     });
@@ -153,34 +174,71 @@ export class AddGamePage {
   private showFailureToast(): void {
     this.toastService.show({
       title: 'error.oops_exclamation',
-      message: 'pages.admin.add_game.game_not_added',
+      message: this.isEditMode()
+        ? 'pages.admin.add_game.game_not_edit'
+        : 'pages.admin.add_game.game_not_added',
       icon: 'fa-file-circle-xmark',
       type: 'error',
     });
   }
 
-  private getInitialModel(): AddGameData {
+  private async getImage(game: GameEntity): Promise<File | null> {
+    try {
+      const url = toGameCardModel(game).coverUrl;
+      const image = await this.getRemoteImageUseCase.execute(url, `${game.id}.webp`);
+
+      return image;
+    } catch (error) {
+      console.error(error);
+      return null;
+    }
+  }
+
+  private getInitialModel(): ManageGameData {
+    const game = this.game();
+
+    return game ? this.getEditModel(game) : this.getDefaultModel();
+  }
+
+  private getEditModel(game: GameEntity): ManageGameData {
     return {
-      ...this.BASE_MODEL,
-      status: this.isFeaturedSnapshot ? 'playing' : 'finished',
+      date: game.date,
+      id: game.id,
+      image: null,
+      platform: game.platform,
+      rating: `${game.rating}`,
+      status: game.status ?? 'finished',
+      title: game.title,
     };
   }
 
-  private getFormModel(): FieldTree<AddGameData, string | number> {
+  private getDefaultModel(): ManageGameData {
+    return {
+      ...this.BASE_MODEL,
+      status: this.isFeatured() ? 'playing' : 'finished',
+    };
+  }
+
+  private getFormModel(): FieldTree<ManageGameData, string | number> {
     return form(this.formModel, (schemaPath) => {
       required(schemaPath.title, { message: 'forms.required' });
       required(schemaPath.platform, { message: 'forms.required' });
       required(schemaPath.rating, { message: 'forms.required' });
       required(schemaPath.status, { message: 'forms.required' });
       required(schemaPath.image, { message: 'forms.required' });
-
-      if (!this.isFeaturedSnapshot) {
-        required(schemaPath.date, { message: 'forms.required' });
-      }
+      required(schemaPath.date, { message: 'forms.required', when: () => !this.isFeatured() });
     });
   }
 
-  private getUseCase(): AddFeaturedGameUseCase | AddGameUseCase {
-    return this.isFeaturedSnapshot ? this.addFeaturedGameUseCase : this.addGameUseCase;
+  private getUseCase(): GameManagementUseCases {
+    return this.isEditMode() ? this.getEditUseCase() : this.getAddUseCase();
+  }
+
+  private getAddUseCase(): AddFeaturedGameUseCase | AddGameUseCase {
+    return this.isFeatured() ? this.addFeaturedGameUseCase : this.addGameUseCase;
+  }
+
+  private getEditUseCase(): EditFeaturedGameUseCase | EditGameUseCase {
+    return this.isFeatured() ? this.editFeaturedGameUseCase : this.editGameUseCase;
   }
 }
