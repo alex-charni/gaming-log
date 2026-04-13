@@ -40,9 +40,7 @@ export class LoginPage {
     this.isLoggedIn() ? 'fa-solid fa-unlock' : 'fa-solid fa-lock',
   );
 
-  protected readonly title = computed(() =>
-    this.isLoggedIn() ? 'pages.auth.logout' : 'pages.auth.login',
-  );
+  protected readonly title = computed(() => (this.isLoggedIn() ? 'common.logout' : 'common.login'));
 
   private readonly loginModel = signal<LoginData>({ ...INITIAL_FORM_MODEL });
 
@@ -66,7 +64,7 @@ export class LoginPage {
 
         this.authStore.login(session);
         this.showSuccessToast('pages.auth.login_success', '', 'fa-lock-open');
-        this.router.navigateByUrl('/add-game');
+        this.router.navigateByUrl('/manage-games');
       } catch (error) {
         console.error(error);
         this.showFailureToast('error.oops_exclamation', 'pages.auth.login_failed', 'fa-lock');

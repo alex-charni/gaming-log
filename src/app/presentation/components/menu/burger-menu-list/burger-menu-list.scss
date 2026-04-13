@@ -30,7 +30,7 @@
     .button {
       padding: 0;
       box-sizing: border-box;
-      text-align: center;
+      text-align: right;
 
       background-color: transparent;
       border: none;
@@ -39,10 +39,6 @@
       font-size: $font-md;
 
       cursor: inherit;
-
-      @media screen and (min-width: $screen-lg) {
-        text-align: left;
-      }
     }
 
     .icon {
