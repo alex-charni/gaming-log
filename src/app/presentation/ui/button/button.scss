@@ -1,25 +1,57 @@
 @use 'scss' as *;
 
 :host {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  height: 100%;
   width: 100%;
 }
 
 .button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
   cursor: pointer;
-  font-size: $font-sm;
   font-weight: 600;
   padding: 0.8rem 1rem;
 
-  background: var(--primary);
   color: $white-pure;
 
   border: none;
   border-radius: 0.5rem;
+  box-shadow: var(--card-shadow);
 
   transition:
     transform 0.3s,
     opacity 0.2s,
     background-color 0.2s;
+
+  &--font-size-sm {
+    font-size: $font-sm;
+  }
+  &--font-size-md {
+    font-size: $font-md;
+  }
+  &--font-size-lg {
+    font-size: $font-lg;
+  }
+  &--font-size-xl {
+    font-size: $font-xl;
+  }
+
+  &--round {
+    border-radius: 50%;
+  }
+
+  &--primary {
+    background: var(--primary);
+  }
+  &--danger {
+    background: $black;
+  }
 
   &:hover:not(:disabled) {
     background-color: var(--primary-hover);

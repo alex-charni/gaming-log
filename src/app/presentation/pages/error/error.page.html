@@ -10,12 +10,9 @@
       <p class="message">{{ message() }}</p>
 
       @if (showButton()) {
-        <app-button
-          [type]="'button'"
-          [text]="buttonText()"
-          [width]="'50%'"
-          (action)="handleButtonAction()"
-        />
+        <app-button [type]="'button'" [width]="'50%'" (action)="handleButtonAction()">
+          {{ buttonText() }}
+        </app-button>
       }
     </app-content-card-layout>
   </section>

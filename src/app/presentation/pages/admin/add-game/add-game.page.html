@@ -74,11 +74,9 @@
         </div>
 
         <div class="form__submit">
-          <app-button
-            [type]="'submit'"
-            [text]="'pages.admin.add_game.save' | translate"
-            [disabled]="form().invalid()"
-          />
+          <app-button [type]="'submit'" [disabled]="form().invalid()">
+            {{ 'pages.admin.add_game.save' | translate }}
+          </app-button>
         </div>
       </form>
     </app-content-card-layout>
