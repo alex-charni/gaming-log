@@ -1,6 +1,7 @@
 import { Component, computed, input } from '@angular/core';
 
 import { Header } from '@presentation/components';
+import { Sizes } from '@presentation/schemas/types';
 
 @Component({
   selector: 'app-page-layout',
@@ -10,7 +11,7 @@ import { Header } from '@presentation/components';
 })
 export class PageLayout {
   readonly centerVertically = input(false);
-  readonly contentMaxSize = input<string>('xl');
+  readonly contentMaxSize = input<Sizes>('xl');
   readonly showHeader = input(true);
   readonly transformOnResize = input(true);
 
