@@ -1,11 +1,8 @@
 @let featured = isFeatured();
-@let title =
-  featured
-    ? ('pages.admin.add_game.add_featured_game' | translate)
-    : ('pages.admin.add_game.add_game' | translate);
+@let title = computedTitle() | translate;
 
 <app-page-layout [contentMaxSize]="'md'">
-  <section class="add-game">
+  <section class="manage-game">
     <app-content-card-layout
       [width]="'md'"
       icon="fa-solid fa-circle-plus"
@@ -74,11 +71,9 @@
         </div>
 
         <div class="form__submit">
-          <app-button
-            [type]="'submit'"
-            [text]="'pages.admin.add_game.save' | translate"
-            [disabled]="form().invalid()"
-          />
+          <app-button [type]="'submit'" [disabled]="form().invalid()">
+            {{ 'pages.admin.add_game.save' | translate }}
+          </app-button>
         </div>
       </form>
     </app-content-card-layout>

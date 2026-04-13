@@ -11,10 +11,10 @@ import {
   createSpinnerServiceMock,
   createToastServiceMock,
 } from '@testing/mocks';
-import { AddGamePage } from './add-game.page';
+import { ManageGamePage } from './manage-game.page';
 
 describe('AddGamePage', () => {
-  let component: AddGamePage;
+  let component: ManageGamePage;
 
   let addGameUseCase: any;
   let addFeaturedGameUseCase: any;
@@ -30,7 +30,7 @@ describe('AddGamePage', () => {
     toastService = createToastServiceMock();
 
     TestBed.configureTestingModule({
-      imports: [AddGamePage],
+      imports: [ManageGamePage],
       providers: [
         { provide: AddGameUseCase, useValue: addGameUseCase },
         { provide: AddFeaturedGameUseCase, useValue: addFeaturedGameUseCase },
@@ -46,7 +46,7 @@ describe('AddGamePage', () => {
       ],
     });
 
-    const fixture = TestBed.createComponent(AddGamePage);
+    const fixture = TestBed.createComponent(ManageGamePage);
     component = fixture.componentInstance;
   };
 

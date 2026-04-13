@@ -7,12 +7,9 @@
       [titleLevel]="'h1'"
     >
       @if (isLoggedIn()) {
-        <app-button
-          [type]="'button'"
-          [text]="'pages.auth.logout' | translate"
-          [width]="'50%'"
-          (action)="onLogout()"
-        />
+        <app-button [type]="'button'" [width]="'50%'" (action)="onLogout()">
+          {{ 'common.logout' | translate }}
+        </app-button>
       } @else {
         <form class="form" (submit)="onSubmit($event)">
           <app-form-field
@@ -29,12 +26,9 @@
             [field]="loginForm.password()"
           />
 
-          <app-button
-            type="submit"
-            [text]="'pages.auth.login' | translate"
-            [width]="'50%'"
-            [disabled]="loginForm().invalid()"
-          />
+          <app-button type="submit" [width]="'50%'" [disabled]="loginForm().invalid()">
+            {{ 'common.login' | translate }}
+          </app-button>
         </form>
       }
     </app-content-card-layout>

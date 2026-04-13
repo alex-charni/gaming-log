@@ -1,6 +1,7 @@
 <button
   [type]="type()"
-  class="button button--primary"
+  class="button"
+  [class]="classes()"
   [style.height]="height()"
   [style.width]="width()"
   appPulseOnclick
@@ -9,5 +10,5 @@
   [disabled]="disabled()"
   (click)="handleClick()"
 >
-  {{ text() }}
+  <ng-content />
 </button>

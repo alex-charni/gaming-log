@@ -1,13 +1,17 @@
 import {
   AddFeaturedGameUseCase,
   AddGameUseCase,
+  EditFeaturedGameUseCase,
+  GetAllGamesUseCase,
   GetFeaturedGamesUseCase,
   GetGamesByYearUseCase,
+  GetRemoteImageUseCase,
   GetSessionUseCase,
   LoginUseCase,
   LogoutUseCase,
 } from '@core/application/use-cases';
 import { OnAuthStateChangeUseCase } from '@core/application/use-cases/auth/on-auth-state-change.usecase';
+import { EditGameUseCase } from '@core/application/use-cases/games/edit-game.usecase';
 import { AuthRepository, GamesRepository } from '@core/domain/repositories';
 import { APP_PARAMS } from '@infrastructure/config/app.params';
 import { GamesRepositoryAdapter } from '@infrastructure/http/api';
@@ -64,6 +68,21 @@ const GAMES_PROVIDERS = [
     deps: [GamesRepository],
   },
   {
+    provide: EditFeaturedGameUseCase,
+    useFactory: (repository: GamesRepository) => new EditFeaturedGameUseCase(repository),
+    deps: [GamesRepository],
+  },
+  {
+    provide: EditGameUseCase,
+    useFactory: (repository: GamesRepository) => new EditGameUseCase(repository),
+    deps: [GamesRepository],
+  },
+  {
+    provide: GetAllGamesUseCase,
+    useFactory: (repository: GamesRepository) => new GetAllGamesUseCase(repository),
+    deps: [GamesRepository],
+  },
+  {
     provide: GetGamesByYearUseCase,
     useFactory: (repository: GamesRepository) => new GetGamesByYearUseCase(repository),
     deps: [GamesRepository],
@@ -71,6 +90,11 @@ const GAMES_PROVIDERS = [
   {
     provide: GetFeaturedGamesUseCase,
     useFactory: (repository: GamesRepository) => new GetFeaturedGamesUseCase(repository),
+    deps: [GamesRepository],
+  },
+  {
+    provide: GetRemoteImageUseCase,
+    useFactory: (repository: GamesRepository) => new GetRemoteImageUseCase(repository),
     deps: [GamesRepository],
   },
 ];

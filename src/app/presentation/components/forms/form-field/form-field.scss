@@ -41,5 +41,15 @@
     &--select {
       padding-right: 1rem;
     }
+
+    &--align-text-center {
+      text-align: center;
+    }
+    &--align-text-left {
+      text-align: left;
+    }
+    &--align-text-right {
+      text-align: right;
+    }
   }
 }

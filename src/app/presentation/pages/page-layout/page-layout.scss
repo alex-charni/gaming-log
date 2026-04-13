@@ -17,6 +17,16 @@
       background-color: var(--bg-app);
     }
   }
+  &--lg {
+    @include desktop-view--md {
+      background-color: var(--bg-app);
+    }
+  }
+  &--xl {
+    @include desktop-view--md {
+      background-color: var(--bg-app);
+    }
+  }
 
   &--static-bg {
     background-color: var(--bg-app);

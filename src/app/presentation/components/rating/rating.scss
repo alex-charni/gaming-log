@@ -3,15 +3,13 @@
 .rating {
   color: $fuchsia;
 
-  &--small {
+  &--sm {
     font-size: $font-sm;
   }
-
-  &--medium {
+  &--md {
     font-size: $font-md;
   }
-
-  &--large {
+  &--lg {
     font-size: $font-lg;
   }
 

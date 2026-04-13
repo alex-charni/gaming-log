@@ -7,7 +7,6 @@
   gap: 0.5rem;
 
   &__label {
-    text-align: center;
     font-size: $font-sm;
     font-weight: 600;
     color: var(--text-main);
@@ -17,6 +16,16 @@
     color: $fuchsia;
     position: absolute;
     margin-top: 0.25rem;
+  }
+
+  &--align-text-center {
+    text-align: center;
+  }
+  &--align-text-left {
+    text-align: left;
+  }
+  &--align-text-right {
+    text-align: right;
   }
 
   &__errors {
