@@ -4,6 +4,22 @@
 
 - Japanese language.
 
+## [1.3.3] - 2026-04-13
+
+### 🟢 Added
+
+- Games management page.
+
+### 🟠 Changed
+
+- Add game page repurposed to allow edit mode.
+- Updated form fields customization capabilities.
+- Updated buttons customization capabilities.
+
+### 🔴 Fixed
+
+- Minor styles corrections.
+
 ## [1.3.2] - 2026-04-08
 
 ### 🟠 Changed
