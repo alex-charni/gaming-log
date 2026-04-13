@@ -1,6 +1,7 @@
+import { Observable } from 'rxjs';
+
 import { GameEntity } from '@core/domain/entities';
 import { GamesRepository } from '@core/domain/repositories';
-import { Observable } from 'rxjs';
 
 export class GetGamesByYearUseCase {
   constructor(private readonly gamesRepository: GamesRepository) {}

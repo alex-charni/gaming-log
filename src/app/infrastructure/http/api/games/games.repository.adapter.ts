@@ -72,6 +72,70 @@ export class GamesRepositoryAdapter implements GamesRepository {
     ]);
   }
 
+  public updateFeaturedGame(game: GameEntity): Promise<void | null> {
+    const url = `${environment.apiUrl}/featured_games`;
+    const mappedGame = toGameApi(game);
+
+    return firstValueFrom(
+      this.http
+        .patch<void>(
+          url,
+          { ...mappedGame, date: mappedGame.date ? mappedGame.date : null },
+          { observe: 'response' },
+        )
+        .pipe(map((response) => response.body)),
+    );
+  }
+
+  public async updateFeaturedGameImage(
+    gameId: string,
+    image: File,
+    placeholder: File,
+  ): Promise<[void, void]> {
+    const extension = image.type.split('/')[1] || 'webp';
+
+    const coverPath = `featured/${gameId}.${extension}`;
+    const coverUrl = `${environment.supabaseUrl}/${environment.supabaseStorageEndpoint}/object/images/${coverPath}`;
+
+    const placeholderPath = `featured-placeholders/${gameId}.placeholder.${extension}`;
+    const placeholderUrl = `${environment.supabaseUrl}/${environment.supabaseStorageEndpoint}/object/images/${placeholderPath}`;
+
+    return await Promise.all([
+      firstValueFrom(this.http.put<void>(coverUrl, image)),
+      firstValueFrom(this.http.put<void>(placeholderUrl, placeholder)),
+    ]);
+  }
+
+  public updateGame(game: GameEntity): Promise<void | null> {
+    const url = `${environment.apiUrl}/items?id=eq.${game.id}`;
+    const mappedGame = toGameApi(game);
+
+    return firstValueFrom(
+      this.http
+        .patch<void>(url, mappedGame, { observe: 'response' })
+        .pipe(map((response) => response.body)),
+    );
+  }
+
+  public async updateGameCover(
+    gameId: string,
+    image: File,
+    placeholder: File,
+  ): Promise<[void, void]> {
+    const extension = image.type.split('/')[1] || 'webp';
+
+    const coverPath = `covers/${gameId}.${extension}`;
+    const coverUrl = `${environment.supabaseUrl}/${environment.supabaseStorageEndpoint}/object/images/${coverPath}`;
+
+    const placeholderPath = `covers-placeholders/${gameId}.placeholder.${extension}`;
+    const placeholderUrl = `${environment.supabaseUrl}/${environment.supabaseStorageEndpoint}/object/images/${placeholderPath}`;
+
+    return await Promise.all([
+      firstValueFrom(this.http.put<void>(coverUrl, image)),
+      firstValueFrom(this.http.put<void>(placeholderUrl, placeholder)),
+    ]);
+  }
+
   public getFeaturedGames(quantity?: number): Observable<GameEntity[]> {
     const url = `${environment.apiUrl}/featured_games`;
 
@@ -97,5 +161,23 @@ export class GamesRepositoryAdapter implements GamesRepository {
       delay(environment.dataMockDelay),
       map((response) => (response.body ? toGamesEntity(response.body) : [])),
     );
+  }
+
+  public getAllGames(): Observable<GameEntity[]> {
+    const url = `${environment.apiUrl}/items`;
+
+    let params = new HttpParams();
+    params = params.append('order', 'date.desc');
+
+    return this.http.get<GameApiResponse[]>(url, { params, observe: 'response' }).pipe(
+      delay(environment.dataMockDelay),
+      map((response) => (response.body ? toGamesEntity(response.body) : [])),
+    );
+  }
+
+  public async getRemoteImage(url: string, fileName: string): Promise<File> {
+    const blob = await firstValueFrom(this.http.get(url, { responseType: 'blob' }));
+
+    return new File([blob], fileName, { type: blob.type });
   }
 }

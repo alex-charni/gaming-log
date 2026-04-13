@@ -11,6 +11,16 @@ export abstract class GamesRepository {
   ): Promise<[void, void]>;
   abstract addGame(game: GameEntity): Promise<void | null>;
   abstract addGameCover(gameId: string, image: File, placeholder: File): Promise<[void, void]>;
+  abstract getAllGames(): Observable<GameEntity[]>;
   abstract getGamesByYear(year: number): Observable<GameEntity[]>;
   abstract getFeaturedGames(quantity?: number): Observable<GameEntity[]>;
+  abstract getRemoteImage(url: string, fileName: string): Promise<File>;
+  abstract updateFeaturedGame(game: GameEntity): Promise<void | null>;
+  abstract updateFeaturedGameImage(
+    gameId: string,
+    image: File,
+    placeholder: File,
+  ): Promise<[void, void]>;
+  abstract updateGame(game: GameEntity): Promise<void | null>;
+  abstract updateGameCover(gameId: string, image: File, placeholder: File): Promise<[void, void]>;
 }
