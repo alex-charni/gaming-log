@@ -11,12 +11,20 @@ export const routes: Routes = [
   {
     path: 'manage-games',
     canActivate: [authGuard],
-    loadComponent: () => import('./presentation/pages').then((c) => c.GamesListPage),
+    loadComponent: () => import('./presentation/pages').then((c) => c.GamesManagementPage),
+  },
+  {
+    path: 'add-featured-game',
+    canActivate: [authGuard],
+    data: {
+      isFeatured: true,
+    },
+    loadComponent: () => import('./presentation/pages').then((c) => c.ManageGamePage),
   },
   {
     path: 'add-game',
     canActivate: [authGuard],
-    loadComponent: () => import('./presentation/pages').then((c) => c.AddGamePage),
+    loadComponent: () => import('./presentation/pages').then((c) => c.ManageGamePage),
   },
   {
     path: 'edit-featured-game',
@@ -25,7 +33,7 @@ export const routes: Routes = [
       editMode: true,
       isFeatured: true,
     },
-    loadComponent: () => import('./presentation/pages').then((c) => c.AddGamePage),
+    loadComponent: () => import('./presentation/pages').then((c) => c.ManageGamePage),
   },
   {
     path: 'edit-game',
@@ -33,15 +41,7 @@ export const routes: Routes = [
     data: {
       editMode: true,
     },
-    loadComponent: () => import('./presentation/pages').then((c) => c.AddGamePage),
-  },
-  {
-    path: 'add-featured-game',
-    canActivate: [authGuard],
-    data: {
-      isFeatured: true,
-    },
-    loadComponent: () => import('./presentation/pages').then((c) => c.AddGamePage),
+    loadComponent: () => import('./presentation/pages').then((c) => c.ManageGamePage),
   },
   {
     path: 'error',

@@ -20,15 +20,13 @@ import { PageLayout } from '@presentation/pages/page-layout/page-layout';
 import { ImageProcessorService, SpinnerService, ToastService } from '@presentation/services';
 import { AdminGamesStore } from '@presentation/stores';
 import { Button, ContentCardLayout } from '@presentation/ui';
-import { FORM_BASE_MODEL } from './const/form-base-model';
-import { RATING_OPTIONS } from './const/rating-options';
-import { STATUS_OPTIONS } from './const/status-options';
-import { ManageGameData } from './interfaces/manage-game-data';
+import { FORM_BASE_MODEL, RATING_OPTIONS, STATUS_OPTIONS } from './const';
+import { ManageGameData } from './interfaces';
 
 @Component({
-  selector: 'app-add-game',
-  templateUrl: './add-game.page.html',
-  styleUrl: './add-game.page.scss',
+  selector: 'app-manage-game',
+  templateUrl: './manage-game.page.html',
+  styleUrl: './manage-game.page.scss',
   imports: [
     Button,
     ContentCardLayout,
@@ -39,7 +37,7 @@ import { ManageGameData } from './interfaces/manage-game-data';
     TranslatePipe,
   ],
 })
-export class AddGamePage {
+export class ManageGamePage {
   private readonly addGameUseCase = inject(AddGameUseCase);
   private readonly addFeaturedGameUseCase = inject(AddFeaturedGameUseCase);
   private readonly editGameUseCase = inject(EditGameUseCase);

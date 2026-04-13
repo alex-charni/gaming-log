@@ -11,12 +11,12 @@ import { AdminGamesStore } from '@presentation/stores';
 import { Button, ContentCardLayout } from '@presentation/ui';
 
 @Component({
-  selector: 'app-games-list',
-  templateUrl: './games-list.html',
-  styleUrl: './games-list.scss',
+  selector: 'app-games-management',
+  templateUrl: './games-management.html',
+  styleUrl: './games-management.scss',
   imports: [Button, CommonModule, ContentCardLayout, FormFieldComponent, PageLayout, TranslatePipe],
 })
-export class GamesListPage implements OnInit {
+export class GamesManagementPage implements OnInit {
   private readonly store = inject(AdminGamesStore);
   private readonly router = inject(Router);
 

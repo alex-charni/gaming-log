@@ -1,2 +1,2 @@
-export * from './add-game/add-game.page';
-export * from './games-list/games-list';
+export * from './games-management/games-management';
+export * from './manage-game/manage-game.page';
