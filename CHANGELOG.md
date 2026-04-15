@@ -4,6 +4,12 @@
 
 - Japanese language.
 
+## [1.3.4] - 2026-04-15
+
+### 🟢 Added
+
+- Delete game option in games management page.
+
 ## [1.3.3] - 2026-04-13
 
 ### 🟢 Added
