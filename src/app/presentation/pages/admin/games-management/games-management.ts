@@ -54,7 +54,7 @@ export class GamesManagementPage implements OnInit {
 
   protected deleteGame(game: GameEntity): void {
     if (!confirm('Are you sure you want to delete this game?')) return;
-    // this.store.deleteGame(id);
+    this.store.deleteGameRx(game.id);
   }
 
   protected manageSearchInput(event: Event): void {

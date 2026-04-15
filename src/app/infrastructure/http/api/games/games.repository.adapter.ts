@@ -72,6 +72,27 @@ export class GamesRepositoryAdapter implements GamesRepository {
     ]);
   }
 
+  public deleteGame(gameId: string): Promise<void | null> {
+    const url = `${environment.apiUrl}/items?id=eq.${gameId}`;
+
+    return firstValueFrom(
+      this.http.delete<void>(url, { observe: 'response' }).pipe(map((response) => response.body)),
+    );
+  }
+
+  public async deleteGameCover(gameId: string, extension: string = 'webp'): Promise<[void, void]> {
+    const coverPath = `covers/${gameId}.${extension}`;
+    const coverUrl = `${environment.supabaseUrl}/${environment.supabaseStorageEndpoint}/object/images/${coverPath}`;
+
+    const placeholderPath = `covers-placeholders/${gameId}.placeholder.${extension}`;
+    const placeholderUrl = `${environment.supabaseUrl}/${environment.supabaseStorageEndpoint}/object/images/${placeholderPath}`;
+
+    return await Promise.all([
+      firstValueFrom(this.http.delete<void>(coverUrl)),
+      firstValueFrom(this.http.delete<void>(placeholderUrl)),
+    ]);
+  }
+
   public updateFeaturedGame(game: GameEntity): Promise<void | null> {
     const url = `${environment.apiUrl}/featured_games`;
     const mappedGame = toGameApi(game);

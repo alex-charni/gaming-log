@@ -1,5 +1,6 @@
 export * from './add-featured-game.usecase';
 export * from './add-game.usecase';
+export * from './delete-game.usecase';
 export * from './edit-featured-game.usecase';
 export * from './edit-game.usecase';
 export * from './get-all-games.usecase';
