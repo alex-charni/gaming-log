@@ -7,7 +7,7 @@ import { TranslatePipe } from '@ngx-translate/core';
 
 import { FormFieldComponent } from '@presentation/components';
 import { PageLayout } from '@presentation/pages/page-layout/page-layout';
-import { AdminGamesStore } from '@presentation/stores';
+import { GamesManagementStore } from '@presentation/stores';
 import { Button, ContentCardLayout } from '@presentation/ui';
 
 @Component({
@@ -17,7 +17,7 @@ import { Button, ContentCardLayout } from '@presentation/ui';
   imports: [Button, CommonModule, ContentCardLayout, FormFieldComponent, PageLayout, TranslatePipe],
 })
 export class GamesManagementPage implements OnInit {
-  private readonly store = inject(AdminGamesStore);
+  private readonly store = inject(GamesManagementStore);
   private readonly router = inject(Router);
 
   private readonly games = computed(() => this.store.gamesCollection());

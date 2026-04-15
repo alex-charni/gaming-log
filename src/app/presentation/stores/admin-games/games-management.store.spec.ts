@@ -6,11 +6,11 @@ import { of, throwError } from 'rxjs';
 import { GetAllGamesUseCase } from '@core/application/use-cases';
 import { APP_PARAMS } from '@infrastructure/config/app.params';
 import { APP_SETTINGS_PROVIDER_MOCK, createBasicUseCaseMock } from '@testing/mocks';
-import { adminGamesInitialState } from './admin-games-initial-state';
-import { AdminGamesStore } from './admin-games.store';
+import { gamesManagementInitialState } from './games-management-initial-state';
+import { GamesManagementStore } from './games-management.store';
 
-describe('AdminGamesStore', () => {
-  let store: InstanceType<typeof AdminGamesStore>;
+describe('GamesManagementStore', () => {
+  let store: InstanceType<typeof GamesManagementStore>;
   let appSettings: typeof APP_PARAMS;
   let getAllGamesUseCaseMock: any;
 
@@ -20,17 +20,17 @@ describe('AdminGamesStore', () => {
 
     TestBed.configureTestingModule({
       providers: [
-        AdminGamesStore,
+        GamesManagementStore,
         APP_SETTINGS_PROVIDER_MOCK(),
         { provide: GetAllGamesUseCase, useValue: getAllGamesUseCaseMock },
       ],
     });
 
-    store = TestBed.inject(AdminGamesStore);
+    store = TestBed.inject(GamesManagementStore);
   });
 
   it('should be initialized with the provided initial state', () => {
-    expect(store.gamesCollection()).toEqual(adminGamesInitialState.gamesCollection);
+    expect(store.gamesCollection()).toEqual(gamesManagementInitialState.gamesCollection);
   });
 
   describe('getGamesRx', () => {
@@ -41,7 +41,7 @@ describe('AdminGamesStore', () => {
       store.getGamesRx();
 
       expect(store.gamesCollection().length).toBe(
-        adminGamesInitialState.gamesCollection.length + 1,
+        gamesManagementInitialState.gamesCollection.length + 1,
       );
       expect(store.gamesAreLoading()).toBe(false);
     });
