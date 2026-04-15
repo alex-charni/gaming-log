@@ -1,6 +1,6 @@
 import { GameEntity } from '@core/domain/entities';
 
-export type AdminGamesState = {
+export type GamesManagementState = {
   gamesCollection: GameEntity[];
   gamesAreLoading: boolean;
   selectedGame: GameEntity | undefined;

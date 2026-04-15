@@ -7,11 +7,11 @@ import { distinctUntilChanged, from, pipe, switchMap, tap } from 'rxjs';
 
 import { GameEntity } from '@core/domain/entities';
 import { SpinnerService } from '@presentation/services';
-import { adminGamesInitialState } from './admin-games-initial-state';
+import { gamesManagementInitialState } from './games-management-initial-state';
 
-export const AdminGamesStore = signalStore(
+export const GamesManagementStore = signalStore(
   { providedIn: 'root' },
-  withState(adminGamesInitialState),
+  withState(gamesManagementInitialState),
 
   withComputed(({ gamesCollection, gamesAreLoading }) => ({
     spinner: computed(() => gamesCollection().length < 20 && gamesAreLoading()),

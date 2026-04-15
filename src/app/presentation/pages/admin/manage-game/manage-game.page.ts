@@ -18,7 +18,7 @@ import { FormFieldComponent, ImageFormField } from '@presentation/components';
 import { toGameCardModel } from '@presentation/mappers';
 import { PageLayout } from '@presentation/pages/page-layout/page-layout';
 import { ImageProcessorService, SpinnerService, ToastService } from '@presentation/services';
-import { AdminGamesStore } from '@presentation/stores';
+import { GamesManagementStore } from '@presentation/stores';
 import { Button, ContentCardLayout } from '@presentation/ui';
 import { FORM_BASE_MODEL, RATING_OPTIONS, STATUS_OPTIONS } from './const';
 import { ManageGameData } from './interfaces';
@@ -43,7 +43,7 @@ export class ManageGamePage {
   private readonly editGameUseCase = inject(EditGameUseCase);
   private readonly editFeaturedGameUseCase = inject(EditFeaturedGameUseCase);
   private readonly getRemoteImageUseCase = inject(GetRemoteImageUseCase);
-  private readonly adminGamesStore = inject(AdminGamesStore);
+  private readonly gamesManagementStore = inject(GamesManagementStore);
   private readonly route = inject(ActivatedRoute);
   private readonly router = inject(Router);
 
@@ -62,7 +62,7 @@ export class ManageGamePage {
   protected readonly isFeatured = computed<boolean>(() => this.routeData().isFeatured ?? false);
 
   private readonly game = computed(() =>
-    this.isEditMode() ? this.adminGamesStore.selectedGame() : undefined,
+    this.isEditMode() ? this.gamesManagementStore.selectedGame() : undefined,
   );
 
   protected readonly computedTitle = computed(() => {

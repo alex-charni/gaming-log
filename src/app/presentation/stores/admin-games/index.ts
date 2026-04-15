@@ -1,1 +1,1 @@
-export * from './admin-games.store';
+export * from './games-management.store';
