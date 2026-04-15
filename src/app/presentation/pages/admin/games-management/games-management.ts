@@ -44,12 +44,12 @@ export class GamesManagementPage implements OnInit {
   }
 
   protected createGame(): void {
-    this.router.navigateByUrl('/add-game');
+    this.router.navigateByUrl('/admin/add-game');
   }
 
   protected editGame(game: GameEntity): void {
-    this.store.setSelectedCard(game);
-    this.router.navigateByUrl('/edit-game');
+    this.store.setSelectedGame(game);
+    this.router.navigateByUrl('/admin/edit-game');
   }
 
   protected deleteGame(game: GameEntity): void {

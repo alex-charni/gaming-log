@@ -119,7 +119,7 @@ describe('LoginPage', () => {
       expect(spinnerServiceMock.setVisible).toHaveBeenCalledWith(true);
       expect(loginUseCaseMock.execute).toHaveBeenCalledWith('test@test.com', '123456');
       expect(authStoreMock.login).toHaveBeenCalledWith(mockSession);
-      expect(routerMock.navigateByUrl).toHaveBeenCalledWith('/add-game');
+      expect(routerMock.navigateByUrl).toHaveBeenCalledWith('/admin/manage-games');
       expect(toastServiceMock.show).toHaveBeenCalledWith(
         expect.objectContaining({ type: 'success' }),
       );
