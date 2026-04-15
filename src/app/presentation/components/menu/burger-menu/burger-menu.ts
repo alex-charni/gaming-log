@@ -51,9 +51,9 @@ export class BurgerMenu {
   protected readonly adminItems = computed(() => {
     return this.authStore.isLoggedIn()
       ? [
-          { label: 'common.manage_games', icon: 'fa-database', route: '/manage-games' },
-          { label: 'common.add_game', icon: 'fa-plus', route: '/add-game' },
-          { label: 'common.add_featured_game', icon: 'fa-star', route: '/add-featured-game' },
+          { label: 'common.manage_games', icon: 'fa-database', route: '/admin/manage-games' },
+          { label: 'common.add_game', icon: 'fa-plus', route: '/admin/add-game' },
+          { label: 'common.add_featured_game', icon: 'fa-star', route: '/admin/add-featured-game' },
           { label: 'common.logout', icon: 'fa-arrow-right-from-bracket', route: '/login' },
         ]
       : [];

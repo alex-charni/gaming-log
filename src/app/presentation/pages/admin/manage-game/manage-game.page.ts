@@ -62,7 +62,7 @@ export class ManageGamePage {
   protected readonly isFeatured = computed<boolean>(() => this.routeData().isFeatured ?? false);
 
   private readonly game = computed(() =>
-    this.isEditMode() ? this.adminGamesStore.selectedCard() : undefined,
+    this.isEditMode() ? this.adminGamesStore.selectedGame() : undefined,
   );
 
   protected readonly computedTitle = computed(() => {
@@ -82,7 +82,7 @@ export class ManageGamePage {
   constructor() {
     this.initEffects();
 
-    if (this.isEditMode() && !this.game()) this.router.navigateByUrl('/manage-games');
+    if (this.isEditMode() && !this.game()) this.router.navigateByUrl('/admin/manage-games');
   }
 
   private initEffects(): void {
@@ -146,7 +146,9 @@ export class ManageGamePage {
   private onSuccess(): void {
     this.showSuccessToast();
     this.resetForm();
-    this.router.navigateByUrl(this.isFeatured() ? '/manage-featured-games' : '/manage-games');
+    this.router.navigateByUrl(
+      this.isFeatured() ? '/admin/manage-featured-games' : '/admin/manage-games',
+    );
   }
 
   private onError(error: unknown): void {

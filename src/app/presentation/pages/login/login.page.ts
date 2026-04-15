@@ -64,7 +64,7 @@ export class LoginPage {
 
         this.authStore.login(session);
         this.showSuccessToast('pages.auth.login_success', '', 'fa-lock-open');
-        this.router.navigateByUrl('/manage-games');
+        this.router.navigateByUrl('/admin/manage-games');
       } catch (error) {
         console.error(error);
         this.showFailureToast('error.oops_exclamation', 'pages.auth.login_failed', 'fa-lock');

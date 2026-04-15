@@ -1,5 +1,5 @@
-@let loadingCards = cardsAreLoading();
 @let games = filteredGames();
+@let loadingGames = gamesAreLoading();
 @let searchTerm = form.searchTerm();
 
 <app-page-layout [contentMaxSize]="'md'">
@@ -56,7 +56,7 @@
           </div>
         </li>
 
-        @if (loadingCards) {
+        @if (loadingGames) {
           @for (item of placeholders; track $index) {
             @defer {
               <li class="games-list__item">
@@ -84,22 +84,22 @@
                   <i class="fa-solid fa-pencil"></i>
                 </app-button>
 
-                <!-- <app-button
-                    class="button"
-                    [type]="'button'"
-                    [width]="'100%'"
-                    [round]="true"
-                    [style]="'danger'"
-                    (action)="deleteGame(game)"
-                  >
-                    <i class="fa-solid fa-trash-can"></i>
-                  </app-button> -->
+                <app-button
+                  class="button"
+                  [type]="'button'"
+                  [width]="'100%'"
+                  [round]="true"
+                  [style]="'danger'"
+                  (action)="deleteGame(game)"
+                >
+                  <i class="fa-solid fa-trash-can"></i>
+                </app-button>
               </div>
             </div>
           </li>
         }
 
-        @if (!loadingCards && !games.length) {
+        @if (!loadingGames && !games.length) {
           <li class="games-list__item">
             <div class="game-card game-card--not-found">
               <p>

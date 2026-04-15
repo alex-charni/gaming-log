@@ -17,6 +17,7 @@ import { APP_PARAMS } from '@infrastructure/config/app.params';
 import { GamesRepositoryAdapter } from '@infrastructure/http/api';
 import { AuthRepositoryAdapter } from '@infrastructure/http/api/auth/auth.repository.adapter';
 import { APP_SETTINGS } from '../config/app.tokens';
+import { DeleteGameUseCase } from '@core/application/use-cases/games/delete-game.usecase';
 
 const APP_SETTINGS_PROVIDERS = [
   {
@@ -65,6 +66,11 @@ const GAMES_PROVIDERS = [
   {
     provide: AddGameUseCase,
     useFactory: (repository: GamesRepository) => new AddGameUseCase(repository),
+    deps: [GamesRepository],
+  },
+  {
+    provide: DeleteGameUseCase,
+    useFactory: (repository: GamesRepository) => new DeleteGameUseCase(repository),
     deps: [GamesRepository],
   },
   {

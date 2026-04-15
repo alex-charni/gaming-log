@@ -20,8 +20,8 @@ export class GamesManagementPage implements OnInit {
   private readonly store = inject(AdminGamesStore);
   private readonly router = inject(Router);
 
-  private readonly games = computed(() => this.store.cardsCollection());
-  protected readonly cardsAreLoading = computed(() => this.store.cardsAreLoading());
+  private readonly games = computed(() => this.store.gamesCollection());
+  protected readonly gamesAreLoading = computed(() => this.store.gamesAreLoading());
 
   protected readonly filteredGames = computed(() => {
     const term = this.form.searchTerm().value().toLowerCase().trim();
@@ -40,21 +40,21 @@ export class GamesManagementPage implements OnInit {
   protected readonly form = form(this.formModel);
 
   ngOnInit(): void {
-    this.store.getCardsRx();
+    this.store.getGamesRx();
   }
 
   protected createGame(): void {
-    this.router.navigateByUrl('/add-game');
+    this.router.navigateByUrl('/admin/add-game');
   }
 
   protected editGame(game: GameEntity): void {
-    this.store.setSelectedCard(game);
-    this.router.navigateByUrl('/edit-game');
+    this.store.setSelectedGame(game);
+    this.router.navigateByUrl('/admin/edit-game');
   }
 
   protected deleteGame(game: GameEntity): void {
     if (!confirm('Are you sure you want to delete this game?')) return;
-    // this.store.deleteGame(id);
+    this.store.deleteGameRx(game.id);
   }
 
   protected manageSearchInput(event: Event): void {
