@@ -30,48 +30,48 @@ describe('AdminGamesStore', () => {
   });
 
   it('should be initialized with the provided initial state', () => {
-    expect(store.cardsCollection()).toEqual(adminGamesInitialState.cardsCollection);
+    expect(store.gamesCollection()).toEqual(adminGamesInitialState.gamesCollection);
   });
 
-  describe('getCardsRx', () => {
-    it('should append new games to cardsCollection', () => {
+  describe('getGamesRx', () => {
+    it('should append new games to gamesCollection', () => {
       const mockGames = [{ id: 'g1' }];
       getAllGamesUseCaseMock.execute.mockReturnValue(of(mockGames));
 
-      store.getCardsRx();
+      store.getGamesRx();
 
-      expect(store.cardsCollection().length).toBe(
-        adminGamesInitialState.cardsCollection.length + 1,
+      expect(store.gamesCollection().length).toBe(
+        adminGamesInitialState.gamesCollection.length + 1,
       );
-      expect(store.cardsAreLoading()).toBe(false);
+      expect(store.gamesAreLoading()).toBe(false);
     });
 
-    it('should handle error by setting cardsAreLoading to false', () => {
+    it('should handle error by setting gamesAreLoading to false', () => {
       const consoleSpy = vi.spyOn(console, 'error').mockImplementation(() => {});
       getAllGamesUseCaseMock.execute.mockReturnValue(throwError(() => new Error('API Error')));
 
-      store.getCardsRx();
+      store.getGamesRx();
 
-      expect(store.cardsAreLoading()).toBe(false);
+      expect(store.gamesAreLoading()).toBe(false);
       expect(consoleSpy).toHaveBeenCalled();
       consoleSpy.mockRestore();
     });
   });
 
   describe('Computed Signals', () => {
-    it('should show spinner when cards are loading and collection is small', () => {
+    it('should show spinner when games are loading and collection is small', () => {
       patchState(unprotected(store), {
-        cardsCollection: new Array(10),
-        cardsAreLoading: true,
+        gamesCollection: new Array(10),
+        gamesAreLoading: true,
       });
 
       expect(store.spinner()).toBe(true);
     });
 
-    it('should hide spinner when 20 or more cards are already loaded even if cardsAreLoading is true', () => {
+    it('should hide spinner when 20 or more games are already loaded even if gamesAreLoading is true', () => {
       patchState(unprotected(store), {
-        cardsCollection: new Array(25),
-        cardsAreLoading: true,
+        gamesCollection: new Array(25),
+        gamesAreLoading: true,
       });
 
       expect(store.spinner()).toBe(false);

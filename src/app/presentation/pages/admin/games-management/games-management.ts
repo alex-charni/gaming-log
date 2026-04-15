@@ -20,8 +20,8 @@ export class GamesManagementPage implements OnInit {
   private readonly store = inject(AdminGamesStore);
   private readonly router = inject(Router);
 
-  private readonly games = computed(() => this.store.cardsCollection());
-  protected readonly cardsAreLoading = computed(() => this.store.cardsAreLoading());
+  private readonly games = computed(() => this.store.gamesCollection());
+  protected readonly gamesAreLoading = computed(() => this.store.gamesAreLoading());
 
   protected readonly filteredGames = computed(() => {
     const term = this.form.searchTerm().value().toLowerCase().trim();
@@ -40,7 +40,7 @@ export class GamesManagementPage implements OnInit {
   protected readonly form = form(this.formModel);
 
   ngOnInit(): void {
-    this.store.getCardsRx();
+    this.store.getGamesRx();
   }
 
   protected createGame(): void {

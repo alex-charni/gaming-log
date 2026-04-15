@@ -62,7 +62,7 @@ export class ManageGamePage {
   protected readonly isFeatured = computed<boolean>(() => this.routeData().isFeatured ?? false);
 
   private readonly game = computed(() =>
-    this.isEditMode() ? this.adminGamesStore.selectedCard() : undefined,
+    this.isEditMode() ? this.adminGamesStore.selectedGame() : undefined,
   );
 
   protected readonly computedTitle = computed(() => {
