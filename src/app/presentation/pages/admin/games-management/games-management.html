@@ -7,10 +7,22 @@
     <app-content-card-layout
       [width]="'md'"
       icon="fa-solid fa-database"
-      [title]="'common.finished_games' | translate"
+      [title]="'common.games' | translate"
       [titleLevel]="'h1'"
     >
       <div class="games-list__controls">
+        <div class="games-list__select">
+          <app-form-field
+            class="select-input"
+            type="select"
+            id="list"
+            [field]="form.gamesList()"
+            [options]="gamesListOptions"
+            [displayErrors]="false"
+            [reserveSpaceForErrors]="false"
+          />
+        </div>
+
         <div class="games-list__search">
           <app-form-field
             class="search-input"
@@ -74,6 +86,18 @@
               </div>
 
               <div class="game-card__actions">
+                @if (form().value().gamesList === 'featured') {
+                  <app-button
+                    class="button"
+                    [type]="'button'"
+                    [width]="'100%'"
+                    [round]="true"
+                    (action)="moveToFinished(game)"
+                  >
+                    <i class="fa-solid fa-flag-checkered"></i>
+                  </app-button>
+                }
+
                 <app-button
                   class="button"
                   [type]="'button'"
@@ -103,7 +127,7 @@
           <li class="games-list__item">
             <div class="game-card game-card--not-found">
               <p>
-                {{ 'pages.admin.games_list.games_not_found' | translate }}
+                {{ 'pages.admin.games_management.games_not_found' | translate }}
                 <i class="fa-regular fa-face-frown sad"></i>
               </p>
             </div>

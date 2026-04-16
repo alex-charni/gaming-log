@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, computed, inject, OnInit, signal } from '@angular/core';
+import { Component, computed, effect, inject, signal } from '@angular/core';
 import { form } from '@angular/forms/signals';
 import { Router } from '@angular/router';
 import { GameEntity } from '@core/domain/entities';
@@ -7,8 +7,11 @@ import { TranslatePipe } from '@ngx-translate/core';
 
 import { FormFieldComponent } from '@presentation/components';
 import { PageLayout } from '@presentation/pages/page-layout/page-layout';
+import { SpinnerService } from '@presentation/services';
 import { GamesManagementStore } from '@presentation/stores';
 import { Button, ContentCardLayout } from '@presentation/ui';
+import { FORM_BASE_MODEL, GAMES_LIST_OPTIONS } from './const';
+import { ManageGameListControlsData } from './interfaces';
 
 @Component({
   selector: 'app-games-management',
@@ -16,9 +19,10 @@ import { Button, ContentCardLayout } from '@presentation/ui';
   styleUrl: './games-management.scss',
   imports: [Button, CommonModule, ContentCardLayout, FormFieldComponent, PageLayout, TranslatePipe],
 })
-export class GamesManagementPage implements OnInit {
-  private readonly store = inject(GamesManagementStore);
+export class GamesManagementPage {
   private readonly router = inject(Router);
+  private readonly spinner = inject(SpinnerService);
+  private readonly store = inject(GamesManagementStore);
 
   private readonly games = computed(() => this.store.gamesCollection());
   protected readonly gamesAreLoading = computed(() => this.store.gamesAreLoading());
@@ -35,26 +39,73 @@ export class GamesManagementPage implements OnInit {
   });
 
   protected readonly placeholders = Array.from({ length: 10 });
+  protected readonly gamesListOptions = GAMES_LIST_OPTIONS;
 
-  private readonly formModel = signal<{ searchTerm: string }>({ searchTerm: '' });
+  private readonly formModel = signal<ManageGameListControlsData>(FORM_BASE_MODEL);
   protected readonly form = form(this.formModel);
 
-  ngOnInit(): void {
-    this.store.getGamesRx();
+  constructor() {
+    this.initEffects();
+  }
+
+  private initEffects(): void {
+    effect(() => {
+      switch (this.formModel().gamesList) {
+        case 'featured':
+          this.store.getFeaturedGamesRx();
+          break;
+        case 'finished':
+          this.store.getGamesRx();
+          break;
+      }
+    });
+
+    effect(() => {
+      this.spinner.setVisible(this.store.isBusy());
+    });
   }
 
   protected createGame(): void {
-    this.router.navigateByUrl('/admin/add-game');
+    switch (this.formModel().gamesList) {
+      case 'featured':
+        this.router.navigateByUrl('/admin/add-featured-game');
+        break;
+      case 'finished':
+        this.router.navigateByUrl('/admin/add-game');
+        break;
+    }
+  }
+
+  protected moveToFinished(game: GameEntity): void {
+    this.store.setSelectedGame(game);
+
+    this.router.navigateByUrl('/admin/archive-featured-game');
   }
 
   protected editGame(game: GameEntity): void {
     this.store.setSelectedGame(game);
-    this.router.navigateByUrl('/admin/edit-game');
+
+    switch (this.formModel().gamesList) {
+      case 'featured':
+        this.router.navigateByUrl('/admin/edit-featured-game');
+        break;
+      case 'finished':
+        this.router.navigateByUrl('/admin/edit-game');
+        break;
+    }
   }
 
   protected deleteGame(game: GameEntity): void {
     if (!confirm('Are you sure you want to delete this game?')) return;
-    this.store.deleteGameRx(game.id);
+
+    switch (this.formModel().gamesList) {
+      case 'featured':
+        this.store.deleteFeaturedGameRx(game.id);
+        break;
+      case 'finished':
+        this.store.deleteGameRx(game.id);
+        break;
+    }
   }
 
   protected manageSearchInput(event: Event): void {
@@ -63,7 +114,7 @@ export class GamesManagementPage implements OnInit {
   }
 
   protected clearSearch(): void {
-    this.formModel.set({ searchTerm: '' });
+    this.formModel.update((model) => ({ ...model, searchTerm: '' }));
     this.form().reset();
   }
 }

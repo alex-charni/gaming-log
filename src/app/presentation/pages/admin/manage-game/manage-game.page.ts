@@ -9,13 +9,14 @@ import { GameManagementUseCases } from '@core/application/schemas';
 import {
   AddFeaturedGameUseCase,
   AddGameUseCase,
+  ArchiveFeaturedGameUseCase,
   EditFeaturedGameUseCase,
   EditGameUseCase,
   GetRemoteImageUseCase,
 } from '@core/application/use-cases';
 import { GameEntity } from '@core/domain/entities';
 import { FormFieldComponent, ImageFormField } from '@presentation/components';
-import { toGameCardModel } from '@presentation/mappers';
+import { toGameCardModel, toHeroSlideModel } from '@presentation/mappers';
 import { PageLayout } from '@presentation/pages/page-layout/page-layout';
 import { ImageProcessorService, SpinnerService, ToastService } from '@presentation/services';
 import { GamesManagementStore } from '@presentation/stores';
@@ -40,6 +41,7 @@ import { ManageGameData } from './interfaces';
 export class ManageGamePage {
   private readonly addGameUseCase = inject(AddGameUseCase);
   private readonly addFeaturedGameUseCase = inject(AddFeaturedGameUseCase);
+  private readonly archiveFeaturedGameUseCase = inject(ArchiveFeaturedGameUseCase);
   private readonly editGameUseCase = inject(EditGameUseCase);
   private readonly editFeaturedGameUseCase = inject(EditFeaturedGameUseCase);
   private readonly getRemoteImageUseCase = inject(GetRemoteImageUseCase);
@@ -51,13 +53,16 @@ export class ManageGamePage {
   private readonly spinnerService = inject(SpinnerService);
   private readonly toastService = inject(ToastService);
 
+  // TODO: move to store
   private readonly routeData = toSignal(this.route.data, {
     initialValue: {} as {
+      archiveMode: boolean;
       editMode: boolean;
       isFeatured: boolean;
     },
   });
 
+  protected readonly isArchiveMode = computed<boolean>(() => this.routeData().archiveMode ?? false);
   protected readonly isEditMode = computed<boolean>(() => this.routeData().editMode ?? false);
   protected readonly isFeatured = computed<boolean>(() => this.routeData().isFeatured ?? false);
 
@@ -66,7 +71,8 @@ export class ManageGamePage {
   );
 
   protected readonly computedTitle = computed(() => {
-    if (this.isFeatured() && this.isEditMode()) return 'common.edit_featured_game';
+    if (this.isArchiveMode()) return 'common.archive_featured_game';
+    else if (this.isFeatured() && this.isEditMode()) return 'common.edit_featured_game';
     else if (this.isFeatured()) return 'common.add_featured_game';
     else if (this.isEditMode()) return 'common.edit_game';
     else return 'common.add_game';
@@ -87,9 +93,11 @@ export class ManageGamePage {
 
   private initEffects(): void {
     effect((onCleanup) => {
+      if (this.isArchiveMode() || !this.isEditMode()) return;
+
       const game = this.game();
 
-      if (!game || !this.isEditMode()) return;
+      if (!game) return;
 
       let cancelled = false;
 
@@ -146,9 +154,8 @@ export class ManageGamePage {
   private onSuccess(): void {
     this.showSuccessToast();
     this.resetForm();
-    this.router.navigateByUrl(
-      this.isFeatured() ? '/admin/manage-featured-games' : '/admin/manage-games',
-    );
+    this.gamesManagementStore.resetSelectedGame();
+    this.router.navigateByUrl('/admin/manage-games');
   }
 
   private onError(error: unknown): void {
@@ -164,8 +171,8 @@ export class ManageGamePage {
     this.toastService.show({
       title: 'common.success_exclamation',
       message: this.isEditMode()
-        ? 'pages.admin.add_game.game_edited'
-        : 'pages.admin.add_game.game_added',
+        ? 'pages.admin.manage_game.game_edited'
+        : 'pages.admin.manage_game.game_added',
       icon: 'fa-file-circle-check',
       type: 'success',
     });
@@ -175,8 +182,8 @@ export class ManageGamePage {
     this.toastService.show({
       title: 'error.oops_exclamation',
       message: this.isEditMode()
-        ? 'pages.admin.add_game.game_not_edit'
-        : 'pages.admin.add_game.game_not_added',
+        ? 'pages.admin.manage_game.game_not_edited'
+        : 'pages.admin.manage_game.game_not_added',
       icon: 'fa-file-circle-xmark',
       type: 'error',
     });
@@ -184,7 +191,9 @@ export class ManageGamePage {
 
   private async getImage(game: GameEntity): Promise<File | null> {
     try {
-      const url = toGameCardModel(game).coverUrl;
+      const url = this.isFeatured()
+        ? toHeroSlideModel(game).imageUrl
+        : toGameCardModel(game).coverUrl;
       const image = await this.getRemoteImageUseCase.execute(url, `${game.id}.webp`);
 
       return image;
@@ -231,7 +240,8 @@ export class ManageGamePage {
   }
 
   private getUseCase(): GameManagementUseCases {
-    return this.isEditMode() ? this.getEditUseCase() : this.getAddUseCase();
+    if (this.isArchiveMode()) return this.archiveFeaturedGameUseCase;
+    else return this.isEditMode() ? this.getEditUseCase() : this.getAddUseCase();
   }
 
   private getAddUseCase(): AddFeaturedGameUseCase | AddGameUseCase {
