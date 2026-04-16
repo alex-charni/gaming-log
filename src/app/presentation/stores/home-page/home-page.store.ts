@@ -11,12 +11,15 @@ import { homePageInitialState } from './home-page-initial-state';
 
 export const HomePageStore = signalStore(
   { providedIn: 'root' },
+
   withState(homePageInitialState),
+
   withComputed(({ cardsCollection, slidesAreLoading, cardsAreLoading }) => ({
-    spinner: computed(
+    isBusy: computed(
       () => (cardsCollection().length < 20 && cardsAreLoading()) || slidesAreLoading(),
     ),
   })),
+
   withComputed(({ nextYearToLoad }) => {
     const startingYear = inject(APP_SETTINGS).startingYear;
 
@@ -24,6 +27,7 @@ export const HomePageStore = signalStore(
       haventReachedLastYear: computed(() => nextYearToLoad() >= startingYear),
     };
   }),
+
   withMethods(
     (
       store,
@@ -38,6 +42,7 @@ export const HomePageStore = signalStore(
           ],
         });
       },
+
       getHeroBannerSlidesRx: rxMethod<number>(
         pipe(
           distinctUntilChanged(),
@@ -57,6 +62,7 @@ export const HomePageStore = signalStore(
           }),
         ),
       ),
+
       getCardsRx: rxMethod<number>(
         pipe(
           distinctUntilChanged(),
