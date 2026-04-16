@@ -13,6 +13,8 @@ export abstract class GamesRepository {
   abstract addGameCover(gameId: string, image: File, placeholder: File): Promise<[void, void]>;
   abstract deleteGame(gameId: string): Promise<void | null>;
   abstract deleteGameCover(gameId: string): Promise<[void, void]>;
+  abstract deleteFeaturedGame(gameId: string): Promise<void | null>;
+  abstract deleteFeaturedGameImage(gameId: string): Promise<[void, void]>;
   abstract getAllGames(): Observable<GameEntity[]>;
   abstract getGamesByYear(year: number): Observable<GameEntity[]>;
   abstract getFeaturedGames(quantity?: number): Observable<GameEntity[]>;

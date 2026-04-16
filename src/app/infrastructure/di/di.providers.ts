@@ -1,6 +1,8 @@
 import {
   AddFeaturedGameUseCase,
   AddGameUseCase,
+  ArchiveFeaturedGameUseCase,
+  DeleteFeaturedGameUseCase,
   EditFeaturedGameUseCase,
   GetAllGamesUseCase,
   GetFeaturedGamesUseCase,
@@ -11,13 +13,13 @@ import {
   LogoutUseCase,
 } from '@core/application/use-cases';
 import { OnAuthStateChangeUseCase } from '@core/application/use-cases/auth/on-auth-state-change.usecase';
+import { DeleteGameUseCase } from '@core/application/use-cases/games/delete-game.usecase';
 import { EditGameUseCase } from '@core/application/use-cases/games/edit-game.usecase';
 import { AuthRepository, GamesRepository } from '@core/domain/repositories';
 import { APP_PARAMS } from '@infrastructure/config/app.params';
 import { GamesRepositoryAdapter } from '@infrastructure/http/api';
 import { AuthRepositoryAdapter } from '@infrastructure/http/api/auth/auth.repository.adapter';
 import { APP_SETTINGS } from '../config/app.tokens';
-import { DeleteGameUseCase } from '@core/application/use-cases/games/delete-game.usecase';
 
 const APP_SETTINGS_PROVIDERS = [
   {
@@ -74,6 +76,11 @@ const GAMES_PROVIDERS = [
     deps: [GamesRepository],
   },
   {
+    provide: DeleteFeaturedGameUseCase,
+    useFactory: (repository: GamesRepository) => new DeleteFeaturedGameUseCase(repository),
+    deps: [GamesRepository],
+  },
+  {
     provide: EditFeaturedGameUseCase,
     useFactory: (repository: GamesRepository) => new EditFeaturedGameUseCase(repository),
     deps: [GamesRepository],
@@ -97,6 +104,14 @@ const GAMES_PROVIDERS = [
     provide: GetFeaturedGamesUseCase,
     useFactory: (repository: GamesRepository) => new GetFeaturedGamesUseCase(repository),
     deps: [GamesRepository],
+  },
+  {
+    provide: ArchiveFeaturedGameUseCase,
+    useFactory: (
+      addGameUseCase: AddGameUseCase,
+      deleteFeaturedGameUseCase: DeleteFeaturedGameUseCase,
+    ) => new ArchiveFeaturedGameUseCase(addGameUseCase, deleteFeaturedGameUseCase),
+    deps: [AddGameUseCase, DeleteFeaturedGameUseCase],
   },
   {
     provide: GetRemoteImageUseCase,
