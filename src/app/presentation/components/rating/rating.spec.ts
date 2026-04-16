@@ -58,7 +58,7 @@ describe('Rating', () => {
 
       const container = fixture.nativeElement.querySelector('.rating');
 
-      expect(container.classList).toContain('rating--medium');
+      expect(container.classList).toContain('rating--md');
     });
 
     it.each(['small', 'medium', 'large'] as const)('should apply %s size class', (size) => {

@@ -4,7 +4,12 @@ import { By } from '@angular/platform-browser';
 import { CardsGrid } from '@presentation/components';
 import { SpinnerService } from '@presentation/services';
 import { HomePageStore } from '@presentation/stores';
-import { createHomePageStoreMock, createSpinnerServiceMock } from '@testing/mocks';
+import {
+  createHomePageStoreMock,
+  createSpinnerServiceMock,
+  MOCK_GAME_CARD,
+  MOCK_GAME_SLIDES,
+} from '@testing/mocks';
 import { HomePage } from './home.page';
 
 const storeMock = createHomePageStoreMock();
@@ -29,8 +34,12 @@ describe('HomePage', () => {
     component = fixture.componentInstance;
   });
 
+  afterEach(() => {
+    vi.clearAllMocks();
+  });
+
   describe('Initialization', () => {
-    it('should initialize and fetch data on ngOnInit', () => {
+    it('should initialize and fetch data on ngOnInit when loading status is false', () => {
       storeMock.slidesAreLoading.set(false);
       storeMock.cardsAreLoading.set(false);
 
@@ -38,6 +47,26 @@ describe('HomePage', () => {
 
       expect(storeMock.getHeroBannerSlidesRx).toHaveBeenCalledWith(3);
       expect(storeMock.getCardsRx).toHaveBeenCalledWith(storeMock.nextYearToLoad());
+    });
+
+    it('should initialize without fetching data on ngOnInit when loading status is true', () => {
+      storeMock.slidesAreLoading.set(true);
+      storeMock.cardsAreLoading.set(true);
+
+      fixture.detectChanges();
+
+      expect(storeMock.getHeroBannerSlidesRx).not.toHaveBeenCalledWith();
+      expect(storeMock.getCardsRx).not.toHaveBeenCalledWith();
+    });
+
+    it('should initialize without fetching data on ngOnInit when there is data in store', () => {
+      storeMock.slidesCollection.set(MOCK_GAME_SLIDES);
+      storeMock.cardsCollection.set([MOCK_GAME_CARD]);
+
+      fixture.detectChanges();
+
+      expect(storeMock.getHeroBannerSlidesRx).not.toHaveBeenCalledWith();
+      expect(storeMock.getCardsRx).not.toHaveBeenCalledWith();
     });
   });
 
@@ -71,16 +100,16 @@ describe('HomePage', () => {
   });
 
   describe('Effects', () => {
-    it('should synchronize spinner visibility with store state', () => {
+    it('should synchronize isBusy visibility with store state', () => {
       fixture.detectChanges(); // Effect runs after initial detection
 
-      storeMock.spinner.set(true);
+      storeMock.isBusy.set(true);
 
       fixture.detectChanges(); // Trigger effect execution cycle
 
       expect(spinnerServiceMock.setVisible).toHaveBeenCalledWith(true);
 
-      storeMock.spinner.set(false);
+      storeMock.isBusy.set(false);
       fixture.detectChanges();
 
       expect(spinnerServiceMock.setVisible).toHaveBeenLastCalledWith(false);
