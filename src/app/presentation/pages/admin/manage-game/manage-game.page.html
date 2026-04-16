@@ -62,17 +62,17 @@
             [label]="featured ? 'common.image' : 'common.cover'"
             [field]="form.image()"
             [selectText]="
-              featured ? 'pages.admin.add_game.select_image' : 'pages.admin.add_game.select_cover'
+              featured ? 'pages.admin.manage_game.select_image' : 'pages.admin.manage_game.select_cover'
             "
             [changeText]="
-              featured ? 'pages.admin.add_game.change_image' : 'pages.admin.add_game.change_cover'
+              featured ? 'pages.admin.manage_game.change_image' : 'pages.admin.manage_game.change_cover'
             "
           />
         </div>
 
         <div class="form__submit">
           <app-button [type]="'submit'" [disabled]="form().invalid()">
-            {{ 'pages.admin.add_game.save' | translate }}
+            {{ 'pages.admin.manage_game.save' | translate }}
           </app-button>
         </div>
       </form>

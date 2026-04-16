@@ -6,13 +6,17 @@
     "about": "Acerca de...",
     "add_game": "Añadir juego",
     "add_featured_game": "Añadir juego destacado",
+    "archive_featured_game": "Archivar juego destacado",
     "cover": "Carátula",
     "dropped": "Abandonado",
     "edit_game": "Editar juego",
     "edit_featured_game": "Editar juego destacado",
+    "featured_pl": "Destacados",
     "finished": "Completado",
+    "finished_pl": "Completados",
     "finished_date": "Fecha de finalización",
     "finished_games": "Juegos completados",
+    "games": "Games",
     "games_log": "Log de juegos",
     "go_back": "Volver",
     "id": "ID",
@@ -93,7 +97,7 @@
       }
     },
     "admin": {
-      "add_game": {
+      "manage_game": {
         "change_cover": "Cambiar portada",
         "change_image": "Cambiar imagen",
         "game_added": "¡Juego añadido al catálogo!",
@@ -102,7 +106,7 @@
         "select_cover": "Seleccionar portada",
         "select_image": "Seleccionar imagen"
       },
-      "games_list": {
+      "games_management": {
         "games_not_found": "No se encontró ningún juego"
       }
     },

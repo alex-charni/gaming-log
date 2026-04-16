@@ -6,13 +6,17 @@
     "about": "About",
     "add_game": "Add game",
     "add_featured_game": "Add featured game",
+    "archive_featured_game": "Archive featured game",
     "cover": "Cover",
     "dropped": "Dropped",
     "edit_game": "Edit game",
     "edit_featured_game": "Edit featured game",
+    "featured_pl": "Featured",
     "finished": "Finished",
+    "finished_pl": "Finished",
     "finished_date": "Finished date",
     "finished_games": "Finished games",
+    "games": "Games",
     "games_log": "Games Log",
     "go_back": "Go back",
     "id": "ID",
@@ -93,7 +97,7 @@
       }
     },
     "admin": {
-      "add_game": {
+      "manage_game": {
         "change_cover": "Change cover",
         "change_image": "Change image",
         "game_added": "Game added to the catalog!",
@@ -104,7 +108,7 @@
         "select_cover": "Select cover",
         "select_image": "Select image"
       },
-      "games_list": {
+      "games_management": {
         "games_not_found": "No games found"
       }
     },

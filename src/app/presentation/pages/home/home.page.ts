@@ -24,7 +24,7 @@ export class HomePage {
   }
 
   private initEffects(): void {
-    effect(() => this.spinnerService.setVisible(this.store.spinner()));
+    effect(() => this.spinnerService.setVisible(this.store.isBusy()));
   }
 
   ngOnInit(): void {

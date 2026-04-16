@@ -4,6 +4,12 @@
 
 - Japanese language.
 
+## [1.3.5] - 2026-04-16
+
+### 🟢 Added
+
+- Delete, add and archive options for featured games.
+
 ## [1.3.4] - 2026-04-15
 
 ### 🟢 Added
