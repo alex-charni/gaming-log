@@ -2,27 +2,8 @@ import { ComponentRef } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 
-import { HeroSlideModel } from '@presentation/schemas/interfaces';
+import { MOCK_GAME_SLIDES } from '@testing/mocks';
 import { HeroSliderNavDots } from './hero-slider-nav-dots';
-
-const mockSlides: HeroSlideModel[] = [
-  {
-    bottomLeftText: 'bottom left',
-    bottomRightText: 'bottom right',
-    imagePlaceholderUrl: 'img1.webp',
-    imageUrl: 'img1.webp',
-    topLeftText: 'top left',
-    topRightText: 'top right',
-  },
-  {
-    bottomLeftText: '',
-    bottomRightText: '',
-    imagePlaceholderUrl: 'img2.webp',
-    imageUrl: 'img2.webp',
-    topLeftText: '',
-    topRightText: '',
-  },
-];
 
 describe('HeroSliderNavDots', () => {
   let component: HeroSliderNavDots;
@@ -38,7 +19,7 @@ describe('HeroSliderNavDots', () => {
     component = fixture.componentInstance;
     componentRef = fixture.componentRef;
 
-    componentRef.setInput('slides', mockSlides);
+    componentRef.setInput('slides', MOCK_GAME_SLIDES);
     componentRef.setInput('currentIndex', 0);
 
     await fixture.whenStable();

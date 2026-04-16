@@ -32,21 +32,18 @@ describe('Button', () => {
   });
 
   it('should render button with required inputs and default styles', () => {
-    fixture.componentRef.setInput('text', 'Click me');
     fixture.componentRef.setInput('type', 'button');
 
     fixture.detectChanges();
 
     const button = fixture.nativeElement.querySelector('button');
 
-    expect(button.textContent).toContain('Click me');
     expect(button.type).toBe('button');
     expect(button.style.height).toBe('3rem');
     expect(button.style.width).toBe('100%');
   });
 
   it('should apply custom height and width', () => {
-    fixture.componentRef.setInput('text', 'Styled');
     fixture.componentRef.setInput('type', 'button');
     fixture.componentRef.setInput('height', '50px');
     fixture.componentRef.setInput('width', '200px');
@@ -60,7 +57,6 @@ describe('Button', () => {
   });
 
   it('should disable the button when disabled input is true', () => {
-    fixture.componentRef.setInput('text', 'Disabled');
     fixture.componentRef.setInput('type', 'button');
     fixture.componentRef.setInput('disabled', true);
 
@@ -72,7 +68,6 @@ describe('Button', () => {
   });
 
   it('should emit action when type is button', () => {
-    fixture.componentRef.setInput('text', 'Action');
     fixture.componentRef.setInput('type', 'button');
 
     fixture.detectChanges();
@@ -86,7 +81,6 @@ describe('Button', () => {
   });
 
   it('should not emit action when type is submit', () => {
-    fixture.componentRef.setInput('text', 'Submit');
     fixture.componentRef.setInput('type', 'submit');
 
     fixture.detectChanges();

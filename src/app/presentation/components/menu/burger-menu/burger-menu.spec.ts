@@ -105,9 +105,9 @@ describe('BurgerMenu', () => {
     fixture.detectChanges();
 
     const items = component['adminItems']();
-    expect(items.length).toBe(3);
-    expect(items[0].label).toBe('Add game');
-    expect(items[2].label).toBe('Logout');
+    expect(items.length).toBe(2);
+    expect(items[0].label).toBe('common.manage_games');
+    expect(items[1].label).toBe('common.logout');
   });
 
   describe('onClickOutside HostListener', () => {
