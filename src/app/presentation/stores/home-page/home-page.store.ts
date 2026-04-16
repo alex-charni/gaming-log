@@ -14,10 +14,8 @@ export const HomePageStore = signalStore(
 
   withState(homePageInitialState),
 
-  withComputed(({ cardsCollection, slidesAreLoading, cardsAreLoading }) => ({
-    isBusy: computed(
-      () => (cardsCollection().length < 20 && cardsAreLoading()) || slidesAreLoading(),
-    ),
+  withComputed(({ slidesAreLoading, cardsAreLoading }) => ({
+    isBusy: computed(() => cardsAreLoading() && slidesAreLoading()),
   })),
 
   withComputed(({ nextYearToLoad }) => {
