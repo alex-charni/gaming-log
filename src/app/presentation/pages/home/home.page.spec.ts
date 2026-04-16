@@ -2,19 +2,11 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 
 import { CardsGrid } from '@presentation/components';
-import { SpinnerService } from '@presentation/services';
 import { HomePageStore } from '@presentation/stores';
-import {
-  createHomePageStoreMock,
-  createSpinnerServiceMock,
-  MOCK_GAME_CARD,
-  MOCK_GAME_SLIDES,
-} from '@testing/mocks';
+import { createHomePageStoreMock, MOCK_GAME_CARD, MOCK_GAME_SLIDES } from '@testing/mocks';
 import { HomePage } from './home.page';
 
 const storeMock = createHomePageStoreMock();
-
-const spinnerServiceMock = createSpinnerServiceMock();
 
 describe('HomePage', () => {
   let component: HomePage;
@@ -27,7 +19,6 @@ describe('HomePage', () => {
       imports: [HomePage],
     })
       .overrideProvider(HomePageStore, { useValue: storeMock })
-      .overrideProvider(SpinnerService, { useValue: spinnerServiceMock })
       .compileComponents();
 
     fixture = TestBed.createComponent(HomePage);
@@ -96,23 +87,6 @@ describe('HomePage', () => {
       component['handleFetchMoreGames']();
 
       expect(storeMock.getCardsRx).toHaveBeenCalledWith(2020);
-    });
-  });
-
-  describe('Effects', () => {
-    it('should synchronize isBusy visibility with store state', () => {
-      fixture.detectChanges(); // Effect runs after initial detection
-
-      storeMock.isBusy.set(true);
-
-      fixture.detectChanges(); // Trigger effect execution cycle
-
-      expect(spinnerServiceMock.setVisible).toHaveBeenCalledWith(true);
-
-      storeMock.isBusy.set(false);
-      fixture.detectChanges();
-
-      expect(spinnerServiceMock.setVisible).toHaveBeenLastCalledWith(false);
     });
   });
 

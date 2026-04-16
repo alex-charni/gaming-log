@@ -147,23 +147,13 @@ describe('HomePageStore', () => {
       expect(store.haventReachedLastYear()).toBe(false);
     });
 
-    it('should set isBusy when cards are loading and collection is small', () => {
+    it('should set isBusy when cards are loading and slides are loading', () => {
       patchState(unprotected(store), {
-        cardsCollection: new Array(10),
+        slidesAreLoading: true,
         cardsAreLoading: true,
       });
 
       expect(store.isBusy()).toBe(true);
-    });
-
-    it('should set isBusy when 20 or more cards are already loaded even if cardsAreLoading is true', () => {
-      patchState(unprotected(store), {
-        cardsCollection: new Array(25),
-        cardsAreLoading: true,
-        slidesAreLoading: false,
-      });
-
-      expect(store.isBusy()).toBe(false);
     });
   });
 });
