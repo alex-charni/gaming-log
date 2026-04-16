@@ -36,6 +36,14 @@ export const routes: Routes = [
         loadComponent: () => import('./presentation/pages').then((c) => c.ManageGamePage),
       },
       {
+        path: 'archive-featured-game',
+        data: {
+          editMode: true,
+          archiveMode: true,
+        },
+        loadComponent: () => import('./presentation/pages').then((c) => c.ManageGamePage),
+      },
+      {
         path: 'edit-game',
         data: {
           editMode: true,
