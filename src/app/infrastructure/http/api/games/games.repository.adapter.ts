@@ -32,7 +32,7 @@ export class GamesRepositoryAdapter implements GamesRepository {
     image: File,
     placeholder: File,
   ): Promise<[void, void]> {
-    const extension = image.type.split('/')[1] || 'webp';
+    const extension = this.getFileExtension(image);
 
     const coverPath = `featured/${gameId}.${extension}`;
     const coverUrl = `${environment.supabaseUrl}/${environment.supabaseStorageEndpoint}/object/images/${coverPath}`;
@@ -58,7 +58,7 @@ export class GamesRepositoryAdapter implements GamesRepository {
   }
 
   public async addGameCover(gameId: string, image: File, placeholder: File): Promise<[void, void]> {
-    const extension = image.type.split('/')[1] || 'webp';
+    const extension = this.getFileExtension(image);
 
     const coverPath = `covers/${gameId}.${extension}`;
     const coverUrl = `${environment.supabaseUrl}/${environment.supabaseStorageEndpoint}/object/images/${coverPath}`;
@@ -137,7 +137,7 @@ export class GamesRepositoryAdapter implements GamesRepository {
     image: File,
     placeholder: File,
   ): Promise<[void, void]> {
-    const extension = image.type.split('/')[1] || 'webp';
+    const extension = this.getFileExtension(image);
 
     const coverPath = `featured/${gameId}.${extension}`;
     const coverUrl = `${environment.supabaseUrl}/${environment.supabaseStorageEndpoint}/object/images/${coverPath}`;
@@ -167,7 +167,7 @@ export class GamesRepositoryAdapter implements GamesRepository {
     image: File,
     placeholder: File,
   ): Promise<[void, void]> {
-    const extension = image.type.split('/')[1] || 'webp';
+    const extension = this.getFileExtension(image);
 
     const coverPath = `covers/${gameId}.${extension}`;
     const coverUrl = `${environment.supabaseUrl}/${environment.supabaseStorageEndpoint}/object/images/${coverPath}`;
@@ -204,7 +204,7 @@ export class GamesRepositoryAdapter implements GamesRepository {
 
     return this.http.get<GameApiResponse[]>(url, { params, observe: 'response' }).pipe(
       delay(environment.dataMockDelay),
-      map((response) => (response.body ? toGamesEntity(response.body) : [])),
+      map((response) => this.mapToGamesEntity(response.body)),
     );
   }
 
@@ -216,7 +216,7 @@ export class GamesRepositoryAdapter implements GamesRepository {
 
     return this.http.get<GameApiResponse[]>(url, { params, observe: 'response' }).pipe(
       delay(environment.dataMockDelay),
-      map((response) => (response.body ? toGamesEntity(response.body) : [])),
+      map((response) => this.mapToGamesEntity(response.body)),
     );
   }
 
@@ -224,5 +224,13 @@ export class GamesRepositoryAdapter implements GamesRepository {
     const blob = await firstValueFrom(this.http.get(url, { responseType: 'blob' }));
 
     return new File([blob], fileName, { type: blob.type });
+  }
+
+  private getFileExtension(file: File): string {
+    return file.type.split('/')[1] || 'webp';
+  }
+
+  private mapToGamesEntity(data: GameApiResponse[] | null): GameEntity[] {
+    return data ? toGamesEntity(data) : [];
   }
 }
