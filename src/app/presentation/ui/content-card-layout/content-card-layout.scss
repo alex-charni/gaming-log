@@ -20,6 +20,7 @@
       padding: 2rem 3rem;
       border-radius: 1rem;
       box-shadow: var(--card-shadow);
+      border: var(--card-border);
     }
   }
 
@@ -28,12 +29,14 @@
       padding: 2rem 3rem;
       border-radius: 1rem;
       box-shadow: var(--card-shadow);
+      border: var(--card-border);
     }
   }
 
   &--static {
     border-radius: 1rem;
     box-shadow: var(--card-shadow);
+    border: var(--card-border);
 
     @include desktop-view--sm {
       padding: 2rem 3rem;

@@ -14,8 +14,11 @@ export class FormFieldLayout {
   readonly label = input.required<string>();
   readonly id = input.required<string>();
 
+  readonly textAlign = input<'center' | 'left' | 'right'>('center');
+
   readonly displayAsterisk = input(true);
   readonly displayErrors = input(true);
+  readonly reserveSpaceForErrors = input(true);
 
   protected readonly showAsterisk = computed(
     () => this.displayAsterisk() && this.field().required(),
@@ -24,4 +27,8 @@ export class FormFieldLayout {
   protected readonly showErrors = computed(
     () => this.displayErrors() && this.field().touched() && this.field().invalid(),
   );
+
+  protected readonly classes = computed(() => ({
+    [`form-field--align-text-${this.textAlign()}`]: true,
+  }));
 }

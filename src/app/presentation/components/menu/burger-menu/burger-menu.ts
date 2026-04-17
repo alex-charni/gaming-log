@@ -44,16 +44,14 @@ export class BurgerMenu {
 
   protected readonly menuItems = [
     { label: 'menu.home', icon: 'fa-house', route: '/home' },
-    // { label: 'menu.filters', icon: 'fa-filter', route: '/filter' },
     { label: 'common.about', icon: 'fa-circle-question', route: '/about' },
   ];
 
   protected readonly adminItems = computed(() => {
     return this.authStore.isLoggedIn()
       ? [
-          { label: 'Add game', icon: 'fa-plus', route: '/add-game' },
-          { label: 'Add featured', icon: 'fa-star', route: '/add-featured-game' },
-          { label: 'Logout', icon: 'fa-arrow-right-from-bracket', route: '/login' },
+          { label: 'common.manage_games', icon: 'fa-database', route: '/admin/manage-games' },
+          { label: 'common.logout', icon: 'fa-arrow-right-from-bracket', route: '/login' },
         ]
       : [];
   });

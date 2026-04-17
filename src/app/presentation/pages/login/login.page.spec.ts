@@ -60,7 +60,7 @@ describe('LoginPage', () => {
       fixture.detectChanges();
 
       expect((component as any).icon()).toBe('fa-solid fa-lock');
-      expect((component as any).title()).toBe('pages.auth.login');
+      expect((component as any).title()).toBe('common.login');
 
       const form = fixture.debugElement.query(By.css('form'));
 
@@ -73,11 +73,9 @@ describe('LoginPage', () => {
       fixture.detectChanges();
 
       expect((component as any).icon()).toBe('fa-solid fa-unlock');
-      expect((component as any).title()).toBe('pages.auth.logout');
+      expect((component as any).title()).toBe('common.logout');
 
       const logoutBtn = fixture.debugElement.query(By.css('app-button'));
-
-      expect(logoutBtn.componentInstance.text()).toBe('pages.auth.logout');
     });
   });
 
@@ -119,7 +117,7 @@ describe('LoginPage', () => {
       expect(spinnerServiceMock.setVisible).toHaveBeenCalledWith(true);
       expect(loginUseCaseMock.execute).toHaveBeenCalledWith('test@test.com', '123456');
       expect(authStoreMock.login).toHaveBeenCalledWith(mockSession);
-      expect(routerMock.navigateByUrl).toHaveBeenCalledWith('/add-game');
+      expect(routerMock.navigateByUrl).toHaveBeenCalledWith('/admin/manage-games');
       expect(toastServiceMock.show).toHaveBeenCalledWith(
         expect.objectContaining({ type: 'success' }),
       );

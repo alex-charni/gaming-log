@@ -2,10 +2,35 @@
 
 ## 🛠️ [Unreleased]
 
-- About page.
-- Add game page.
-- Auth system.
 - Japanese language.
+
+## [1.3.5] - 2026-04-16
+
+### 🟢 Added
+
+- Delete, add and archive options for featured games.
+
+## [1.3.4] - 2026-04-15
+
+### 🟢 Added
+
+- Delete game option in games management page.
+
+## [1.3.3] - 2026-04-13
+
+### 🟢 Added
+
+- Games management page.
+
+### 🟠 Changed
+
+- Add game page repurposed to allow edit mode.
+- Updated form fields customization capabilities.
+- Updated buttons customization capabilities.
+
+### 🔴 Fixed
+
+- Minor styles corrections.
 
 ## [1.3.2] - 2026-04-08
 

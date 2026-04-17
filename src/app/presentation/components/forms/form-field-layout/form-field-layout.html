@@ -1,17 +1,23 @@
-<div class="form-field">
-  <label class="form-field__label" [for]="id()">
-    {{ label() | translate }}
+@let translatedLabel = label() | translate;
 
-    @if (showAsterisk()) {
-      <i class="form-field--required fa-solid fa-asterisk fa-2xs"></i>
-    }
-  </label>
+<div class="form-field" [class]="classes()">
+  @if (translatedLabel) {
+    <label class="form-field__label" [for]="id()">
+      {{ translatedLabel }}
+
+      @if (showAsterisk()) {
+        <i class="form-field--required fa-solid fa-asterisk fa-2xs"></i>
+      }
+    </label>
+  }
 
   <ng-content />
 
-  <ul class="form-field__errors" [class.form-field__errors--visible]="showErrors()">
-    @for (error of field().errors(); track error) {
-      <li class="form-field__error">{{ error.message | translate }}</li>
-    }
-  </ul>
+  @if (reserveSpaceForErrors()) {
+    <ul class="form-field__errors" [class.form-field__errors--visible]="showErrors()">
+      @for (error of field().errors(); track error) {
+        <li class="form-field__error">{{ error.message | translate }}</li>
+      }
+    </ul>
+  }
 </div>

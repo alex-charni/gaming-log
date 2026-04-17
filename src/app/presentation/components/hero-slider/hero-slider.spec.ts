@@ -1,32 +1,13 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 
-import { HeroSlideModel } from '@presentation/schemas/interfaces';
+import { MOCK_GAME_SLIDES } from '@testing/mocks';
 import { HeroSliderNavButton } from './components';
 import { HeroSlider } from './hero-slider';
 
 describe('HeroSlider', () => {
   let component: HeroSlider;
   let fixture: ComponentFixture<HeroSlider>;
-
-  const mockSlides: HeroSlideModel[] = [
-    {
-      bottomLeftText: 'bottom left',
-      bottomRightText: 'bottom right',
-      imagePlaceholderUrl: 'img1.webp',
-      imageUrl: 'img1.webp',
-      topLeftText: 'top left',
-      topRightText: 'top right',
-    },
-    {
-      bottomLeftText: '',
-      bottomRightText: '',
-      imagePlaceholderUrl: 'img2.webp',
-      imageUrl: 'img2.webp',
-      topLeftText: '',
-      topRightText: '',
-    },
-  ];
 
   beforeEach(async () => {
     vi.useFakeTimers();
@@ -38,7 +19,7 @@ describe('HeroSlider', () => {
     fixture = TestBed.createComponent(HeroSlider);
     component = fixture.componentInstance;
 
-    fixture.componentRef.setInput('slides', mockSlides);
+    fixture.componentRef.setInput('slides', MOCK_GAME_SLIDES);
     fixture.componentRef.setInput('isLoading', false);
     fixture.componentRef.setInput('autoplayInterval', 5000);
 
@@ -150,7 +131,7 @@ describe('HeroSlider', () => {
       expect(navButtons.length).toBe(0);
 
       fixture.componentRef.setInput('isLoading', false);
-      fixture.componentRef.setInput('slides', [mockSlides[0]]);
+      fixture.componentRef.setInput('slides', [MOCK_GAME_SLIDES[0]]);
       fixture.detectChanges();
 
       navButtons = fixture.debugElement.queryAll(By.css('app-hero-slider-nav-button'));

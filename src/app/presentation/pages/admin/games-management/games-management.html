@@ -1,0 +1,139 @@
+@let games = filteredGames();
+@let loadingGames = gamesAreLoading();
+@let searchTerm = form.searchTerm();
+
+<app-page-layout [contentMaxSize]="'md'">
+  <section class="games-list">
+    <app-content-card-layout
+      [width]="'md'"
+      icon="fa-solid fa-database"
+      [title]="'common.games' | translate"
+      [titleLevel]="'h1'"
+    >
+      <div class="games-list__controls">
+        <div class="games-list__select">
+          <app-form-field
+            class="select-input"
+            type="select"
+            id="list"
+            [field]="form.gamesList()"
+            [options]="gamesListOptions"
+            [displayErrors]="false"
+            [reserveSpaceForErrors]="false"
+          />
+        </div>
+
+        <div class="games-list__search">
+          <app-form-field
+            class="search-input"
+            type="text"
+            id="searchTerm"
+            [placeholder]="'forms.type_to_search' | translate"
+            [field]="searchTerm"
+            [textAlign]="'left'"
+            [displayErrors]="false"
+            [reserveSpaceForErrors]="false"
+            (input)="manageSearchInput($event)"
+          />
+
+          <app-button
+            class="search-clear"
+            [type]="'button'"
+            [height]="'2rem'"
+            [width]="'2rem'"
+            [round]="true"
+            [disabled]="!searchTerm.value()"
+            (action)="clearSearch()"
+          >
+            <i class="fa-solid fa-xmark"></i>
+          </app-button>
+        </div>
+      </div>
+
+      <ul class="games-list__items">
+        <li class="games-list__item">
+          <div class="game-card game-card--button">
+            <app-button
+              [type]="'button'"
+              [width]="'100%'"
+              [height]="'100%'"
+              [fontSize]="'md'"
+              (action)="createGame()"
+            >
+              <div>
+                <i class="fa-solid fa-circle-plus fa-xl"></i>
+                {{ 'common.add_game' | translate }}
+              </div>
+            </app-button>
+          </div>
+        </li>
+
+        @if (loadingGames) {
+          @for (item of placeholders; track $index) {
+            @defer {
+              <li class="games-list__item">
+                <div class="game-card game-card--placeholder"></div>
+              </li>
+            }
+          }
+        }
+
+        @for (game of games; track game.id) {
+          <li class="games-list__item">
+            <div class="game-card">
+              <div class="game-card__info">
+                <p class="game-card__title">{{ game.title }}</p>
+              </div>
+
+              <div class="game-card__actions">
+                @if (form().value().gamesList === 'featured') {
+                  <app-button
+                    class="button"
+                    [type]="'button'"
+                    [width]="'100%'"
+                    [round]="true"
+                    (action)="moveToFinished(game)"
+                  >
+                    <i class="fa-solid fa-flag-checkered"></i>
+                  </app-button>
+                }
+
+                <app-button
+                  class="button"
+                  [type]="'button'"
+                  [width]="'100%'"
+                  [round]="true"
+                  (action)="editGame(game)"
+                >
+                  <i class="fa-solid fa-pencil"></i>
+                </app-button>
+
+                <app-button
+                  class="button"
+                  [type]="'button'"
+                  [width]="'100%'"
+                  [round]="true"
+                  [style]="'danger'"
+                  (action)="deleteGame(game)"
+                >
+                  <i class="fa-solid fa-trash-can"></i>
+                </app-button>
+              </div>
+            </div>
+          </li>
+        }
+
+        @if (!loadingGames && !games.length) {
+          <li class="games-list__item">
+            <div class="game-card game-card--not-found">
+              <p>
+                {{ 'pages.admin.games_management.games_not_found' | translate }}
+                <i class="fa-regular fa-face-frown sad"></i>
+              </p>
+            </div>
+          </li>
+        }
+      </ul>
+    </app-content-card-layout>
+  </section>
+</app-page-layout>

@@ -11,15 +11,29 @@ export const createHomePageStoreMock = () => ({
   cardsAreLoading: signal(false),
   nextYearToLoad: signal(2026),
   haventReachedLastYear: signal(true),
-  spinner: signal(false),
-  // nextYearToLoad: signal(2025),
+  isBusy: signal(false),
   slidesAreLoading: signal(false),
-  slidesCollection: signal([]),
-  cardsCollection: signal([]),
+  slidesCollection: signal<any>([]),
+  cardsCollection: signal<any>([]),
   addYearCard: vi.fn(),
   getCardsRx: vi.fn(),
   getHeroBannerSlidesRx: vi.fn(),
 });
+
+export const createGamesManagementStoreMock = () => {
+  return {
+    gamesCollection: signal([]),
+    selectedGame: signal(undefined),
+    gamesAreLoading: signal(false),
+    isBusy: signal(false),
+    setSelectedGame: vi.fn(),
+    resetSelectedGame: vi.fn(),
+    getFeaturedGamesRx: vi.fn(),
+    getGamesRx: vi.fn(),
+    deleteFeaturedGameRx: vi.fn(),
+    deleteGameRx: vi.fn(),
+  };
+};
 
 export const createToastStoreMock = () => ({
   title: signal(''),

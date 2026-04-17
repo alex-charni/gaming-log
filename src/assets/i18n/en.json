@@ -4,14 +4,26 @@
   },
   "common": {
     "about": "About",
+    "add_game": "Add game",
+    "add_featured_game": "Add featured game",
+    "archive_featured_game": "Archive featured game",
     "cover": "Cover",
     "dropped": "Dropped",
+    "edit_game": "Edit game",
+    "edit_featured_game": "Edit featured game",
+    "featured_pl": "Featured",
     "finished": "Finished",
+    "finished_pl": "Finished",
     "finished_date": "Finished date",
+    "finished_games": "Finished games",
+    "games": "Games",
     "games_log": "Games Log",
     "go_back": "Go back",
     "id": "ID",
     "image": "Image",
+    "login": "Log in",
+    "logout": "Log out",
+    "manage_games": "Manage games",
     "now_playing": "Now playing",
     "now_playing_with_ellipsis": "Now playing...",
     "pending": "Pending",
@@ -37,7 +49,8 @@
     "password": "Password",
     "password_required": "Password is required",
     "required": "Required",
-    "select_file": "Select file"
+    "select_file": "Select file",
+    "type_to_search": "Type to search..."
   },
   "languages": {
     "en": "English",
@@ -84,23 +97,24 @@
       }
     },
     "admin": {
-      "add_game": {
-        "add_game": "Add game",
-        "add_featured_game": "Add featured game",
+      "manage_game": {
         "change_cover": "Change cover",
         "change_image": "Change image",
         "game_added": "Game added to the catalog!",
+        "game_edited": "Game modified correctly!",
         "game_not_added": "Game cannot be added right now.",
+        "game_not_edited": "Game cannot be edited right now.",
         "save": "Save game",
         "select_cover": "Select cover",
         "select_image": "Select image"
+      },
+      "games_management": {
+        "games_not_found": "No games found"
       }
     },
     "auth": {
-      "login": "Log in",
       "login_failed": "Login failed",
       "login_success": "You're in!",
-      "logout": "Log out",
       "logout_failed": "Logout failed",
       "logout_success": "You're out!"
     }

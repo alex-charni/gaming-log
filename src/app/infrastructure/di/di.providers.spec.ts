@@ -3,13 +3,20 @@ import { TestBed } from '@angular/core/testing';
 import {
   AddFeaturedGameUseCase,
   AddGameUseCase,
+  ArchiveFeaturedGameUseCase,
+  DeleteFeaturedGameUseCase,
+  EditFeaturedGameUseCase,
+  GetAllGamesUseCase,
   GetFeaturedGamesUseCase,
   GetGamesByYearUseCase,
+  GetRemoteImageUseCase,
   GetSessionUseCase,
   LoginUseCase,
   LogoutUseCase,
   OnAuthStateChangeUseCase,
 } from '@core/application/use-cases';
+import { DeleteGameUseCase } from '@core/application/use-cases/games/delete-game.usecase';
+import { EditGameUseCase } from '@core/application/use-cases/games/edit-game.usecase';
 import { AuthRepository, GamesRepository } from '@core/domain/repositories';
 import { APP_PARAMS } from '@infrastructure/config/app.params';
 import { AuthRepositoryAdapter, GamesRepositoryAdapter } from '@infrastructure/http/api';
@@ -73,6 +80,31 @@ describe('APP_PROVIDERS Configuration', () => {
       expect(useCase).toBeInstanceOf(AddGameUseCase);
     });
 
+    it('should correctly instantiate DeleteGameUseCase', () => {
+      const useCase = TestBed.inject(DeleteGameUseCase);
+      expect(useCase).toBeInstanceOf(DeleteGameUseCase);
+    });
+
+    it('should correctly instantiate DeleteFeaturedGameUseCase', () => {
+      const useCase = TestBed.inject(DeleteFeaturedGameUseCase);
+      expect(useCase).toBeInstanceOf(DeleteFeaturedGameUseCase);
+    });
+
+    it('should correctly instantiate EditFeaturedGameUseCase', () => {
+      const useCase = TestBed.inject(EditFeaturedGameUseCase);
+      expect(useCase).toBeInstanceOf(EditFeaturedGameUseCase);
+    });
+
+    it('should correctly instantiate EditGameUseCase', () => {
+      const useCase = TestBed.inject(EditGameUseCase);
+      expect(useCase).toBeInstanceOf(EditGameUseCase);
+    });
+
+    it('should correctly instantiate GetAllGamesUseCase', () => {
+      const useCase = TestBed.inject(GetAllGamesUseCase);
+      expect(useCase).toBeInstanceOf(GetAllGamesUseCase);
+    });
+
     it('should correctly instantiate GetGamesByYearUseCase', () => {
       const useCase = TestBed.inject(GetGamesByYearUseCase);
       expect(useCase).toBeInstanceOf(GetGamesByYearUseCase);
@@ -81,6 +113,16 @@ describe('APP_PROVIDERS Configuration', () => {
     it('should correctly instantiate GetFeaturedGamesUseCase', () => {
       const useCase = TestBed.inject(GetFeaturedGamesUseCase);
       expect(useCase).toBeInstanceOf(GetFeaturedGamesUseCase);
+    });
+
+    it('should correctly instantiate ArchiveFeaturedGameUseCase', () => {
+      const useCase = TestBed.inject(ArchiveFeaturedGameUseCase);
+      expect(useCase).toBeInstanceOf(ArchiveFeaturedGameUseCase);
+    });
+
+    it('should correctly instantiate GetRemoteImageUseCase', () => {
+      const useCase = TestBed.inject(GetRemoteImageUseCase);
+      expect(useCase).toBeInstanceOf(GetRemoteImageUseCase);
     });
   });
 
@@ -92,9 +134,9 @@ describe('APP_PROVIDERS Configuration', () => {
       expect(instance1).toBe(instance2);
     });
 
-    it('should provide unique instances for use cases (Singleton check)', () => {
-      const instance1 = TestBed.inject(AddFeaturedGameUseCase);
-      const instance2 = TestBed.inject(AddFeaturedGameUseCase);
+    it('should provide unique instances for game use cases (Singleton check)', () => {
+      const instance1 = TestBed.inject(ArchiveFeaturedGameUseCase);
+      const instance2 = TestBed.inject(ArchiveFeaturedGameUseCase);
 
       expect(instance1).toBe(instance2);
     });

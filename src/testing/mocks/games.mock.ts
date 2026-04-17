@@ -1,7 +1,7 @@
 import { GameEntity } from '@core/domain/entities';
 import { GameStatus } from '@core/domain/schemas/types';
 import { GameApiResponse } from '@infrastructure/http/schemas';
-import { GameCardModel, YearCardModel } from '@presentation/schemas/interfaces';
+import { GameCardModel, HeroSlideModel, YearCardModel } from '@presentation/schemas/interfaces';
 
 export const MOCK_FILE = new File([''], 'test.png', { type: 'image/png' });
 
@@ -51,3 +51,22 @@ export const MOCK_YEAR_CARD: YearCardModel = {
   id: '0003',
   year: '2025',
 };
+
+export const MOCK_GAME_SLIDES: HeroSlideModel[] = [
+  {
+    bottomLeftText: 'bottom left',
+    bottomRightText: 'bottom right',
+    imagePlaceholderUrl: 'img1.webp',
+    imageUrl: 'img1.webp',
+    topLeftText: 'top left',
+    topRightText: 'top right',
+  },
+  {
+    bottomLeftText: '',
+    bottomRightText: '',
+    imagePlaceholderUrl: 'img2.webp',
+    imageUrl: 'img2.webp',
+    topLeftText: '',
+    topRightText: '',
+  },
+];
