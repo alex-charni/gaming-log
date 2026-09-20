@@ -4,6 +4,12 @@
 
 - Japanese language.
 
+## [1.3.6] - 2026-09-20
+
+### 🟠 Changed
+
+- Update app to Angular 22.
+
 ## [1.3.5] - 2026-04-16
 
 ### 🟢 Added
