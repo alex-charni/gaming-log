@@ -3,7 +3,6 @@
 {
   "compileOnSave": false,
   "compilerOptions": {
-    "baseUrl": "./",
     "strict": true,
     "noImplicitOverride": true,
     "noPropertyAccessFromIndexSignature": true,
@@ -16,13 +15,13 @@
     "target": "ES2022",
     "module": "preserve",
     "paths": {
-      "@core/*": ["src/app/core/*"],
-      "@environments/*": ["src/environments/*"],
-      "@infrastructure/*": ["src/app/infrastructure/*"],
-      "@presentation/*": ["src/app/presentation/*"],
-      "@schemas/*": ["src/app/schemas/*"],
-      "@testing/*": ["src/testing/*"],
-      "@i18n/*": ["public/i18n/*"]
+      "@core/*": ["./src/app/core/*"],
+      "@environments/*": ["./src/environments/*"],
+      "@infrastructure/*": ["./src/app/infrastructure/*"],
+      "@presentation/*": ["./src/app/presentation/*"],
+      "@schemas/*": ["./src/app/schemas/*"],
+      "@testing/*": ["./src/testing/*"],
+      "@i18n/*": ["./public/i18n/*"]
     }
   },
   "angularCompilerOptions": {
